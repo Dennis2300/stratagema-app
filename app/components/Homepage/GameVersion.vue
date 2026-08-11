@@ -34,7 +34,7 @@
     </div>
 
     <div v-else>
-      <p>Empty Fallback</p>
+      <GameMaintenance />
     </div>
   </article>
 </template>
