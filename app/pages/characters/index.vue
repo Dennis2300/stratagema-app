@@ -18,12 +18,12 @@
     </figure>
   </header>
 
-  <article>
-    <h2 class="divider">Upcoming characters</h2>
-    <div
-      v-if="upcomingCharacters.length"
-      class="grid grid-cols-2 md:grid-cols-3 gap-4"
-    >
+  <article v-if="upcomingCharacters.length">
+    <div class="my-6 flex items-center gap-3">
+      <div class="h-7 w-1 rounded-full bg-primary"></div>
+      <h2 class="text-2xl font-bold">Upcoming Character(s)</h2>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
       <div
         v-for="character in upcomingCharacters"
         :key="character.id"
@@ -57,7 +57,7 @@
             </div>
           </figcaption>
           <img
-            class="absolute -top-2 -left-2 w-8 h-8 bg-base-200 border border-white/33 rounded-full"
+            class="absolute -top-2.5 -left-2.5 w-8 h-8 bg-gray-800 border border-white/33 rounded-full"
             :src="character.vision_id.img_url"
             alt=""
           />
@@ -67,12 +67,13 @@
         </p>
       </div>
     </div>
-
-    <p v-else>No upcoming characters.</p>
   </article>
 
   <article>
-    <h2 class="divider">Characters</h2>
+    <div class="my-6 flex items-center gap-3">
+      <div class="h-7 w-1 rounded-full bg-primary"></div>
+      <h2 class="text-2xl font-bold">Playable Characters</h2>
+    </div>
 
     <div v-if="pending" class="text-center py-6">
       <span class="loading loading-spinner loading-xl"></span>
@@ -116,7 +117,7 @@
             </div>
           </figcaption>
           <img
-            class="absolute -top-2 -left-2 w-8 h-8 bg-base-200 border border-white/33 rounded-full"
+            class="absolute -top-2.5 -left-2.5 w-8 h-8 bg-gray-800 border border-white/33 rounded-full"
             :src="character.vision_id.img_url"
             alt=""
           />
