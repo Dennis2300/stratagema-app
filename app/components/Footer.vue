@@ -1,6 +1,6 @@
 <template>
   <footer
-    class="footer sm:footer-horizontal bg-base-200 text-neutral-content items-center p-4"
+    class="footer sm:footer-horizontal bg-base-200 text-base-content items-center p-4"
   >
     <aside class="grid-flow-col items-center">
       <svg

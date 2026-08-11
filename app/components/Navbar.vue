@@ -37,7 +37,7 @@
     </div>
     <div class="navbar-center hidden lg:flex">
       <ul class="menu menu-horizontal px-1">
-        <li><NuxtLink to="/characters">Characters</NuxtLink></li>
+        <li><NuxtLink to="/characters" class="uppercase">characters</NuxtLink></li>
       </ul>
     </div>
     <div class="navbar-end">
