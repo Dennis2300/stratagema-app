@@ -8,8 +8,8 @@
       <p>{{ error.message }}</p>
     </div>
 
-    <div v-else-if="currentVersion">
-      <figure class="relative aura">
+    <div v-else-if="currentVersion" class="min-h-170">
+      <figure class="relative w-full h-170 aura">
         <img
           class="w-full h-full object-cover rounded-2xl"
           :src="currentVersion.img_url"
