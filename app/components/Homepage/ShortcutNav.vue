@@ -56,5 +56,10 @@ const links = ref([
     path: "/redeem-codes",
     desc: "Get the latest active redeem codes and rewards",
   },
+  {
+    name: "About",
+    path: "/about",
+    desc: "Read about the website, features, and future plans",
+  },
 ]);
 </script>

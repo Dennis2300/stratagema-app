@@ -34,7 +34,7 @@
     </div>
 
     <div v-else>
-      <GameMaintenance />
+      <HomepageGameMaintenance />
     </div>
   </article>
 </template>
