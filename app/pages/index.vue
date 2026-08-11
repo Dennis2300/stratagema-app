@@ -1,7 +1,6 @@
 <template>
-  <div>
+  <div class="space-y-8">
     <HomepageGameVersion />
+    <HomepageShortcutNav />
   </div>
 </template>
-
-<script setup></script>

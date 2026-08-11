@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar bg-base-200 shadow-sm">
+  <nav class="navbar bg-base-200 shadow-sm">
     <div class="navbar-start">
       <div class="dropdown">
         <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
@@ -37,11 +37,13 @@
     </div>
     <div class="navbar-center hidden lg:flex">
       <ul class="menu menu-horizontal px-1">
-        <li><NuxtLink to="/characters" class="uppercase">characters</NuxtLink></li>
+        <li>
+          <NuxtLink to="/characters" class="uppercase">characters</NuxtLink>
+        </li>
       </ul>
     </div>
     <div class="navbar-end">
       <a class="btn">Button</a>
     </div>
-  </div>
+  </nav>
 </template>

@@ -9,7 +9,7 @@
     </div>
 
     <div v-else-if="currentVersion">
-      <figure class="relative aura text-white">
+      <figure class="relative aura">
         <img
           class="w-full h-full object-cover rounded-2xl"
           :src="currentVersion.img_url"
@@ -22,7 +22,12 @@
           <span>Genshin Impact | 原神</span>
           <h1>{{ currentVersion.name }}</h1>
           <p class="text-lg mt-2">
-            Version {{ currentVersion.version_number }} is available now!
+            Version {{ currentVersion.version_number }} is available now! |
+            Check out the current banner
+            <NuxtLink
+              class="underline hover:text-white/50 hover:cursor-pointer transition-all"
+              >here!</NuxtLink
+            >
           </p>
         </figcaption>
       </figure>
