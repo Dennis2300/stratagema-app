@@ -19,21 +19,114 @@
   </header>
 
   <article>
-    <h2>Upcoming Characters</h2>
-    <div>
-      <div>
-        <h3>Odette</h3>
+    <h2 class="divider">Upcoming characters</h2>
+    <div
+      v-if="upcomingCharacters.length"
+      class="grid grid-cols-2 md:grid-cols-3 gap-4"
+    >
+      <div
+        v-for="character in upcomingCharacters"
+        :key="character.id"
+        class="relative bg-base-300 p-4 rounded-xl"
+      >
+        <figure class="relative flex gap-3">
+          <img
+            class="w-24 h-24 rounded-2xl"
+            :class="{
+              'rarity-5': character.rarity === 5,
+              'rarity-4': character.rarity === 4,
+            }"
+            :src="character.img_url"
+            :alt="character.name"
+          />
+          <figcaption class="flex flex-col justify-center">
+            <h3 class="w-full">{{ character.name }}</h3>
+            <div class="leading-none text-yellow-600">
+              <span v-for="n in character.rarity">★</span>
+            </div>
+            <div class="w-full flex items-center gap-2 mt-2">
+              <span class="badge badge-secondary badge-sm">{{
+                character?.weapon_type_id?.name
+              }}</span>
+              <span class="badge badge-secondary badge-sm">{{
+                character?.main_stat
+              }}</span>
+              <span class="badge badge-secondary badge-sm">{{
+                character?.role
+              }}</span>
+            </div>
+          </figcaption>
+          <img
+            class="absolute -top-2 -left-2 w-8 h-8 bg-base-200 border border-white/33 rounded-full"
+            :src="character.vision_id.img_url"
+            alt=""
+          />
+        </figure>
+        <p class="absolute top-2 right-3 text-xs text-white/25">
+          #{{ character.id }}
+        </p>
       </div>
     </div>
+
+    <p v-else>No upcoming characters.</p>
   </article>
 
   <article>
-    <h2>Characters</h2>
-    <div>
-      <div v-for="character in characters" :key="character.id">
-        <pre>{{ character }}</pre>
+    <h2 class="divider">Characters</h2>
+
+    <div v-if="pending" class="text-center py-6">
+      <span class="loading loading-spinner loading-xl"></span>
+    </div>
+
+    <div v-else-if="error">
+      <p>{{ error.message }}</p>
+    </div>
+
+    <div v-else-if="characters" class="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div
+        v-for="character in playableCharacters"
+        :key="character.id"
+        class="relative bg-base-300 p-4 rounded-xl"
+      >
+        <figure class="relative flex gap-3">
+          <img
+            class="w-24 h-24 rounded-2xl"
+            :class="{
+              'rarity-5': character.rarity === 5,
+              'rarity-4': character.rarity === 4,
+            }"
+            :src="character.img_url"
+            :alt="character.name"
+          />
+          <figcaption class="flex flex-col justify-center">
+            <h3 class="w-full">{{ character.name }}</h3>
+            <div class="leading-none text-yellow-600">
+              <span v-for="n in character.rarity">★</span>
+            </div>
+            <div class="w-full flex items-center gap-2 mt-2">
+              <span class="badge badge-secondary badge-sm">{{
+                character?.weapon_type_id?.name
+              }}</span>
+              <span class="badge badge-secondary badge-sm">{{
+                character?.main_stat
+              }}</span>
+              <span class="badge badge-secondary badge-sm">{{
+                character?.role
+              }}</span>
+            </div>
+          </figcaption>
+          <img
+            class="absolute -top-2 -left-2 w-8 h-8 bg-base-200 border border-white/33 rounded-full"
+            :src="character.vision_id.img_url"
+            alt=""
+          />
+        </figure>
+        <p class="absolute top-2 right-3 text-xs text-white/25">
+          #{{ character.id }}
+        </p>
       </div>
     </div>
+    <div v-else>Empty Fallback</div>
   </article>
 </template>
 
@@ -44,7 +137,7 @@ const {
   data: characters,
   pending,
   error,
-} = await useAsyncData("characters", async () => {
+} = useAsyncData("characters", async () => {
   const { data, error } = await supabase
     .schema("genshin_impact")
     .from("characters")
@@ -53,4 +146,12 @@ const {
   if (error) throw error;
   return data;
 });
+
+const upcomingCharacters = computed(() =>
+  (characters.value ?? []).filter((character) => character.is_upcoming),
+);
+
+const playableCharacters = computed(() =>
+  (characters.value ?? []).filter((character) => !character.is_upcoming),
+);
 </script>
