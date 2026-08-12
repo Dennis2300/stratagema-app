@@ -45,15 +45,18 @@
               <span v-for="n in character.rarity">★</span>
             </div>
             <div class="w-full flex items-center gap-2 mt-2">
-              <span class="badge badge-secondary badge-sm">{{
-                character?.weapon_type_id?.name
-              }}</span>
-              <span class="badge badge-secondary badge-sm">{{
-                character?.main_stat
-              }}</span>
-              <span class="badge badge-secondary badge-sm">{{
-                character?.role
-              }}</span>
+              <div class="text-xs bg-secondary p-2 rounded-2xl">
+                {{ character?.weapon_type_id?.name }}
+              </div>
+              <div class="text-xs bg-accent p-2 rounded-2xl truncate max-w-24">
+                {{ character?.main_stat }}
+              </div>
+              <div
+                class="text-xs p-2 rounded-2xl truncate max-w-24"
+                :class="roleColors[character?.role] || 'bg-accent'"
+              >
+                {{ character?.role }}
+              </div>
             </div>
           </figcaption>
           <img
@@ -100,20 +103,28 @@
             :alt="character.name"
           />
           <figcaption class="flex flex-col justify-center">
-            <h3 class="w-full">{{ character.name }}</h3>
+            <h3 class="w-full">
+              {{ character.name }}
+              <span v-if="character.is_new" class="badge badge-xs badge-info"
+                >NEW!</span
+              >
+            </h3>
             <div class="leading-none text-yellow-600">
               <span v-for="n in character.rarity">★</span>
             </div>
             <div class="w-full flex items-center gap-2 mt-2">
-              <span class="badge badge-secondary badge-sm">{{
-                character?.weapon_type_id?.name
-              }}</span>
-              <span class="badge badge-secondary badge-sm">{{
-                character?.main_stat
-              }}</span>
-              <span class="badge badge-secondary badge-sm">{{
-                character?.role
-              }}</span>
+              <div class="text-xs bg-secondary p-2 rounded-2xl">
+                {{ character?.weapon_type_id?.name }}
+              </div>
+              <div class="text-xs bg-accent p-2 rounded-2xl truncate max-w-24">
+                {{ character?.main_stat }}
+              </div>
+              <div
+                class="text-xs p-2 rounded-2xl truncate max-w-24"
+                :class="roleColors[character?.role] || 'bg-accent'"
+              >
+                {{ character?.role }}
+              </div>
             </div>
           </figcaption>
           <img
@@ -133,6 +144,14 @@
 
 <script setup>
 const supabase = useSupabaseClient();
+
+const roleColors = {
+  DPS: "bg-[#5c3038]",
+  "Sub-DPS": "bg-[#5c4930]",
+  Healer: "bg-[#315044]",
+  Support: "bg-[#304653]",
+  Shielder: "bg-[#443653]",
+};
 
 const {
   data: characters,
