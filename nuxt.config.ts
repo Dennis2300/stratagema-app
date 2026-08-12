@@ -10,9 +10,9 @@ export default defineNuxtConfig({
   modules: ["@nuxtjs/supabase"],
   supabase: {
     redirectOptions: {
-      login: "/login",
+      login: "/",
       callback: "/confirm",
-      exclude: ["/", "/characters"],
+      exclude: ["/", "/characters", "/login"],
     },
   },
 });

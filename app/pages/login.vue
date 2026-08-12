@@ -13,14 +13,46 @@
         <h1 class="text-center">Login</h1>
 
         <form
-          action=""
+          @submit.prevent="signIn"
           class="flex flex-col justify-center items-center space-y-4"
         >
-          <input type="text" placeholder="E-mail" class="input" />
-          <input type="text" placeholder="Password" class="input" />
+          <input
+            v-model="email"
+            type="email"
+            placeholder="E-mail"
+            class="input"
+          />
+          <input
+            v-model="password"
+            type="password"
+            placeholder="Password"
+            class="input"
+          />
           <button class="btn btn-success">Login</button>
         </form>
       </div>
     </div>
   </article>
 </template>
+
+<script setup>
+const supabase = useSupabaseClient();
+const router = useRouter();
+
+const email = ref("");
+const password = ref(null);
+const errorMsg = ref(null);
+
+async function signIn() {
+  try {
+    const { error } = await supabase.auth.signInWithPassword({
+      email: email.value,
+      password: password.value,
+    });
+    if (error) throw error;
+    router.push("/dashboard");
+  } catch (error) {
+    errorMsg.value = error.message;
+  }
+}
+</script>
