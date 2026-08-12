@@ -1,5 +1,5 @@
 <template>
-  <article>
+  <article class="bg-zinc-700 p-4 rounded-2xl">
     <div class="flex justify-between items-center">
       <h1>This is the Dashboard</h1>
       <button @click="logout" type="button" class="btn btn-error">
@@ -8,6 +8,8 @@
     </div>
     <p>Email: {{ user.email }}</p>
   </article>
+
+  <DashboardCreateCharacter />
 </template>
 
 <script setup>
