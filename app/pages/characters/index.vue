@@ -48,7 +48,7 @@
               <div class="text-xs bg-secondary p-2 rounded-2xl">
                 {{ character?.weapon_type_id?.name }}
               </div>
-              <div class="text-xs bg-accent p-2 rounded-2xl truncate max-w-24">
+              <div class="text-xs bg-accent p-2 rounded-2xl truncate max-w-28">
                 {{ character?.main_stat }}
               </div>
               <div
@@ -116,7 +116,7 @@
               <div class="text-xs bg-secondary p-2 rounded-2xl">
                 {{ character?.weapon_type_id?.name }}
               </div>
-              <div class="text-xs bg-accent p-2 rounded-2xl truncate max-w-24">
+              <div class="text-xs bg-accent p-2 rounded-2xl truncate max-w-28">
                 {{ character?.main_stat }}
               </div>
               <div
@@ -161,7 +161,8 @@ const {
   const { data, error } = await supabase
     .schema("genshin_impact")
     .from("characters")
-    .select("*, vision_id(*), weapon_type_id(*)");
+    .select("*, vision_id(*), weapon_type_id(*)")
+    .order("release_date", { ascending: false });
 
   if (error) throw error;
   return data;
