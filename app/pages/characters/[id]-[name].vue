@@ -162,7 +162,7 @@
     >
       <div class="flex items-center gap-3 mb-4">
         <div class="h-9 w-1 rounded-full bg-primary"></div>
-        <h3>Contents</h3>
+        <h4>Contents</h4>
       </div>
 
       <nav class="flex flex-col border-l border-white/10">
