@@ -109,6 +109,10 @@
         </select>
       </div>
 
+      <div class="flex justify-center items-center">
+        <input type="date" class="input" v-model="form.release_date" />
+      </div>
+
       <div class="flex justify-center items-center gap-4">
         <div class="flex items-center gap-2 bg-base-200 py-2 px-3 rounded-xl">
           <label>Is new?</label>
@@ -119,10 +123,6 @@
           <label>Is upcoming?</label>
           <input type="checkbox" class="checkbox" v-model="form.is_upcoming" />
         </div>
-      </div>
-
-      <div class="flex justify-center items-center">
-        <input type="date" class="input" v-model="form.release_date" />
       </div>
     </section>
     <div class="flex justify-center items-center">

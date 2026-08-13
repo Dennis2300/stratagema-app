@@ -162,7 +162,7 @@ const {
     .schema("genshin_impact")
     .from("characters")
     .select("*, vision_id(*), weapon_type_id(*)")
-    .order("release_date", { ascending: false });
+    .order("id", { ascending: false });
 
   if (error) throw error;
   return data;
