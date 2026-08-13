@@ -112,24 +112,49 @@
       </div>
     </section>
 
-    <section>
-      <h2>Best Weapons</h2>
+    <section
+      class="flex-2 h-fit bg-base-200 px-6 py-5 border border-white/25 rounded-lg"
+    >
+      <div class="flex items-center gap-3 mb-4">
+        <div class="h-9 w-1 rounded-full bg-primary"></div>
+        <h2>Best Weapons</h2>
+      </div>
     </section>
 
-    <section>
-      <h2>Best Artifacts</h2>
+    <section
+      class="flex-2 h-fit bg-base-200 px-6 py-5 border border-white/25 rounded-lg"
+    >
+      <div class="flex items-center gap-3 mb-4">
+        <div class="h-9 w-1 rounded-full bg-primary"></div>
+        <h2>Best Artifacts</h2>
+      </div>
     </section>
 
-    <section>
-      <h2>Best Builds</h2>
+    <section
+      class="flex-2 h-fit bg-base-200 px-6 py-5 border border-white/25 rounded-lg"
+    >
+      <div class="flex items-center gap-3 mb-4">
+        <div class="h-9 w-1 rounded-full bg-primary"></div>
+        <h2>Best Builds</h2>
+      </div>
     </section>
 
-    <section>
-      <h2>Team Comps</h2>
+    <section
+      class="flex-2 h-fit bg-base-200 px-6 py-5 border border-white/25 rounded-lg"
+    >
+      <div class="flex items-center gap-3 mb-4">
+        <div class="h-9 w-1 rounded-full bg-primary"></div>
+        <h2>Team Comps</h2>
+      </div>
     </section>
 
-    <section>
-      <h2>Materials</h2>
+    <section
+      class="flex-2 h-fit bg-base-200 px-6 py-5 border border-white/25 rounded-lg"
+    >
+      <div class="flex items-center gap-3 mb-4">
+        <div class="h-9 w-1 rounded-full bg-primary"></div>
+        <h2>Materials</h2>
+      </div>
     </section>
 
     <section
