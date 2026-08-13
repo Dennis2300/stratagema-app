@@ -87,9 +87,10 @@
     </div>
 
     <div v-else-if="characters" class="grid grid-cols-2 md:grid-cols-3 gap-4">
-      <div
+      <NuxtLink
         v-for="character in playableCharacters"
         :key="character.id"
+        :to="`/characters/${character.id}-${character.name}`"
         class="relative bg-base-300 p-4 rounded-xl"
       >
         <figure class="relative flex gap-3">
@@ -136,7 +137,7 @@
         <p class="absolute top-2 right-3 text-xs text-white/25">
           #{{ character.id }}
         </p>
-      </div>
+      </NuxtLink>
     </div>
     <div v-else>Empty Fallback</div>
   </article>
