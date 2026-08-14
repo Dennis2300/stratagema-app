@@ -12,7 +12,7 @@
       <div
         class="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center text-center"
       >
-        <h1>All playable characters</h1>
+        <h1>Characters Archive</h1>
         <p>Here you can find all playable and upcoming playable characters</p>
       </div>
     </figure>
@@ -86,7 +86,10 @@
       <p>{{ error.message }}</p>
     </div>
 
-    <div v-else-if="characters" class="grid grid-cols-2 md:grid-cols-3 gap-4">
+    <div
+      v-else-if="characters.length"
+      class="grid grid-cols-2 md:grid-cols-3 gap-4"
+    >
       <NuxtLink
         v-for="character in playableCharacters"
         :key="character.id"
