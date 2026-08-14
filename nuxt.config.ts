@@ -12,7 +12,14 @@ export default defineNuxtConfig({
     redirectOptions: {
       login: "/",
       callback: "/confirm",
-      exclude: ["/", "/characters", "/characters/**", "/login"],
+      exclude: [
+        "/",
+        "/characters",
+        "/characters/**",
+        "/weapons",
+        "/weapons/**",
+        "/login",
+      ],
     },
   },
 });

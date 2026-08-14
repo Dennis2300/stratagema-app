@@ -40,6 +40,9 @@
         <li>
           <NuxtLink to="/characters" class="uppercase">characters</NuxtLink>
         </li>
+        <li>
+          <NuxtLink to="/weapons" class="uppercase">weapons</NuxtLink>
+        </li>
       </ul>
     </div>
     <div class="navbar-end">
