@@ -46,7 +46,7 @@
       </ul>
     </div>
     <div class="navbar-end">
-      <a class="btn">Button</a>
+      <NuxtLink to="/login" class="btn">Login</NuxtLink>
     </div>
   </nav>
 </template>

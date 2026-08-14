@@ -10,6 +10,7 @@
   </article>
 
   <DashboardCreateCharacter />
+  <DashboardCreateWeapons />
 </template>
 
 <script setup>

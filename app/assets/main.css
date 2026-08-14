@@ -116,3 +116,19 @@ h6 {
     inset 0 1px 0 rgba(255, 255, 255, 0.15),
     0 0 10px rgba(138, 100, 183, 0.25);
 }
+
+.rarity-3 {
+  background: linear-gradient(
+    135deg,
+    #0b2f4a 0%,
+    #0f4f70 20%,
+    #146d91 45%,
+    #2189ad 70%,
+    #42afd0 100%
+  );
+
+  color: #fff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 0 10px rgba(33, 137, 173, 0.25);
+}

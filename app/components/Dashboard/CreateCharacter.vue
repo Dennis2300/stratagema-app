@@ -34,7 +34,7 @@
           <input
             v-model="form.rarity"
             type="radio"
-            name="rating"
+            name="character_rating"
             :value="5"
             checked
           />
@@ -42,7 +42,7 @@
         </label>
 
         <label class="btn btn-primary">
-          <input v-model="form.rarity" type="radio" name="rating" :value="4" />
+          <input v-model="form.rarity" type="radio" name="character_rating" :value="4" />
           4 star
         </label>
       </div>

@@ -50,6 +50,7 @@
                 :class="{
                   'rarity-5': weapon.rarity === 5,
                   'rarity-4': weapon.rarity === 4,
+                  'rarity-3': weapon.rarity === 3,
                 }"
               />
             </figure>
