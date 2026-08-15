@@ -19,7 +19,7 @@
     <p class="text-red-700">{{ error.message }}</p>
   </div>
 
-  <article class="relative space-y-6">
+  <article class="relative space-y-8">
     <section class="flex flex-col md:flex-row">
       <figure class="flex flex-col md:flex-row flex-2 items-center gap-4">
         <img
@@ -114,14 +114,7 @@
 
     <CharacterBestWeapons id="weapons" :weapons="character?.weapons" />
 
-    <section
-      class="flex-2 h-fit bg-base-200 px-6 py-5 border border-white/25 rounded-lg"
-    >
-      <div class="flex items-center gap-3 mb-4">
-        <div class="h-9 w-1 rounded-full bg-primary"></div>
-        <h2>Best Artifacts</h2>
-      </div>
-    </section>
+    <CharacterBestArtifacts id="artifacts" />
 
     <section
       class="flex-2 h-fit bg-base-200 px-6 py-5 border border-white/25 rounded-lg"

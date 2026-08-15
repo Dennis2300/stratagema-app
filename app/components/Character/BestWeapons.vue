@@ -9,9 +9,7 @@
       <div>
         <h2 class="font-bold tracking-wide">Best Weapons</h2>
 
-        <p class="text-xs text-white/50">
-          Recommended weapons for this character
-        </p>
+        <p class="text-xs text-white/50">Recommended weapons</p>
       </div>
     </div>
 
@@ -19,7 +17,7 @@
       <NuxtLink
         v-for="weapon in weapons"
         :key="weapon.id"
-        class="group flex items-center gap-4 rounded-lg border border-base-300 bg-base-100 p-3 transition-all duration-200 hover:border-primary/50 hover:bg-base-300 hover:shadow-md hover:cursor-pointer"
+        class="group flex items-center gap-4 rounded-lg border border-base-content/25 bg-base-100 p-3 transition-all duration-200 hover:bg-base-300 hover:shadow-md hover:cursor-pointer"
       >
         <div class="relative shrink-0 overflow-hidden rounded-lg">
           <img
