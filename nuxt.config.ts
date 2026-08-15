@@ -18,6 +18,8 @@ export default defineNuxtConfig({
         "/characters/**",
         "/weapons",
         "/weapons/**",
+        "/artifacts",
+        "/artifacts/**",
         "/login",
       ],
     },
