@@ -43,14 +43,14 @@
 
           <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs">
             <div class="flex items-center gap-1">
-              <span class="text-base-content/40">Stat</span>
-              <span class="font-medium text-base-content/80">
+              <span class="text-base-content/40">Stat:</span>
+              <span class="font-medium text-primary">
                 {{ weapon.weapon_id.stat }}
               </span>
             </div>
 
             <div class="flex items-center gap-1">
-              <span class="text-base-content/40">Value</span>
+              <span class="text-base-content/40">Value:</span>
               <span class="font-medium text-primary">
                 {{ weapon.weapon_id.stat_value }}
               </span>
