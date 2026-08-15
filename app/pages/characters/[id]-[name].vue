@@ -112,14 +112,7 @@
       </div>
     </section>
 
-    <section
-      class="flex-2 h-fit bg-base-200 px-6 py-5 border border-white/25 rounded-lg"
-    >
-      <div class="flex items-center gap-3 mb-4">
-        <div class="h-9 w-1 rounded-full bg-primary"></div>
-        <h2>Best Weapons</h2>
-      </div>
-    </section>
+    <CharacterBestWeapons id="weapons" :weapons="character?.weapons" />
 
     <section
       class="flex-2 h-fit bg-base-200 px-6 py-5 border border-white/25 rounded-lg"
@@ -157,50 +150,8 @@
       </div>
     </section>
 
-    <section
-      class="hidden md:block fixed left-10 top-1/2 -translate-y-1/2 w-48"
-    >
-      <div class="flex items-center gap-3 mb-4">
-        <div class="h-9 w-1 rounded-full bg-primary"></div>
-        <h4>Contents</h4>
-      </div>
-
-      <nav class="flex flex-col border-l border-white/10">
-        <a
-          class="px-4 py-2 border-l-2 border-primary text-white transition-colors"
-        >
-          Dossier
-        </a>
-        <a
-          class="px-4 py-2 border-l-2 border-transparent opacity-60 hover:opacity-100 hover:border-white/40 transition-colors"
-        >
-          Best Weapons
-        </a>
-        <a
-          class="px-4 py-2 border-l-2 border-transparent opacity-60 hover:opacity-100 hover:border-white/40 transition-colors"
-        >
-          Best Artifacts
-        </a>
-        <a
-          class="px-4 py-2 border-l-2 border-transparent opacity-60 hover:opacity-100 hover:border-white/40 transition-colors"
-        >
-          Best Builds
-        </a>
-        <a
-          class="px-4 py-2 border-l-2 border-transparent opacity-60 hover:opacity-100 hover:border-white/40 transition-colors"
-        >
-          Team Comps
-        </a>
-        <a
-          class="px-4 py-2 border-l-2 border-transparent opacity-60 hover:opacity-100 hover:border-white/40 transition-colors"
-        >
-          Materials
-        </a>
-      </nav>
-    </section>
+    <CharacterTableOfContent />
   </article>
-
-  <div></div>
 </template>
 
 <script setup>
@@ -218,7 +169,9 @@ const {
   const { data, error } = await supabase
     .schema("genshin_impact")
     .from("characters")
-    .select("*, vision_id(*), weapon_type_id(*)")
+    .select(
+      "*, vision_id(*), weapon_type_id(*), weapons:character_weapon(id, weapon_id(*, weapon_type_id(name)), rank)",
+    )
     .eq("id", character_id)
     .single();
   if (error) throw error;

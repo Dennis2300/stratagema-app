@@ -45,6 +45,11 @@
   --text-h6: 1rem; /* 16px */
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
 h1 {
   font-size: var(--text-h1);
   line-height: 1.15;
