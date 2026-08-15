@@ -19,7 +19,7 @@
     <p class="text-red-700">{{ error.message }}</p>
   </div>
 
-  <article class="relative space-y-4">
+  <article class="relative space-y-6">
     <section class="flex flex-col md:flex-row">
       <figure class="flex flex-col md:flex-row flex-2 items-center gap-4">
         <img
