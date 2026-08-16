@@ -3,7 +3,7 @@
     class="flex-2 h-fit rounded-lg border border-base-content/50 bg-base-200 px-6 py-5 shadow-lg"
   >
     <div class="mb-5 flex items-center gap-3">
-      <div class="h-12 w-1 rounded-full bg-primary"></div>
+      <div class="h-9 w-1 rounded-full bg-primary"></div>
       <h2 class="font-bold tracking-wide">Best Weapons</h2>
     </div>
 
@@ -28,7 +28,9 @@
               :alt="weapon.weapon_id.name"
             />
             <figcaption class="space-y-1">
-              <h3 class="text-white/90 truncate max-w-64 md:max-w-lg">{{ weapon.weapon_id.name }}</h3>
+              <h3 class="text-white/90 truncate max-w-64 md:max-w-lg">
+                {{ weapon.weapon_id.name }}
+              </h3>
               <div class="flex items-center gap-4 text-xs">
                 <div class="space-x-1">
                   <span class="text-base-content/55">STAT:</span>
