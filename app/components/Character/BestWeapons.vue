@@ -1,67 +1,59 @@
 <template>
   <section
-    class="flex-2 h-fit rounded-lg border border-white/25 bg-base-200 px-6 py-5 shadow-lg"
+    class="flex-2 h-fit rounded-lg border border-base-content/50 bg-base-200 px-6 py-5 shadow-lg"
   >
-    <!-- Header -->
     <div class="mb-5 flex items-center gap-3">
       <div class="h-12 w-1 rounded-full bg-primary"></div>
-
-      <div>
-        <h2 class="font-bold tracking-wide">Best Weapons</h2>
-
-        <p class="text-xs text-white/50">Recommended weapons</p>
-      </div>
+      <h2 class="font-bold tracking-wide">Best Weapons</h2>
     </div>
 
-    <div class="space-y-3">
-      <NuxtLink
-        v-for="weapon in weapons"
+    <div class="space-y-4">
+      <div
+        v-for="weapon in weaponsByRank"
         :key="weapon.id"
-        class="group flex items-center gap-4 rounded-lg border border-base-content/25 bg-base-100 p-3 transition-all duration-200 hover:bg-base-300 hover:shadow-md hover:cursor-pointer"
+        class="bg-base-100 rounded-xl border border-white/25"
       >
-        <div class="relative shrink-0 overflow-hidden rounded-lg">
-          <img
-            :src="weapon.weapon_id.img_url"
-            :alt="weapon.weapon_id.name"
-            class="h-16 w-16 object-cover"
-            :class="{
-              'rarity-5': weapon.weapon_id.rarity === 5,
-              'rarity-4': weapon.weapon_id.rarity === 4,
-              'rarity-3': weapon.weapon_id.rarity === 3,
-            }"
-          />
-        </div>
-
-        <div class="min-w-0 flex-1">
-          <h3
-            class="truncate font-semibold text-base-content transition-colors group-hover:text-primary"
-          >
-            {{ weapon.weapon_id.name }}
-          </h3>
-
-          <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs">
-            <div class="flex items-center gap-1">
-              <span class="text-base-content/40">Stat:</span>
-              <span class="font-medium text-primary">
-                {{ weapon.weapon_id.stat }}
-              </span>
-            </div>
-
-            <div class="flex items-center gap-1">
-              <span class="text-base-content/40">Value:</span>
-              <span class="font-medium text-primary">
-                {{ weapon.weapon_id.stat_value }}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div
-          class="hidden text-base-content/30 transition-all duration-200 group-hover:translate-x-1 group-hover:text-primary sm:block"
+        <NuxtLink
+          class="flex justify-between items-center p-3 rounded-t-xl group hover:bg-base-300 hover:cursor-pointer transition-all duration-300"
         >
-          →
-        </div>
-      </NuxtLink>
+          <figure class="flex items-center gap-3">
+            <img
+              class="h-16 w-16 mask mask-squircle"
+              :class="{
+                'rarity-5': weapon.weapon_id.rarity === 5,
+                'rarity-4': weapon.weapon_id.rarity === 4,
+                'rarity-3': weapon.weapon_id.rarity === 3,
+              }"
+              :src="weapon.weapon_id.img_url"
+              :alt="weapon.weapon_id.name"
+            />
+            <figcaption class="space-y-1">
+              <h3 class="text-white/90 truncate max-w-64 md:max-w-lg">{{ weapon.weapon_id.name }}</h3>
+              <div class="flex items-center gap-4 text-xs">
+                <div class="space-x-1">
+                  <span class="text-base-content/55">STAT:</span>
+                  <span class="text-base-content">{{
+                    weapon.weapon_id.stat
+                  }}</span>
+                </div>
+                <div class="space-x-1">
+                  <span class="text-base-content/55">VALUE:</span>
+                  <span class="text-base-content">{{
+                    weapon.weapon_id.stat_value
+                  }}</span>
+                </div>
+              </div>
+            </figcaption>
+          </figure>
+          <div
+            class="hidden pr-4 transition-all duration-200 group-hover:translate-x-2 group-hover:text-primary sm:block"
+          >
+            →
+          </div>
+        </NuxtLink>
+        <div class="h-px bg-white/25 rounded-full"></div>
+        <p class="text-base-content text-sm p-4">{{ weapon.details }}</p>
+      </div>
     </div>
 
     <div
@@ -74,10 +66,14 @@
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
   weapons: {
     type: Array,
     default: () => [],
   },
+});
+
+const weaponsByRank = computed(() => {
+  return [...props.weapons].sort((a, b) => a.rank - b.rank);
 });
 </script>

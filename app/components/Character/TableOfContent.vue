@@ -1,14 +1,14 @@
 <template>
-  <section class="hidden md:block fixed left-6 top-1/3 -translate-y-1/2 w-48">
+  <section class="hidden md:block fixed left-12 top-1/2 -translate-y-1/2 w-48">
     <h4>Contents</h4>
 
     <nav class="flex flex-col">
       <div @click="scrollToTop()" class="cursor-pointer">Dossier</div>
-      <a href="#weapons"> Best Weapons </a>
-      <a href="#"> Best Artifacts </a>
-      <a href="#"> Builds </a>
-      <a href="#"> Team Comps </a>
-      <a href="#"> Materials </a>
+      <a href="#weapons"> Weapons </a>
+      <a href="#artifacts"> Artifacts </a>
+      <a href="#builds"> Builds </a>
+      <a href="#team-comps"> Team Comps </a>
+      <a href="#materials"> Materials </a>
     </nav>
   </section>
 </template>
