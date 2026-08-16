@@ -214,8 +214,6 @@ const errorMsg = ref(null);
 async function addCharacter() {
   errorMsg.value = null;
 
-  console.log("form state:", JSON.parse(JSON.stringify(form.value)));
-
   if (!form.value.name || !form.value.img_url || !form.value.vision_id) {
     errorMsg.value = "Name, avatar URL, and Vision are required.";
     return;
@@ -252,8 +250,6 @@ async function addCharacter() {
     return;
   }
 
-  // Success — reset form, emit, whatever fits your flow
-  console.log("Character added:", data);
   resetForm();
 }
 

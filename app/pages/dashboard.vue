@@ -19,8 +19,6 @@ const user = useSupabaseUser();
 const supabase = useSupabaseClient();
 const router = useRouter();
 
-console.log(user.value);
-
 async function logout() {
   try {
     const { error } = await supabase.auth.signOut();

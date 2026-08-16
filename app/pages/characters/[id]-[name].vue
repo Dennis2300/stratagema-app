@@ -80,8 +80,6 @@ const {
     .eq("id", character_id)
     .single();
   if (error) throw error;
-  console.log(data);
-
   return data;
 });
 </script>
