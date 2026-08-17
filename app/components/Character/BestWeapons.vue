@@ -28,9 +28,15 @@
               :alt="weapon.weapon_id.name"
             />
             <figcaption class="space-y-1">
-              <h3 class="text-white/90 truncate max-w-64 md:max-w-lg">
-                {{ weapon.weapon_id.name }}
-              </h3>
+              <div class="flex flex-col md:flex-row md:items-center md:gap-3">
+                <h3 class="text-white/90 truncate max-w-64 md:max-w-lg">
+                  {{ weapon.weapon_id.name }}
+                </h3>
+                <span v-if="weapon.rank === 1" class="badge badge-xs badge-info"
+                  >Best-in-slot</span
+                >
+              </div>
+
               <div class="flex items-center gap-4 text-xs">
                 <div class="space-x-1">
                   <span class="text-base-content/55">STAT:</span>
