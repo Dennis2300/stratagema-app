@@ -55,7 +55,7 @@
         :key="artifact.id"
         class="card overflow-hidden border-2 border-white/25 bg-base-200 shadow-xl"
       >
-        <div class="bg-base-100 p-4">
+        <div class="bg-base-100 py-8">
           <div class="grid grid-cols-5 gap-2 sm:gap-4">
             <!-- Flower -->
             <div class="group flex flex-col items-center gap-2">

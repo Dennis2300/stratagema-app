@@ -33,9 +33,9 @@
         class="bg-base-200 min-h-100 h-full flex justify-center items-center rounded-lg border border-white/25 overflow-hidden"
       >
         <img
+          class="w-full h-full object-cover"
           :src="character.splash_art_url"
           alt=""
-          class="w-full h-full object-cover"
         />
       </figure>
     </div>

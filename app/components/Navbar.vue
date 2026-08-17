@@ -22,15 +22,15 @@
           tabindex="-1"
           class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
         >
-          <li><a>Item 1</a></li>
           <li>
-            <a>Parent</a>
-            <ul class="p-2">
-              <li><a>Submenu 1</a></li>
-              <li><a>Submenu 2</a></li>
-            </ul>
+            <NuxtLink to="/characters" class="uppercase">characters</NuxtLink>
           </li>
-          <li><a>Item 3</a></li>
+          <li>
+            <NuxtLink to="/weapons" class="uppercase">weapons</NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/artifacts" class="uppercase">artifacts</NuxtLink>
+          </li>
         </ul>
       </div>
       <NuxtLink to="/" class="btn btn-ghost text-xl">STRATAGEMA</NuxtLink>
@@ -42,6 +42,9 @@
         </li>
         <li>
           <NuxtLink to="/weapons" class="uppercase">weapons</NuxtLink>
+        </li>
+        <li>
+          <NuxtLink to="/artifacts" class="uppercase">artifacts</NuxtLink>
         </li>
       </ul>
     </div>
