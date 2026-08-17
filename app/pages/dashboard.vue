@@ -12,6 +12,8 @@
   <DashboardCreateCharacter />
   <DashboardCreateWeapons />
   <DashboardCreateArtifacts />
+
+  <DashboardLinkCharacterWeapon />
 </template>
 
 <script setup>
