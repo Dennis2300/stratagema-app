@@ -18,11 +18,11 @@
         :alt="character.name"
       />
     </figure>
-    <div class="absolute w-full z-10">
+    <div class="absolute w-full z-10 space-y-6">
       <section
         class="w-full flex bg-base-300/66 p-6 border border-base-content/50 rounded-xl"
       >
-        <figure class="flex flex-1 items-center gap-6">
+        <figure class="flex flex-2 items-center gap-6">
           <div class="relative shrink-0 rounded-full overflow-hidden">
             <img
               class="h-32 w-32 object-cover md:h-40 md:w-40"
@@ -74,7 +74,7 @@
             <div class="w-1 h-9 bg-white rounded-xl"></div>
             <h2>Voice Actors</h2>
           </div>
-          <div class="flex flex-col justify-around h-full">
+          <div class="flex flex-col justify-around h-full text-sm">
             <p>VOICE ACTOR PLACEHOLDER</p>
             <p>VOICE ACTOR PLACEHOLDER</p>
             <p>VOICE ACTOR PLACEHOLDER</p>
@@ -82,8 +82,13 @@
           </div>
         </div>
       </section>
-      <section>
-        <h2>Dossier</h2>
+      <section
+        class="w-full flex bg-base-300/66 p-6 border border-base-content/50 rounded-xl"
+      >
+        <div class="flex items-center gap-3">
+          <div class="w-1 h-9 bg-white rounded-xl"></div>
+          <h2>Dossier</h2>
+        </div>
       </section>
       <section>
         <h2>Weapons</h2>
