@@ -94,7 +94,6 @@
         v-for="character in playableCharacters"
         :key="character.id"
         :to="`/characters/${character.id}-${slugify(character.name)}`"
-        target="_blank"
         class="relative bg-base-300 p-4 rounded-xl"
       >
         <figure class="relative flex gap-3">
