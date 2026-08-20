@@ -158,8 +158,34 @@
           <div class="w-1 h-9 bg-white rounded-xl"></div>
           <h2>Weapons</h2>
         </div>
-        <div>
-          <pre>{{ character.weapons }}</pre>
+        <div class="space-y-6">
+          <div
+            v-for="w in sortedWeapons"
+            :key="w.weapon.id"
+            class="bg-base-300/80 border border-white/25 rounded-xl"
+          >
+            <figure class="flex items-center gap-3 p-4 border-b border-white/25">
+              <img
+                class="h-24 w-24 object-cover mask mask-squircle"
+                :class="{
+                  'rarity-5': w.weapon.rarity === 5,
+                  'rarity-4': w.weapon.rarity === 4,
+                  'rarity-3': w.weapon.rarity === 3,
+                }"
+                :src="w.weapon.img_url"
+                alt=""
+              />
+              <figcaption>
+                <p>{{ w.weapon.name }}</p>
+                <div>
+                  <span>{{ w.weapon.stat }}</span>
+                  <span>{{ w.weapon.stat_value }}</span>
+                </div>
+              </figcaption>
+            </figure>
+
+            <p class="p-4">{{ w.details }}</p>
+          </div>
         </div>
       </section>
 
@@ -221,11 +247,15 @@ const {
     .schema("genshin_impact")
     .from("characters")
     .select(
-      "*, vision:vision_id(*), weapon_type:weapon_type_id(*), weapons:character_weapon(*)",
+      "*, vision:vision_id(*), weapon_type:weapon_type_id(*), weapons:character_weapon(*, weapon:weapon_id(*))",
     )
     .eq("id", param_id)
     .single();
   if (error) throw error;
   return data;
+});
+
+const sortedWeapons = computed(() => {
+  return [...character.value.weapons].sort((a, b) => a.rank - b.rank);
 });
 </script>
