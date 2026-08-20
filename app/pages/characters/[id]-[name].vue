@@ -20,9 +20,9 @@
     </figure>
     <div class="absolute w-full z-10 space-y-6">
       <section
-        class="w-full flex bg-base-300/66 p-6 border border-base-content/50 rounded-xl"
+        class="w-full flex flex-col gap-8 bg-base-300/66 py-6 md:p-6 border border-base-content/50 rounded-xl backdrop-blur-xs md:flex-row md:gap-0"
       >
-        <figure class="flex flex-2 items-center gap-6">
+        <figure class="flex flex-2 flex-col items-center gap-6 md:flex-row">
           <div class="relative shrink-0 rounded-full overflow-hidden">
             <img
               class="h-32 w-32 object-cover md:h-40 md:w-40"
@@ -34,20 +34,23 @@
               :alt="character.name"
             />
           </div>
-          <figcaption class="text-white">
+
+          <figcaption class="text-white text-center md:text-left">
             <span
               v-if="character.title"
               class="mb-2 block text-sm font-medium uppercase tracking-[0.3em] text-white/50"
             >
               {{ character.title }}
             </span>
+
             <h1
               class="text-6xl font-bold uppercase leading-none tracking-tight md:text-8xl"
             >
               {{ character.name }}
             </h1>
+
             <div
-              class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-medium uppercase tracking-[0.2em] text-white/50"
+              class="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs font-medium uppercase tracking-[0.2em] text-white/50 md:justify-start"
             >
               <span
                 :class="visionColors[character.vision.name] ?? 'text-white'"
@@ -55,26 +58,22 @@
                 {{ character.vision.name }}
               </span>
               <span class="h-1 w-1 rounded-full bg-white/30"></span>
-              <span>
-                {{ character.weapon_type.name }}
-              </span>
+              <span>{{ character.weapon_type.name }}</span>
               <span class="h-1 w-1 rounded-full bg-white/30"></span>
-              <span>
-                {{ character.role }}
-              </span>
+              <span>{{ character.role }}</span>
               <span class="h-1 w-1 rounded-full bg-white/30"></span>
-              <span>
-                {{ character.main_stat }}
-              </span>
+              <span>{{ character.main_stat }}</span>
             </div>
           </figcaption>
         </figure>
-        <div class="flex-1 flex flex-col items-end">
+
+        <div class="flex flex-1 flex-col items-center md:items-end">
           <div class="flex items-center gap-3">
-            <div class="w-1 h-9 bg-white rounded-xl"></div>
+            <div class="h-9 w-1 rounded-xl bg-white"></div>
             <h2>Voice Actors</h2>
           </div>
-          <div class="flex flex-col justify-around h-full text-sm">
+
+          <div class="flex flex-col justify-around text-sm">
             <p>VOICE ACTOR PLACEHOLDER</p>
             <p>VOICE ACTOR PLACEHOLDER</p>
             <p>VOICE ACTOR PLACEHOLDER</p>
@@ -83,11 +82,52 @@
         </div>
       </section>
       <section
-        class="w-full flex bg-base-300/66 p-6 border border-base-content/50 rounded-xl"
+        class="w-full bg-base-300/66 p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
       >
-        <div class="flex items-center gap-3">
+        <span
+          class="block text-sm font-medium uppercase tracking-wide text-white/40 pl-4"
+        >
+          Character Profile</span
+        >
+        <div class="flex items-center gap-3 mb-4">
           <div class="w-1 h-9 bg-white rounded-xl"></div>
           <h2>Dossier</h2>
+        </div>
+
+        <div
+          class="grid grid-cols-2 gap-px overflow-hidden rounded-lg bg-base-content/10"
+        >
+          <div class="bg-base-300/80 p-5">
+            <span class="label">Rarity</span>
+            <div class="text-lg text-yellow-400">
+              <span v-for="star in character.rarity" :key="star">★</span>
+            </div>
+          </div>
+
+          <div class="bg-base-300/80 p-5">
+            <span class="label">Signature Dish</span>
+            <p class="text-lg font-semibold">Signature Dish</p>
+          </div>
+
+          <div class="bg-base-300/80 p-5">
+            <span class="label">Constellation</span>
+            <p class="text-lg font-semibold">{{ character.constellation }}</p>
+          </div>
+
+          <div class="bg-base-300/80 p-5">
+            <span class="label">Birthday</span>
+            <p class="text-lg font-semibold">{{ character.birthday }}</p>
+          </div>
+
+          <div class="bg-base-300/80 p-5">
+            <span class="label">Combat Role</span>
+            <p class="text-lg font-semibold uppercase">{{ character.role }}</p>
+          </div>
+
+          <div class="bg-base-300/80 p-5">
+            <span class="label">Release Date</span>
+            <p class="text-lg font-semibold">{{ character.release_date }}</p>
+          </div>
         </div>
       </section>
       <section>
