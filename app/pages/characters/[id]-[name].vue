@@ -11,14 +11,14 @@
   </div>
 
   <article v-else-if="character" class="relative min-h-[125vh]">
-    <figure class="absolute">
+    <figure class="absolute inset-0">
       <img
         class="w-full object-cover opacity-50"
         :src="character.splash_art_url"
         :alt="character.name"
       />
     </figure>
-    <div class="absolute w-full z-10 space-y-6">
+    <div class="relative w-full z-10 space-y-6">
       <section
         class="w-full flex flex-col gap-8 bg-base-300/66 py-6 md:p-6 border border-base-content/50 rounded-xl backdrop-blur-xs md:flex-row md:gap-0"
       >
@@ -158,6 +158,9 @@
           <div class="w-1 h-9 bg-white rounded-xl"></div>
           <h2>Weapons</h2>
         </div>
+        <div>
+          <pre>{{ character.weapons }}</pre>
+        </div>
       </section>
 
       <section
@@ -217,7 +220,9 @@ const {
   const { data, error } = await supabase
     .schema("genshin_impact")
     .from("characters")
-    .select("*, vision:vision_id(*), weapon_type:weapon_type_id(*)")
+    .select(
+      "*, vision:vision_id(*), weapon_type:weapon_type_id(*), weapons:character_weapon(*)",
+    )
     .eq("id", param_id)
     .single();
   if (error) throw error;
