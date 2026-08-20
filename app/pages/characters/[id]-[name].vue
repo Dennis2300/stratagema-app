@@ -13,7 +13,7 @@
   <article v-else-if="character" class="relative min-h-[125vh]">
     <figure class="absolute">
       <img
-        class="w-full object-cover opacity-25"
+        class="w-full object-cover opacity-50"
         :src="character.splash_art_url"
         :alt="character.name"
       />
@@ -81,6 +81,7 @@
           </div>
         </div>
       </section>
+
       <section
         class="w-full bg-base-300/66 p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
       >
@@ -130,11 +131,61 @@
           </div>
         </div>
       </section>
-      <section>
-        <h2>Weapons</h2>
+
+      <section
+        class="w-full bg-base-300/66 p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
+      >
+        <span
+          class="block text-sm font-medium uppercase tracking-wide text-white/40 pl-4"
+        >
+          All materials needed to reach Level 90 and max out Talents.
+        </span>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-1 h-9 bg-white rounded-xl"></div>
+          <h2>Materials</h2>
+        </div>
       </section>
-      <section>
-        <h2>Builds</h2>
+
+      <section
+        class="w-full bg-base-300/66 p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
+      >
+        <span
+          class="block text-sm font-medium uppercase tracking-wide text-white/40 pl-4"
+        >
+          Recommended Weapons for {{ character.name }}
+        </span>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-1 h-9 bg-white rounded-xl"></div>
+          <h2>Weapons</h2>
+        </div>
+      </section>
+
+      <section
+        class="w-full bg-base-300/66 p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
+      >
+        <span
+          class="block text-sm font-medium uppercase tracking-wide text-white/40 pl-4"
+        >
+          Recommended Build(s) for {{ character.name }}
+        </span>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-1 h-9 bg-white rounded-xl"></div>
+          <h2>Build(s)</h2>
+        </div>
+      </section>
+
+      <section
+        class="w-full bg-base-300/66 p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
+      >
+        <span
+          class="block text-sm font-medium uppercase tracking-wide text-white/40 pl-4"
+        >
+          Possible Teams for {{ character.name }}
+        </span>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-1 h-9 bg-white rounded-xl"></div>
+          <h2>Teams</h2>
+        </div>
       </section>
     </div>
   </article>
