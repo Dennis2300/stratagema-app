@@ -60,11 +60,11 @@
               </span>
               <span class="h-1 w-1 rounded-full bg-white/30"></span>
               <span>
-                {{ character.main_stat }}
+                {{ character.role }}
               </span>
               <span class="h-1 w-1 rounded-full bg-white/30"></span>
               <span>
-                {{ character.role }}
+                {{ character.main_stat }}
               </span>
             </div>
           </figcaption>
