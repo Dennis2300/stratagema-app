@@ -162,29 +162,60 @@
           <div
             v-for="w in sortedWeapons"
             :key="w.weapon.id"
-            class="bg-base-300/80 border border-white/25 rounded-xl"
+            class="group overflow-hidden rounded-xl border border-white/15 bg-base-300/80 shadow-sm transition-all duration-200 hover:border-white/30 hover:bg-base-300/95"
           >
-            <figure class="flex items-center gap-3 p-4 border-b border-white/25">
-              <img
-                class="h-24 w-24 object-cover mask mask-squircle"
-                :class="{
-                  'rarity-5': w.weapon.rarity === 5,
-                  'rarity-4': w.weapon.rarity === 4,
-                  'rarity-3': w.weapon.rarity === 3,
-                }"
-                :src="w.weapon.img_url"
-                alt=""
-              />
-              <figcaption>
-                <p>{{ w.weapon.name }}</p>
-                <div>
-                  <span>{{ w.weapon.stat }}</span>
-                  <span>{{ w.weapon.stat_value }}</span>
+            <div
+              class="flex items-center justify-between gap-3 border-b border-white/10 p-4"
+            >
+              <figure class="flex min-w-0 items-center gap-4">
+                <div
+                  class="shrink-0 overflow-hidden rounded-xl ring-1 ring-white/10"
+                >
+                  <img
+                    class="h-20 w-20 object-cover transition-transform duration-300 group-hover:scale-105"
+                    :class="{
+                      'rarity-5': w.weapon.rarity === 5,
+                      'rarity-4': w.weapon.rarity === 4,
+                      'rarity-3': w.weapon.rarity === 3,
+                    }"
+                    :src="w.weapon.img_url"
+                    :alt="w.weapon.name"
+                  />
                 </div>
-              </figcaption>
-            </figure>
 
-            <p class="p-4">{{ w.details }}</p>
+                <figcaption class="min-w-0">
+                  <h3 class="truncate">
+                    {{ w.weapon.name }}
+                  </h3>
+
+                  <div
+                    class="mt-2 flex items-center gap-3 text-sm text-white/60"
+                  >
+                    <p>
+                      <span class="text-white/40">STAT:</span>
+                      {{ w.weapon.stat }}
+                    </p>
+
+                    <span class="h-1 w-1 rounded-full bg-white/20"></span>
+
+                    <p>
+                      <span class="text-white/40">VALUE:</span>
+                      {{ w.weapon.stat_value }}
+                    </p>
+                  </div>
+                </figcaption>
+              </figure>
+
+              <div
+                class="shrink-0 text-white/30 transition-all duration-200 group-hover:translate-x-1 group-hover:text-white/70"
+              >
+                <span class="text-xl">→</span>
+              </div>
+            </div>
+
+            <p class="p-4 text-white/70">
+              {{ w.details }}
+            </p>
           </div>
         </div>
       </section>
