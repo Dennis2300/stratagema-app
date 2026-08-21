@@ -138,20 +138,6 @@
         <span
           class="block text-sm font-medium uppercase tracking-wide text-white/40 pl-4"
         >
-          All materials needed to reach Level 90 and max out Talents.
-        </span>
-        <div class="flex items-center gap-3 mb-4">
-          <div class="w-1 h-9 bg-white rounded-xl"></div>
-          <h2>Materials</h2>
-        </div>
-      </section>
-
-      <section
-        class="w-full bg-base-300/66 p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
-      >
-        <span
-          class="block text-sm font-medium uppercase tracking-wide text-white/40 pl-4"
-        >
           Recommended Weapons for {{ character.name }}
         </span>
         <div class="flex items-center gap-3 mb-4">
@@ -247,6 +233,32 @@
           <h2>Teams</h2>
         </div>
       </section>
+
+      <section
+        class="w-full bg-base-300/66 p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
+      >
+        <span
+          class="block text-sm font-medium uppercase tracking-wide text-white/40 pl-4"
+        >
+          All materials needed to reach Level 90 and max out Talents.
+        </span>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-1 h-9 bg-white rounded-xl"></div>
+          <h2>Materials</h2>
+        </div>
+        <div v-for="(items, type) in groupedMaterials" :key="type">
+          <h3 class="capitalize">{{ type.replaceAll("_", " ") }}</h3>
+          <div>
+            <figure v-for="item in items" :key="item.id">
+              <img :src="item.material.img_url" class="w-20 h-20" />
+              <figcaption>
+                <p>{{ item.material.name }}</p>
+                <span>×{{ item.amount }}</span>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
     </div>
   </article>
 
@@ -269,6 +281,8 @@ const visionColors = {
   Geo: "text-yellow-400",
 };
 
+const usageOrder = ["character_ascension", "talent"];
+
 const {
   data: character,
   pending: characterLoading,
@@ -278,15 +292,36 @@ const {
     .schema("genshin_impact")
     .from("characters")
     .select(
-      "*, vision:vision_id(*), weapon_type:weapon_type_id(*), weapons:character_weapon(*, weapon:weapon_id(*))",
+      `
+      *, 
+      vision:vision_id(*), 
+      weapon_type:weapon_type_id(*), 
+      weapons:character_weapon(*, weapon:weapon_id(*)),
+      materials:character_material(id, material:material_id(*), usage_type, amount)
+      `,
     )
     .eq("id", param_id)
     .single();
   if (error) throw error;
+  console.log(data.materials);
+
   return data;
 });
 
 const sortedWeapons = computed(() => {
   return [...character.value.weapons].sort((a, b) => a.rank - b.rank);
+});
+
+const groupedMaterials = computed(() => {
+  if (!character.value?.materials) return {};
+  return usageOrder.reduce((acc, type) => {
+    acc[type] = character.value.materials
+      .filter((m) => m.usage_type === type)
+      .map((m) => ({
+        ...m,
+        amount: type === "talent" ? m.amount * 3 : m.amount,
+      }));
+    return acc;
+  }, {});
 });
 </script>
