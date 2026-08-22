@@ -252,24 +252,36 @@
           >
             {{ type.replaceAll("_", " ") }}
           </h3>
-          <div>
-            <figure v-for="item in items" :key="item.id">
-              <img
-                :src="item.material.img_url"
-                class="w-20 h-20 mask mask-squircle"
-                :class="{
-                  'rarity-5': item.material.rarity === 5,
-                  'rarity-4': item.material.rarity === 4,
-                  'rarity-3': item.material.rarity === 3,
-                  'rarity-2': item.material.rarity === 2,
-                  'rarity-1': item.material.rarity === 1,
-                }"
-              />
-              <figcaption>
-                <p>{{ item.material.name }}</p>
-                <span>×{{ item.amount }}</span>
-              </figcaption>
-            </figure>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-12">
+            <div
+              v-for="item in items"
+              :key="item.id"
+              class="bg-base-300 p-4 border border-base-content/10 rounded-lg hover:bg-zinc-700/50 transition duration-200"
+            >
+              <figure class="flex items-center gap-3">
+                <img
+                  :src="item.material.img_url"
+                  class="w-16 h-16 mask mask-squircle"
+                  :class="{
+                    'rarity-5': item.material.rarity === 5,
+                    'rarity-4': item.material.rarity === 4,
+                    'rarity-3': item.material.rarity === 3,
+                    'rarity-2': item.material.rarity === 2,
+                    'rarity-1': item.material.rarity === 1,
+                  }"
+                />
+                <figcaption class="min-w-0">
+                  <p class="truncate text-sm font-medium text-base-content/90">
+                    {{ item.material.name }}
+                  </p>
+                  <span
+                    class="mt-1 inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-2 py-0.5 text-xs font-semibold text-primary"
+                  >
+                    ×{{ item.amount.toLocaleString() }}
+                  </span>
+                </figcaption>
+              </figure>
+            </div>
           </div>
         </div>
       </section>
@@ -295,7 +307,7 @@ const visionColors = {
   Geo: "text-yellow-400",
 };
 
-const usageOrder = ["character_ascension", "talent"];
+const usageOrder = ["character_ascension", "character_talent"];
 
 const {
   data: character,
