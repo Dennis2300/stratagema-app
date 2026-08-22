@@ -256,7 +256,7 @@
             <div
               v-for="item in items"
               :key="item.id"
-              class="bg-base-300 p-4 border border-base-content/10 rounded-lg hover:bg-zinc-700/50 transition duration-200"
+              class="bg-base-300 p-4 border-2 border-base-content/10 rounded-lg hover:bg-zinc-700/50 transition duration-200"
             >
               <figure class="flex items-center gap-3">
                 <img
@@ -283,6 +283,20 @@
               </figure>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section
+        class="w-full bg-base-300/66 p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
+      >
+        <span
+          class="block text-sm font-medium uppercase tracking-wide text-white/40 pl-4"
+        >
+          Recommended Priorities for {{ character.name }}
+        </span>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-1 h-9 bg-white rounded-xl"></div>
+          <h2>Talent Priorities</h2>
         </div>
       </section>
     </div>
