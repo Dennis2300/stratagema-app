@@ -247,10 +247,24 @@
           <h2>Materials</h2>
         </div>
         <div v-for="(items, type) in groupedMaterials" :key="type">
-          <h3 class="capitalize">{{ type.replaceAll("_", " ") }}</h3>
+          <h3
+            class="whitespace-nowrap text-xs font-bold uppercase tracking-widest text-primary/70 divider divider-start"
+          >
+            {{ type.replaceAll("_", " ") }}
+          </h3>
           <div>
             <figure v-for="item in items" :key="item.id">
-              <img :src="item.material.img_url" class="w-20 h-20" />
+              <img
+                :src="item.material.img_url"
+                class="w-20 h-20 mask mask-squircle"
+                :class="{
+                  'rarity-5': item.material.rarity === 5,
+                  'rarity-4': item.material.rarity === 4,
+                  'rarity-3': item.material.rarity === 3,
+                  'rarity-2': item.material.rarity === 2,
+                  'rarity-1': item.material.rarity === 1,
+                }"
+              />
               <figcaption>
                 <p>{{ item.material.name }}</p>
                 <span>×{{ item.amount }}</span>

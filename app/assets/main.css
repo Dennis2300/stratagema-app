@@ -38,11 +38,11 @@
 
 @theme {
   --text-h1: 3.052rem;
-  --text-h2: 2.441rem; 
-  --text-h3: 1.553rem; 
-  --text-h4: 1.263rem; 
-  --text-h5: 1.05rem; 
-  --text-h6: 0.5rem; 
+  --text-h2: 2.441rem;
+  --text-h3: 1.553rem;
+  --text-h4: 1.263rem;
+  --text-h5: 1.05rem;
+  --text-h6: 0.5rem;
 }
 
 html {
@@ -136,4 +136,36 @@ h6 {
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.15),
     0 0 10px rgba(33, 137, 173, 0.25);
+}
+
+.rarity-2 {
+  background: linear-gradient(
+    135deg,
+    #1a3a1f 0%,
+    #285530 25%,
+    #397245 50%,
+    #4f9760 75%,
+    #74c084 100%
+  );
+
+  color: #fff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 0 10px rgba(79, 151, 96, 0.25);
+}
+
+.rarity-1 {
+  background: linear-gradient(
+    135deg,
+    #2e2e2e 0%,
+    #4a4a4a 25%,
+    #686868 50%,
+    #8a8a8a 75%,
+    #b0b0b0 100%
+  );
+
+  color: #fff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 0 10px rgba(138, 138, 138, 0.25);
 }
