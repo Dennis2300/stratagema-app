@@ -42,7 +42,12 @@
         </label>
 
         <label class="btn btn-primary">
-          <input v-model="form.rarity" type="radio" name="character_rating" :value="4" />
+          <input
+            v-model="form.rarity"
+            type="radio"
+            name="character_rating"
+            :value="4"
+          />
           4 star
         </label>
       </div>
@@ -123,6 +128,10 @@
           <label>Is upcoming?</label>
           <input type="checkbox" class="checkbox" v-model="form.is_upcoming" />
         </div>
+      </div>
+
+      <div class="flex justify-center items-center">
+        <input type="text" class="input" v-model="form.title" placeholder="title" />
       </div>
     </section>
     <div class="flex justify-center items-center">
@@ -206,6 +215,7 @@ const form = ref({
   is_new: false,
   is_upcoming: false,
   release_date: null,
+  title: null,
 });
 
 const submitting = ref(false);
@@ -238,6 +248,7 @@ async function addCharacter() {
       img_url: form.value.img_url,
       splash_art_url: form.value.splash_art_url || null,
       release_date: form.value.release_date || null,
+      title: form.value.title || null,
     })
     .select()
     .single();
