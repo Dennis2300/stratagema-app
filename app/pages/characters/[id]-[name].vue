@@ -364,7 +364,7 @@ const groupedMaterials = computed(() => {
       .filter((m) => m.usage_type === type)
       .map((m) => ({
         ...m,
-        amount: type === "talent" ? m.amount * 3 : m.amount,
+        amount: type === "character_talent" ? m.amount * 3 : m.amount,
       }))
       .sort((a, b) => {
         const prioA = categoryPriority[a.material.category] ?? 99;
