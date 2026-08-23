@@ -14,6 +14,7 @@
   <DashboardLinkCharacterWeapon />
   <DashboardCreateArtifacts />
   <DashboardCreateMaterials />
+  <DashboardLinkCharacterMaterial />
 </template>
 
 <script setup>
