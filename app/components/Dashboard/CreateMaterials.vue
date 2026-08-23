@@ -90,8 +90,5 @@ async function createMaterial() {
 
   // reset form on success
   form.value = { name: "", rarity: null, category: null, img_url: "" };
-
-  // optional: emit or push to a local list
-  console.log("Created material:", data);
 }
 </script>

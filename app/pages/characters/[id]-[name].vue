@@ -343,7 +343,6 @@ const {
     .eq("id", param_id)
     .single();
   if (error) throw error;
-  console.log(data.materials);
 
   return data;
 });
@@ -352,15 +351,34 @@ const sortedWeapons = computed(() => {
   return [...character.value.weapons].sort((a, b) => a.rank - b.rank);
 });
 
+const categoryPriority = {
+  ascension: 1,
+  enhancement: 2,
+};
+
 const groupedMaterials = computed(() => {
   if (!character.value?.materials) return {};
+
   return usageOrder.reduce((acc, type) => {
     acc[type] = character.value.materials
       .filter((m) => m.usage_type === type)
       .map((m) => ({
         ...m,
         amount: type === "talent" ? m.amount * 3 : m.amount,
-      }));
+      }))
+      .sort((a, b) => {
+        const prioA = categoryPriority[a.material.category] ?? 99;
+        const prioB = categoryPriority[b.material.category] ?? 99;
+
+        // different priority groups: gems before insignias before "everything else"
+        if (prioA !== prioB) return prioA - prioB;
+
+        // same priority group (both gems, or both insignias): sort by rarity ascending
+        if (prioA !== 99) return a.material.rarity - b.material.rarity;
+
+        // both fall in "everything else": leave as-is (stable sort preserves original order)
+        return 0;
+      });
     return acc;
   }, {});
 });

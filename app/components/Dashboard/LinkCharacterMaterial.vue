@@ -180,7 +180,6 @@ async function linkMaterial() {
   form.value.usage_type = "";
   selectedCategory.value = "";
 
-  console.log("Linked material:", data);
 }
 
 onMounted(() => {
