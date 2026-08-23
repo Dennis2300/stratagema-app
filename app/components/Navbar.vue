@@ -49,7 +49,13 @@
       </ul>
     </div>
     <div class="navbar-end">
-      <NuxtLink to="/login" class="btn">Login</NuxtLink>
+      <NuxtLink :to="user ? '/dashboard' : '/login'" class="btn">
+        {{ user ? "Dashboard" : "Login" }}
+      </NuxtLink>
     </div>
   </nav>
 </template>
+
+<script setup>
+const user = useSupabaseUser();
+</script>
