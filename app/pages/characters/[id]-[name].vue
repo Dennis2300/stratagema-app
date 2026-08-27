@@ -223,14 +223,68 @@
       <section
         class="w-full bg-base-300/66 p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
       >
-        <span
-          class="block text-sm font-medium uppercase tracking-wide text-white/40 pl-4"
-        >
-          Possible Teams for {{ character.name }}
-        </span>
-        <div class="flex items-center gap-3 mb-4">
-          <div class="w-1 h-9 bg-white rounded-xl"></div>
-          <h2>Teams</h2>
+        <!-- Header -->
+        <div class="mb-5">
+          <span
+            class="text-xs font-medium uppercase tracking-widest text-primary/60"
+          >
+            Possible Teams for {{ character.name }}
+          </span>
+
+          <div class="mt-2 flex items-center gap-3">
+            <div class="h-8 w-1 rounded-full bg-primary"></div>
+            <h2 class="text-xl font-semibold">Teams</h2>
+          </div>
+        </div>
+
+        <!-- Teams -->
+        <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
+          <div
+            v-for="team in character.teams"
+            :key="team.id"
+            class="bg-base-300 h-fit p-4 border-2 border-base-content/10 rounded-lg hover:bg-zinc-700/50 transition duration-200"
+          >
+            <!-- Team name -->
+            <h3 class="mb-3 font-medium text-base-content">
+              {{ team.name }}
+            </h3>
+
+            <!-- Members -->
+            <div class="flex items-center gap-2">
+              <!-- Primary Member -->
+              <img
+                class="h-16 w-16 mask mask-squircle"
+                :class="{
+                  'rarity-5': character.rarity === 5,
+                  'rarity-4': character.rarity === 4,
+                }"
+                :src="character.img_url"
+                :alt="character.name"
+              />
+
+              <div class="h-8 w-px bg-base-content/50"></div>
+
+              <!-- Team Members -->
+              <img
+                v-for="member in team.members"
+                :key="member.id"
+                class="h-16 w-16 mask mask-squircle"
+                :class="{
+                  'rarity-5': member.character.rarity === 5,
+                  'rarity-4': member.character.rarity === 4,
+                }"
+                :src="member.character.img_url"
+                :alt="member.character.name"
+              />
+            </div>
+
+            <!-- Details -->
+            <div class="mt-4 border-t border-base-content/10 pt-3">
+              <p class="text-sm leading-relaxed text-primary/75">
+                {{ team.details }}
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -333,16 +387,18 @@ const {
     .from("characters")
     .select(
       `
-      *, 
-      vision:vision_id(*), 
-      weapon_type:weapon_type_id(*), 
-      weapons:character_weapon(*, weapon:weapon_id(*)),
-      materials:character_material(id, material:material_id(*), usage_type, amount)
-      `,
+    *, 
+    vision:vision_id(*), 
+    weapon_type:weapon_type_id(*), 
+    weapons:character_weapon(*, weapon:weapon_id(*)),
+    materials:character_material(id, material:material_id(*), usage_type, amount),
+    teams(*, members:team_character(*, character:character_id(id, name, rarity, img_url)))
+    `,
     )
     .eq("id", param_id)
     .single();
   if (error) throw error;
+  // console.log(data);
 
   return data;
 });
