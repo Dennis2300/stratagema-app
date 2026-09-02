@@ -193,7 +193,7 @@
               </figure>
 
               <div
-                class="shrink-0 text-white/30 transition-all duration-200 group-hover:translate-x-1 group-hover:text-white/70"
+                class="hidden md:block shrink-0 text-white/30 transition-all duration-200 group-hover:translate-x-1 group-hover:text-white/70"
               >
                 <span class="text-xl">→</span>
               </div>
@@ -207,7 +207,7 @@
       </section>
 
       <section
-        class="w-full bg-base-300/66 p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
+        class="w-full min-h-64 bg-base-300/66 p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
       >
         <span
           class="block text-sm font-medium uppercase tracking-wide text-white/40 pl-4"
@@ -217,6 +217,77 @@
         <div class="flex items-center gap-3 mb-4">
           <div class="w-1 h-9 bg-white rounded-xl"></div>
           <h2>Build(s)</h2>
+        </div>
+        <div v-if="buildsLoading" class="flex items-center justify-center">
+          <span class="loading loading-xl"></span>
+        </div>
+        <div v-else-if="buildsError">
+          <ErrorMessage :error="buildsError" />
+        </div>
+        <div v-else-if="builds">
+          <div v-for="build in builds" :key="build.id">
+            <h3 class="text-info">{{ character.name }} {{ build.title }}</h3>
+            <div
+              class="flex flex-wrap md:justify-around items-center bg-base-100 my-2 border border-base-content/80 rounded-lg"
+              v-for="a in build.artifacts"
+              :key="a.artifact.id"
+            >
+              <figure class="flex items-center">
+                <img class="w-24 h-24" :src="a.artifact.sands_img_url" alt="" />
+                <figcaption>
+                  <h4>Sands</h4>
+                  <p class="text-sm">{{ build.stats.find((s) => s.slot === "sands")?.stat }}</p>
+                </figcaption>
+              </figure>
+
+              <figure class="flex items-center">
+                <img
+                  class="w-24 h-24"
+                  :src="a.artifact.goblet_img_url"
+                  alt=""
+                />
+                <figcaption>
+                  <h4>Goblet</h4>
+                  <p>
+                    {{ build.stats.find((s) => s.slot === "goblet")?.stat }}
+                  </p>
+                </figcaption>
+              </figure>
+
+              <figure class="flex items-center">
+                <img
+                  class="w-24 h-24"
+                  :src="a.artifact.circlet_img_url"
+                  alt=""
+                />
+                <figcaption>
+                  <h4>Circlet</h4>
+                  <p>
+                    {{ build.stats.find((s) => s.slot === "circlet")?.stat }}
+                  </p>
+                </figcaption>
+              </figure>
+            </div>
+
+            <div>
+              <h3 class="text-info my-3">Substats</h3>
+              <div class="flex flex-wrap gap-4">
+                <span
+                  class="px-4 py-2 bg-base-100 border border-base-content/80 rounded-lg"
+                  v-for="sub in build.stats
+                    .filter((s) => s.slot === 'substat')
+                    .sort((a, b) => a.rank - b.rank)"
+                  :key="sub.id"
+                >
+                  {{ sub.stat }} (#{{ sub.rank }})
+                </span>
+              </div>
+            </div>
+            <div class="divider"></div>
+            <div class="text-primary/80">
+              {{ build.details }}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -400,6 +471,26 @@ const {
   if (error) throw error;
   // console.log(data);
 
+  return data;
+});
+
+const {
+  data: builds,
+  pending: buildsLoading,
+  error: buildsError,
+} = useAsyncData(`character-${param_id}-build`, async () => {
+  const { data, error } = await supabase
+    .schema("genshin_impact")
+    .from("builds")
+    .select(
+      `
+    *,
+    artifacts:build_artifact(id, artifact:artifact_id(*,two_piece_bonus_id(name)), rank),
+    stats:build_stat(id, slot, stat, rank)
+    `,
+    )
+    .eq("character_id", param_id);
+  if (error) throw error;
   return data;
 });
 
