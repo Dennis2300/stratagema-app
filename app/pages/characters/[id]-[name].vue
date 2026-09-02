@@ -228,15 +228,17 @@
           <div v-for="build in builds" :key="build.id">
             <h3 class="text-info">{{ character.name }} {{ build.title }}</h3>
             <div
-              class="flex flex-wrap md:justify-around items-center bg-base-100 my-2 border border-base-content/80 rounded-lg"
+              class="flex flex-wrap md:justify-around items-center py-6 bg-base-100 my-2 border border-base-content/80 rounded-lg"
               v-for="a in build.artifacts"
               :key="a.artifact.id"
             >
               <figure class="flex items-center">
                 <img class="w-24 h-24" :src="a.artifact.sands_img_url" alt="" />
                 <figcaption>
-                  <h4>Sands</h4>
-                  <p class="text-sm">{{ build.stats.find((s) => s.slot === "sands")?.stat }}</p>
+                  <h4 class="text-base-content/80">Sands</h4>
+                  <p class="text-sm">
+                    {{ build.stats.find((s) => s.slot === "sands")?.stat }}
+                  </p>
                 </figcaption>
               </figure>
 
@@ -247,8 +249,8 @@
                   alt=""
                 />
                 <figcaption>
-                  <h4>Goblet</h4>
-                  <p>
+                  <h4 class="text-base-content/80">Goblet</h4>
+                  <p class="text-sm">
                     {{ build.stats.find((s) => s.slot === "goblet")?.stat }}
                   </p>
                 </figcaption>
@@ -261,8 +263,8 @@
                   alt=""
                 />
                 <figcaption>
-                  <h4>Circlet</h4>
-                  <p>
+                  <h4 class="text-base-content/80">Circlet</h4>
+                  <p class="text-sm">
                     {{ build.stats.find((s) => s.slot === "circlet")?.stat }}
                   </p>
                 </figcaption>
