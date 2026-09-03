@@ -68,16 +68,29 @@
         </figure>
 
         <div class="flex flex-1 flex-col items-center md:items-end">
-          <div class="flex items-center gap-3">
-            <div class="h-9 w-1 rounded-xl bg-white"></div>
-            <h2>Voice Actors</h2>
+          <!-- Section heading -->
+          <div class="mb-4 flex items-center gap-3">
+            <div class="h-9 w-1 rounded-full bg-white"></div>
+            <h2 class="text-lg font-semibold text-white">Voice Actors</h2>
           </div>
 
-          <div class="flex flex-col justify-around text-sm">
-            <p>VOICE ACTOR PLACEHOLDER</p>
-            <p>VOICE ACTOR PLACEHOLDER</p>
-            <p>VOICE ACTOR PLACEHOLDER</p>
-            <p>VOICE ACTOR PLACEHOLDER</p>
+          <!-- Voice actors -->
+          <div class="flex w-full max-w-xs flex-col gap-2">
+            <div
+              v-for="voiceActor in sortedVoiceActors"
+              :key="voiceActor.id"
+              class="flex items-center justify-between rounded-lg bg-white/25 px-4 py-2.5 transition-colors hover:bg-white/10"
+            >
+              <span
+                class="w-10 text-sm font-bold uppercase tracking-wide text-white/60"
+              >
+                {{ voiceActor.language }}
+              </span>
+
+              <span class="text-sm font-medium text-white">
+                {{ voiceActor.voice_actor_id.name }}
+              </span>
+            </div>
           </div>
         </div>
       </section>
@@ -314,7 +327,7 @@
         </div>
 
         <!-- Teams -->
-        <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
+        <div class="space-y-8">
           <div
             v-for="team in character.teams"
             :key="team.id"
@@ -438,6 +451,7 @@ const visionColors = {
 };
 
 const usageOrder = ["character_ascension", "character_talent"];
+const languageOrder = ["EN", "JP", "CN", "KR"];
 
 const {
   data: character,
@@ -454,13 +468,14 @@ const {
     weapon_type:weapon_type_id(*), 
     weapons:character_weapon(*, weapon:weapon_id(*)),
     materials:character_material(id, material:material_id(*), usage_type, amount),
-    teams(*, members:team_character(*, character:character_id(id, name, rarity, img_url)))
+    teams(*, members:team_character(*, character:character_id(id, name, rarity, img_url))),
+    voice_actors:character_voice_actor(*, voice_actor_id(*))
     `,
     )
     .eq("id", param_id)
     .single();
   if (error) throw error;
-  // console.log(data);
+  console.log(data);
 
   return data;
 });
@@ -519,5 +534,12 @@ const groupedMaterials = computed(() => {
       });
     return acc;
   }, {});
+});
+
+const sortedVoiceActors = computed(() => {
+  return [...character.value.voice_actors].sort(
+    (a, b) =>
+      languageOrder.indexOf(a.language) - languageOrder.indexOf(b.language),
+  );
 });
 </script>
