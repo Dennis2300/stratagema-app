@@ -35,7 +35,8 @@
       </div>
       <NuxtLink to="/" class="btn btn-ghost text-xl">STRATAGEMA</NuxtLink>
     </div>
-    <div class="navbar-center hidden lg:flex">
+    <div class="navbar-center"></div>
+    <div class="navbar-end hidden lg:flex">
       <ul class="menu menu-horizontal px-1">
         <li>
           <NuxtLink to="/characters" class="uppercase">characters</NuxtLink>
@@ -47,11 +48,6 @@
           <NuxtLink to="/artifacts" class="uppercase">artifacts</NuxtLink>
         </li>
       </ul>
-    </div>
-    <div class="navbar-end">
-      <NuxtLink :to="user ? '/dashboard' : '/login'" class="btn">
-        {{ user ? "Dashboard" : "Login" }}
-      </NuxtLink>
     </div>
   </nav>
 </template>

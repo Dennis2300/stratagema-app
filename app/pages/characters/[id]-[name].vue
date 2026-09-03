@@ -228,45 +228,45 @@
           <div v-for="build in builds" :key="build.id">
             <h3 class="text-info">{{ character.name }} {{ build.title }}</h3>
             <div
-              class="flex flex-wrap md:justify-around items-center py-6 bg-base-100 my-2 border border-base-content/80 rounded-lg"
+              class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 my-4"
               v-for="a in build.artifacts"
               :key="a.artifact.id"
             >
-              <figure class="flex items-center">
+              <figure class="flex items-center bg-base-100 p-4 rounded-lg">
                 <img class="w-24 h-24" :src="a.artifact.sands_img_url" alt="" />
                 <figcaption>
-                  <h4 class="text-base-content/80">Sands</h4>
-                  <p class="text-sm">
+                  <p class="text-base-content/80">Sands</p>
+                  <h4 class="text-primary/95">
                     {{ build.stats.find((s) => s.slot === "sands")?.stat }}
-                  </p>
+                  </h4>
                 </figcaption>
               </figure>
 
-              <figure class="flex items-center">
+              <figure class="flex items-center bg-base-100 p-4 rounded-lg">
                 <img
                   class="w-24 h-24"
                   :src="a.artifact.goblet_img_url"
                   alt=""
                 />
                 <figcaption>
-                  <h4 class="text-base-content/80">Goblet</h4>
-                  <p class="text-sm">
+                  <p class="text-base-content/80">Goblet</p>
+                  <h4 class="text-primary/95">
                     {{ build.stats.find((s) => s.slot === "goblet")?.stat }}
-                  </p>
+                  </h4>
                 </figcaption>
               </figure>
 
-              <figure class="flex items-center">
+              <figure class="flex items-center bg-base-100 p-4 rounded-lg">
                 <img
                   class="w-24 h-24"
                   :src="a.artifact.circlet_img_url"
                   alt=""
                 />
                 <figcaption>
-                  <h4 class="text-base-content/80">Circlet</h4>
-                  <p class="text-sm">
+                  <p class="text-base-content/80">Circlet</p>
+                  <h4 class="text-primary/95">
                     {{ build.stats.find((s) => s.slot === "circlet")?.stat }}
-                  </p>
+                  </h4>
                 </figcaption>
               </figure>
             </div>
@@ -275,13 +275,13 @@
               <h3 class="text-info my-3">Substats</h3>
               <div class="flex flex-wrap gap-4">
                 <span
-                  class="px-4 py-2 bg-base-100 border border-base-content/80 rounded-lg"
+                  class="px-4 py-2 bg-base-100 rounded-lg"
                   v-for="sub in build.stats
                     .filter((s) => s.slot === 'substat')
                     .sort((a, b) => a.rank - b.rank)"
                   :key="sub.id"
                 >
-                  {{ sub.stat }} (#{{ sub.rank }})
+                  #{{ sub.rank }} {{ sub.stat }}
                 </span>
               </div>
             </div>
@@ -290,6 +290,9 @@
               {{ build.details }}
             </div>
           </div>
+        </div>
+        <div v-else>
+          <p>No Builds</p>
         </div>
       </section>
 
@@ -410,20 +413,6 @@
               </figure>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section
-        class="w-full bg-base-300/66 p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
-      >
-        <span
-          class="block text-sm font-medium uppercase tracking-wide text-white/40 pl-4"
-        >
-          Recommended Priorities for {{ character.name }}
-        </span>
-        <div class="flex items-center gap-3 mb-4">
-          <div class="w-1 h-9 bg-white rounded-xl"></div>
-          <h2>Talent Priorities</h2>
         </div>
       </section>
     </div>
