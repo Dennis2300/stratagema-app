@@ -19,7 +19,6 @@ export default defineNuxtConfig({
         "/weapons",
         "/weapons/**",
         "/artifacts",
-        "/login",
       ],
     },
   },

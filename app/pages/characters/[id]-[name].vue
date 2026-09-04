@@ -475,7 +475,7 @@ const {
     .eq("id", param_id)
     .single();
   if (error) throw error;
-  console.log(data);
+  // console.log(data);
 
   return data;
 });
