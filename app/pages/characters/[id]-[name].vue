@@ -299,9 +299,7 @@
               </div>
             </div>
             <div class="divider"></div>
-            <div class="text-primary/80">
-              {{ build.details }}
-            </div>
+            <MarkdownRender :text="build.details" />
           </div>
         </div>
         <div v-else>
@@ -435,6 +433,8 @@
 </template>
 
 <script setup>
+import MarkdownRender from "~/components/MarkdownRender.vue";
+
 const supabase = useSupabaseClient();
 const route = useRoute();
 
