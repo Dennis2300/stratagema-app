@@ -13,7 +13,7 @@
   <article v-else-if="character" class="relative min-h-[125vh]">
     <figure class="absolute inset-0">
       <img
-        class="w-full object-cover opacity-50"
+        class="w-full object-cover"
         :src="character.splash_art_url"
         :alt="character.name"
       />
@@ -112,34 +112,52 @@
           class="grid grid-cols-2 gap-px overflow-hidden rounded-lg bg-base-content/10"
         >
           <div class="bg-base-300/80 p-5">
-            <span class="label">Rarity</span>
+            <span
+              class="w-10 text-sm font-bold uppercase tracking-wide text-white/60"
+              >Rarity</span
+            >
             <div class="text-lg text-yellow-400">
               <span v-for="star in character.rarity" :key="star">★</span>
             </div>
           </div>
 
           <div class="bg-base-300/80 p-5">
-            <span class="label">Signature Dish</span>
+            <span
+              class="w-10 text-sm font-bold uppercase tracking-wide text-white/60"
+              >Signature Dish</span
+            >
             <p class="text-lg font-semibold">Signature Dish</p>
           </div>
 
           <div class="bg-base-300/80 p-5">
-            <span class="label">Constellation</span>
+            <span
+              class="w-10 text-sm font-bold uppercase tracking-wide text-white/60"
+              >Constellation</span
+            >
             <p class="text-lg font-semibold">{{ character.constellation }}</p>
           </div>
 
           <div class="bg-base-300/80 p-5">
-            <span class="label">Birthday</span>
+            <span
+              class="w-10 text-sm font-bold uppercase tracking-wide text-white/60"
+              >Birthday</span
+            >
             <p class="text-lg font-semibold">{{ character.birthday }}</p>
           </div>
 
           <div class="bg-base-300/80 p-5">
-            <span class="label">Team Role</span>
+            <span
+              class="w-10 text-sm font-bold uppercase tracking-wide text-white/60"
+              >Team Role</span
+            >
             <p class="text-lg font-semibold uppercase">{{ character.role }}</p>
           </div>
 
           <div class="bg-base-300/80 p-5">
-            <span class="label">Release Date</span>
+            <span
+              class="w-10 text-sm font-bold uppercase tracking-wide text-white/60"
+              >Release Date</span
+            >
             <p class="text-lg font-semibold">{{ character.release_date }}</p>
           </div>
         </div>
@@ -310,7 +328,6 @@
       <section
         class="w-full bg-base-300/66 p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
       >
-        <!-- Header -->
         <div class="mb-5">
           <span
             class="text-xs font-medium uppercase tracking-widest text-primary/60"
@@ -324,21 +341,17 @@
           </div>
         </div>
 
-        <!-- Teams -->
         <div class="space-y-8">
           <div
-            v-for="team in character.teams"
+            v-for="team in sortTeams(character.teams)"
             :key="team.id"
             class="bg-base-300 h-fit p-4 border-2 border-base-content/10 rounded-lg hover:bg-zinc-700/50 transition duration-200"
           >
-            <!-- Team name -->
             <h3 class="mb-3 font-medium text-base-content">
               {{ team.name }}
             </h3>
 
-            <!-- Members -->
             <div class="flex items-center gap-2">
-              <!-- Primary Member -->
               <img
                 class="h-16 w-16 mask mask-squircle"
                 :class="{
@@ -348,28 +361,25 @@
                 :src="character.img_url"
                 :alt="character.name"
               />
-
               <div class="h-8 w-px bg-base-content/50"></div>
-
-              <!-- Team Members -->
-              <img
-                v-for="member in team.members"
+              <div
+                v-for="member in sortedMembers(team.members)"
                 :key="member.id"
-                class="h-16 w-16 mask mask-squircle"
-                :class="{
-                  'rarity-5': member.character.rarity === 5,
-                  'rarity-4': member.character.rarity === 4,
-                }"
-                :src="member.character.img_url"
-                :alt="member.character.name"
-              />
+              >
+                <img
+                  class="h-16 w-16 mask mask-squircle"
+                  :class="{
+                    'rarity-5': member.character.rarity === 5,
+                    'rarity-4': member.character.rarity === 4,
+                  }"
+                  :src="member.character.img_url"
+                  :alt="member.character.name"
+                />
+              </div>
             </div>
 
-            <!-- Details -->
             <div class="mt-4 border-t border-base-content/10 pt-3">
-              <p class="text-sm leading-relaxed text-primary/75">
-                {{ team.details }}
-              </p>
+              <MarkdownRender v-if="team.details" :text="team.details" />
             </div>
           </div>
         </div>
@@ -499,6 +509,14 @@ const {
   if (error) throw error;
   return data;
 });
+
+function sortedMembers(members) {
+  return [...members].sort((a, b) => a.slot - b.slot);
+}
+
+function sortTeams(teams) {
+  return [...teams].sort((a, b) => a.id - b.id);
+}
 
 const sortedWeapons = computed(() => {
   return [...character.value.weapons].sort((a, b) => a.rank - b.rank);

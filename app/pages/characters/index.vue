@@ -41,22 +41,29 @@
           />
           <figcaption class="flex flex-col justify-center">
             <h3 class="w-full">{{ character.name }}</h3>
-            <div class="leading-none text-yellow-600">
+            <div class="leading-none text-yellow-600 my-1">
               <span v-for="n in character.rarity">★</span>
             </div>
             <div class="w-full flex items-center gap-2 mt-2">
-              <div class="text-xs bg-secondary p-2 rounded-lg">
+              <span
+                v-if="character?.weapon_type_id?.name"
+                class="text-xs bg-secondary p-2 rounded-lg"
+              >
                 {{ character?.weapon_type_id?.name }}
-              </div>
-              <div class="text-xs bg-accent p-2 rounded-md truncate max-w-28">
+              </span>
+              <span
+                v-if="character?.main_stat"
+                class="text-xs bg-accent p-2 rounded-md truncate max-w-28"
+              >
                 {{ character?.main_stat }}
-              </div>
-              <div
+              </span>
+              <span
+                v-if="character?.role"
                 class="text-xs p-2 rounded-lg truncate max-w-24"
                 :class="roleColors[character?.role] || 'bg-accent'"
               >
                 {{ character?.role }}
-              </div>
+              </span>
             </div>
           </figcaption>
           <img
@@ -113,7 +120,7 @@
                 >NEW!</span
               >
             </h3>
-            <div class="leading-none text-yellow-600">
+            <div class="leading-none text-yellow-600 mt-1">
               <span v-for="n in character.rarity">★</span>
             </div>
             <div class="w-full flex items-center gap-2 mt-2">
@@ -166,7 +173,7 @@ const {
     .schema("genshin_impact")
     .from("characters")
     .select("*, vision_id(*), weapon_type_id(*)")
-    .order("id", { ascending: false });
+    .order("release_date", { ascending: false });
 
   if (error) throw error;
   return data;
