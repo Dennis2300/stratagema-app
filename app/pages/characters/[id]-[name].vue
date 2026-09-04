@@ -70,8 +70,8 @@
         <div class="flex flex-1 flex-col items-center md:items-end">
           <!-- Section heading -->
           <div class="mb-4 flex items-center gap-3">
-            <div class="h-9 w-1 rounded-full bg-white"></div>
-            <h2 class="text-lg font-semibold text-white">Voice Actors</h2>
+            <div class="h-6 w-1 rounded-full bg-white"></div>
+            <h3 class="font-semibold text-white">Voice Actors</h3>
           </div>
 
           <!-- Voice actors -->
@@ -79,7 +79,7 @@
             <div
               v-for="voiceActor in sortedVoiceActors"
               :key="voiceActor.id"
-              class="flex items-center justify-between rounded-lg bg-white/25 px-4 py-2.5 transition-colors hover:bg-white/10"
+              class="flex items-center justify-between rounded-lg bg-base-300 px-4 py-2.5 transition-colors hover:bg-white/10"
             >
               <span
                 class="w-10 text-sm font-bold uppercase tracking-wide text-white/60"
@@ -134,7 +134,7 @@
           </div>
 
           <div class="bg-base-300/80 p-5">
-            <span class="label">Combat Role</span>
+            <span class="label">Team Role</span>
             <p class="text-lg font-semibold uppercase">{{ character.role }}</p>
           </div>
 
