@@ -124,10 +124,10 @@
               <span v-for="n in character.rarity">★</span>
             </div>
             <div class="w-full flex items-center gap-2 mt-2">
-              <span class="text-xs bg-secondary p-2 rounded-lg">
+              <span class="text-xs bg-zinc-700 p-2 rounded-lg">
                 {{ character?.weapon_type_id?.name }}
               </span>
-              <span class="text-xs bg-accent p-2 rounded-lg truncate max-w-28">
+              <span class="text-xs bg-zinc-700 p-2 rounded-lg truncate max-w-28">
                 {{ character?.main_stat }}
               </span>
               <span
@@ -157,12 +157,13 @@
 const supabase = useSupabaseClient();
 
 const roleColors = {
-  DPS: "bg-[#5c3038]",
-  "Sub-DPS": "bg-[#5c4930]",
-  Healer: "bg-[#315044]",
-  Support: "bg-[#304653]",
-  Shielder: "bg-[#443653]",
+  DPS: "bg-[#b84a4a]",
+  "Sub-DPS": "bg-[#b8753f]",
+  Healer: "bg-[#3f8f83]",
+  Support: "bg-[#71805b]",
+  Shielder: "bg-[#665477]",
 };
+
 
 const {
   data: characters,
