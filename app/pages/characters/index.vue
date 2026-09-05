@@ -47,7 +47,7 @@
             <div class="w-full flex items-center gap-2 mt-2">
               <span
                 v-if="character?.weapon_type_id?.name"
-                class="text-xs bg-secondary p-2 rounded-lg"
+                class="text-xs bg-accent p-2 rounded-md truncate max-w-28"
               >
                 {{ character?.weapon_type_id?.name }}
               </span>
@@ -59,8 +59,7 @@
               </span>
               <span
                 v-if="character?.role"
-                class="text-xs p-2 rounded-lg truncate max-w-24"
-                :class="roleColors[character?.role] || 'bg-accent'"
+                class="text-xs bg-accent p-2 rounded-md truncate max-w-28"
               >
                 {{ character?.role }}
               </span>
@@ -79,10 +78,31 @@
     </div>
   </article>
 
-  <article>
-    <div class="my-6 flex items-center gap-3">
-      <div class="h-7 w-1 rounded-full bg-primary"></div>
-      <h2 class="text-2xl font-bold">Playable Characters</h2>
+  <article class="min-h-screen">
+    <div class="my-6">
+      <div class="flex items-center gap-3">
+        <div class="h-7 w-1 rounded-full bg-primary"></div>
+        <h2 class="text-2xl font-bold">Playable Characters</h2>
+      </div>
+      <label class="input mt-3">
+        <svg
+          class="h-[1em] opacity-50"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <g
+            stroke-linejoin="round"
+            stroke-linecap="round"
+            stroke-width="2.5"
+            fill="none"
+            stroke="currentColor"
+          >
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+          </g>
+        </svg>
+        <input type="search" required placeholder="Search" />
+      </label>
     </div>
 
     <div v-if="pending" class="text-center py-6">
@@ -98,10 +118,10 @@
       class="grid grid-cols-2 md:grid-cols-3 gap-4"
     >
       <NuxtLink
-        v-for="character in playableCharacters"
+        v-for="character in filteredPlayableCharacters"
         :key="character.id"
         :to="`/characters/${character.id}-${slugify(character.name)}`"
-        class="relative bg-base-300 p-4 rounded-xl"
+        class="relative bg-base-300 p-4 rounded-xl hover:bg-zinc-800 transition duration-300"
       >
         <figure class="relative flex gap-3">
           <img
@@ -124,15 +144,18 @@
               <span v-for="n in character.rarity">★</span>
             </div>
             <div class="w-full flex items-center gap-2 mt-2">
-              <span class="text-xs bg-zinc-700 p-2 rounded-lg">
+              <span
+                class="text-xs bg-zinc-700 p-2 rounded-md truncate max-w-28"
+              >
                 {{ character?.weapon_type_id?.name }}
               </span>
-              <span class="text-xs bg-zinc-700 p-2 rounded-lg truncate max-w-28">
+              <span
+                class="text-xs bg-zinc-700 p-2 rounded-lg truncate max-w-28"
+              >
                 {{ character?.main_stat }}
               </span>
               <span
-                class="text-xs p-2 rounded-lg truncate max-w-24"
-                :class="roleColors[character?.role] || 'bg-accent'"
+                class="text-xs bg-zinc-700 p-2 rounded-md truncate max-w-28"
               >
                 {{ character?.role }}
               </span>
@@ -149,21 +172,14 @@
         </p>
       </NuxtLink>
     </div>
+
     <div v-else>Empty Fallback</div>
   </article>
 </template>
 
 <script setup>
 const supabase = useSupabaseClient();
-
-const roleColors = {
-  DPS: "bg-[#b84a4a]",
-  "Sub-DPS": "bg-[#b8753f]",
-  Healer: "bg-[#3f8f83]",
-  Support: "bg-[#71805b]",
-  Shielder: "bg-[#665477]",
-};
-
+const search = ref("");
 
 const {
   data: characters,
@@ -187,4 +203,14 @@ const upcomingCharacters = computed(() =>
 const playableCharacters = computed(() =>
   (characters.value ?? []).filter((character) => !character.is_upcoming),
 );
+
+const filteredPlayableCharacters = computed(() => {
+  const query = search.value.toLowerCase().trim();
+
+  if (!query) return playableCharacters.value;
+
+  return playableCharacters.value.filter((character) =>
+    character.name.toLowerCase().startsWith(query),
+  );
+});
 </script>
