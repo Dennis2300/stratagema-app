@@ -31,6 +31,9 @@
           <li>
             <NuxtLink to="/artifacts" class="uppercase">artifacts</NuxtLink>
           </li>
+          <li>
+            <NuxtLink to="/about" class="uppercase">About</NuxtLink>
+          </li>
         </ul>
       </div>
       <NuxtLink to="/" class="btn btn-ghost text-xl">STRATAGEMA</NuxtLink>
@@ -47,11 +50,10 @@
         <li>
           <NuxtLink to="/artifacts" class="uppercase">artifacts</NuxtLink>
         </li>
+        <li>
+          <NuxtLink to="/about" class="uppercase">About</NuxtLink>
+        </li>
       </ul>
     </div>
   </nav>
 </template>
-
-<script setup>
-const user = useSupabaseUser();
-</script>
