@@ -102,7 +102,7 @@
             <path d="m21 21-4.3-4.3"></path>
           </g>
         </svg>
-        <input v-model="search" type="search" required placeholder="Search" />
+        <input v-model="search" type="search" required placeholder="Search..." />
       </label>
     </div>
 
