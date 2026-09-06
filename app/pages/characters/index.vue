@@ -24,10 +24,11 @@
       <h2 class="text-2xl font-bold">Upcoming Character(s)</h2>
     </div>
     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-      <div
+      <NuxtLink
         v-for="character in upcomingCharacters"
         :key="character.id"
-        class="relative bg-base-300 p-4 rounded-xl"
+        :to="`/characters/${character.id}-${slugify(character.name)}`"
+        class="relative bg-base-300 p-4 rounded-xl hover:bg-zinc-800 transition duration-300"
       >
         <figure class="relative flex gap-3">
           <img
@@ -74,7 +75,7 @@
         <p class="absolute top-2 right-3 text-xs text-white/25">
           #{{ character.id }}
         </p>
-      </div>
+      </NuxtLink>
     </div>
   </article>
 
@@ -101,7 +102,7 @@
             <path d="m21 21-4.3-4.3"></path>
           </g>
         </svg>
-        <input type="search" required placeholder="Search" />
+        <input v-model="search" type="search" required placeholder="Search" />
       </label>
     </div>
 
@@ -132,6 +133,7 @@
             }"
             :src="character.img_url"
             :alt="character.name"
+            loading="lazy"
           />
           <figcaption class="flex flex-col justify-center">
             <h3 class="w-full">
