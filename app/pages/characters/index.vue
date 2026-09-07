@@ -129,7 +129,7 @@
               />
             </div>
             <figcaption>
-              <h4 class="truncate max-w-32">{{ character.name }}</h4>
+              <h4 class="truncate max-w-36">{{ character.name }}</h4>
               <div class="leading-none text-yellow-600">
                 <span v-for="n in character.rarity" :key="n">★</span>
               </div>
@@ -138,7 +138,7 @@
           <img
             class="h-24 w-auto opacity-50 group-hover:opacity-100 transition duration-300"
             :src="character.splash_art_url"
-            alt=""
+            :alt="character.name"
           />
         </figure>
 
@@ -156,8 +156,8 @@
 
         <span
           v-if="character.is_new"
-          class="absolute -top-4 -left-2 badge badge-info"
-          >NEW!</span
+          class="absolute -top-3 -left-3 badge badge-info badge-sm"
+          >New!</span
         >
       </NuxtLink>
     </div>
