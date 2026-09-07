@@ -23,58 +23,38 @@
       <div class="h-7 w-1 rounded-full bg-primary"></div>
       <h2 class="text-2xl font-bold">Upcoming Character(s)</h2>
     </div>
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 px-2">
       <NuxtLink
         v-for="character in upcomingCharacters"
         :key="character.id"
         :to="`/characters/${character.id}-${slugify(character.name)}`"
-        class="relative bg-base-300 p-4 rounded-xl hover:bg-zinc-800 transition duration-300"
+        class="relative group bg-base-300 p-4 rounded-xl hover:bg-zinc-800 hover:-translate-y-0.5 transition duration-300"
       >
-        <figure class="relative flex gap-3">
-          <img
-            class="w-24 h-24 rounded-2xl"
-            :class="{
-              'rarity-5': character.rarity === 5,
-              'rarity-4': character.rarity === 4,
-            }"
-            :src="character.img_url"
-            :alt="character.name"
-          />
-          <figcaption class="flex flex-col justify-center">
-            <h3 class="w-full">{{ character.name }}</h3>
-            <div class="leading-none text-yellow-600 my-1">
-              <span v-for="n in character.rarity">★</span>
-            </div>
-            <div class="w-full flex items-center gap-2 mt-2">
-              <span
-                v-if="character?.weapon_type_id?.name"
-                class="text-xs bg-accent p-2 rounded-md truncate max-w-28"
-              >
-                {{ character?.weapon_type_id?.name }}
-              </span>
-              <span
-                v-if="character?.main_stat"
-                class="text-xs bg-accent p-2 rounded-md truncate max-w-28"
-              >
-                {{ character?.main_stat }}
-              </span>
-              <span
-                v-if="character?.role"
-                class="text-xs bg-accent p-2 rounded-md truncate max-w-28"
-              >
-                {{ character?.role }}
-              </span>
+        <figure class="flex items-center gap-3">
+          <div class="relative w-24 h-24 shrink-0">
+            <img
+              class="w-full h-full rounded-2xl object-cover"
+              :class="{
+                'rarity-5': character.rarity === 5,
+                'rarity-4': character.rarity === 4,
+              }"
+              :src="character.img_url"
+              :alt="character.name"
+              loading="lazy"
+            />
+            <img
+              class="absolute -top-2.5 -right-2.5 w-8 h-8 bg-gray-800 border border-white/33 rounded-full"
+              :src="character.vision_id.img_url"
+              alt=""
+            />
+          </div>
+          <figcaption>
+            <h4 class="truncate max-w-32">{{ character.name }}</h4>
+            <div class="leading-none text-yellow-600">
+              <span v-for="n in character.rarity" :key="n">★</span>
             </div>
           </figcaption>
-          <img
-            class="absolute -top-2.5 -left-2.5 w-8 h-8 bg-gray-800 border border-white/33 rounded-full"
-            :src="character.vision_id.img_url"
-            alt=""
-          />
         </figure>
-        <p class="absolute top-2 right-3 text-xs text-white/25">
-          #{{ character.id }}
-        </p>
       </NuxtLink>
     </div>
   </article>
@@ -102,7 +82,12 @@
             <path d="m21 21-4.3-4.3"></path>
           </g>
         </svg>
-        <input v-model="search" type="search" required placeholder="Search..." />
+        <input
+          v-model="search"
+          type="search"
+          required
+          placeholder="Search..."
+        />
       </label>
     </div>
 
@@ -122,56 +107,58 @@
         v-for="character in filteredPlayableCharacters"
         :key="character.id"
         :to="`/characters/${character.id}-${slugify(character.name)}`"
-        class="relative bg-base-300 p-4 rounded-xl hover:bg-zinc-800 transition duration-300"
+        class="relative group bg-base-300 p-4 rounded-xl hover:bg-zinc-800 hover:-translate-y-0.5 transition duration-300"
       >
-        <figure class="relative flex gap-3">
-          <img
-            class="w-24 h-24 rounded-2xl"
-            :class="{
-              'rarity-5': character.rarity === 5,
-              'rarity-4': character.rarity === 4,
-            }"
-            :src="character.img_url"
-            :alt="character.name"
-            loading="lazy"
-          />
-          <figcaption class="flex flex-col justify-center">
-            <h3 class="w-full">
-              {{ character.name }}
-              <span v-if="character.is_new" class="badge badge-xs badge-info"
-                >NEW!</span
-              >
-            </h3>
-            <div class="leading-none text-yellow-600 mt-1">
-              <span v-for="n in character.rarity">★</span>
+        <figure class="flex justify-between">
+          <div class="flex items-center gap-3">
+            <div class="relative w-24 h-24 shrink-0">
+              <img
+                class="w-full h-full rounded-2xl object-cover"
+                :class="{
+                  'rarity-5': character.rarity === 5,
+                  'rarity-4': character.rarity === 4,
+                }"
+                :src="character.img_url"
+                :alt="character.name"
+                loading="lazy"
+              />
+              <img
+                class="absolute -top-2.5 -right-2.5 w-8 h-8 bg-gray-800 border border-white/33 rounded-full"
+                :src="character.vision_id.img_url"
+                alt=""
+              />
             </div>
-            <div class="w-full flex items-center gap-2 mt-2">
-              <span
-                class="text-xs bg-zinc-700 p-2 rounded-md truncate max-w-28"
-              >
-                {{ character?.weapon_type_id?.name }}
-              </span>
-              <span
-                class="text-xs bg-zinc-700 p-2 rounded-lg truncate max-w-20 md:max-w-28"
-              >
-                {{ character?.main_stat }}
-              </span>
-              <span
-                class="text-xs bg-zinc-700 p-2 rounded-md truncate max-w-28"
-              >
-                {{ character?.role }}
-              </span>
-            </div>
-          </figcaption>
+            <figcaption>
+              <h4 class="truncate max-w-32">{{ character.name }}</h4>
+              <div class="leading-none text-yellow-600">
+                <span v-for="n in character.rarity" :key="n">★</span>
+              </div>
+            </figcaption>
+          </div>
           <img
-            class="absolute -top-2.5 -left-2.5 w-8 h-8 bg-gray-800 border border-white/33 rounded-full"
-            :src="character.vision_id.img_url"
+            class="h-24 w-auto opacity-50 group-hover:opacity-100 transition duration-300"
+            :src="character.splash_art_url"
             alt=""
           />
         </figure>
-        <p class="absolute top-2 right-3 text-xs text-white/25">
-          #{{ character.id }}
-        </p>
+
+        <div class="grid grid-cols-3 gap-1 mt-3 text-center text-sm">
+          <span class="truncate bg-zinc-700 rounded-md py-1 px-1">{{
+            character?.weapon_type_id?.name
+          }}</span>
+          <span class="truncate bg-zinc-700 rounded-md py-1 px-2">{{
+            character?.main_stat
+          }}</span>
+          <span class="truncate bg-zinc-700 rounded-md py-1 px-1">{{
+            character?.role
+          }}</span>
+        </div>
+
+        <span
+          v-if="character.is_new"
+          class="absolute -top-3 -left-3 badge badge-info"
+          >NEW!</span
+        >
       </NuxtLink>
     </div>
 
