@@ -156,7 +156,7 @@
 
         <span
           v-if="character.is_new"
-          class="absolute -top-3 -left-3 badge badge-info"
+          class="absolute -top-4 -left-2 badge badge-info"
           >NEW!</span
         >
       </NuxtLink>
