@@ -116,7 +116,7 @@
 
     <div
       v-else-if="characters.length"
-      class="grid grid-cols-2 md:grid-cols-3 gap-4"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-2"
     >
       <NuxtLink
         v-for="character in filteredPlayableCharacters"
@@ -152,7 +152,7 @@
                 {{ character?.weapon_type_id?.name }}
               </span>
               <span
-                class="text-xs bg-zinc-700 p-2 rounded-lg truncate max-w-28"
+                class="text-xs bg-zinc-700 p-2 rounded-lg truncate max-w-20 md:max-w-28"
               >
                 {{ character?.main_stat }}
               </span>
