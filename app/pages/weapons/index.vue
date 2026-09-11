@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header class="px-2 md:px-0">
     <figure
       class="relative w-full h-48 overflow-hidden rounded-2xl border-2 border-white/25"
     >
@@ -17,108 +17,176 @@
       </div>
     </figure>
   </header>
+
+  <div class="my-4 flex flex-col md:flex-row justify-center items-center gap-4">
+    <select class="select">
+      <option selected disabled>Rarity</option>
+    </select>
+    <select class="select">
+      <option selected disabled>Type</option>
+    </select>
+    <select class="select">
+      <option selected disabled>Attribute</option>
+    </select>
+  </div>
+
   <article>
-    <div v-if="pending" class="text-center py-6">
-      <span class="loading loading-spinner loading-xl"></span>
+    <div
+      v-if="weaponsLoading"
+      class="flex justify-center items-center h-50 md:h-100"
+    >
+      <span class="loading loading-xl scale-175"></span>
     </div>
 
-    <div v-else-if="error">
-      <p>{{ error.message }}</p>
+    <div
+      v-else-if="weaponsError"
+      class="flex justify-center items-center h-50 md:h-100"
+    >
+      <p>{{ weaponsError }}</p>
     </div>
 
-    <table class="table table-zebra w-full">
-      <thead>
-        <tr class="text-base">
-          <th class="w-20"></th>
-          <th class="min-w-48">Name</th>
-          <th class="w-32">Type</th>
-          <th class="w-32">Stat</th>
-          <th class="w-32">Stat Value</th>
-          <th class="min-w-64">Description</th>
-          <th class="w-28"></th>
-        </tr>
-      </thead>
+    <div v-else>
+      <div class="overflow-x-auto">
+        <table class="table table-zebra">
+          <!-- head -->
+          <thead>
+            <tr>
+              <th></th>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Base ATK</th>
+              <th>Stat</th>
+              <th>DETAILS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="weapon in weapons" :key="weapon.id">
+              <td class="w-24">
+                <img
+                  :src="weapon.img_url"
+                  :alt="weapon.name"
+                  class="w-full h-auto mask mask-squircle"
+                  :class="{
+                    'rarity-5': weapon.rarity === 5,
+                    'rarity-4': weapon.rarity === 4,
+                    'rarity-3': weapon.rarity === 3,
+                  }"
+                />
+              </td>
+              <td class="w-100">
+                <h4 class="truncate w-100">{{ weapon.name }}</h4>
+                <span
+                  v-for="n in weapon.rarity"
+                  :key="n"
+                  class="text-yellow-500 leading-none"
+                  >★</span
+                >
+              </td>
+              <td>
+                {{ weapon.weapon_type_id.name }}
+              </td>
+              <td>
+                ATK:
+                <span class="text-base-content">{{ weapon.base_atk }}</span>
+              </td>
+              <td>
+                {{ weapon.stat }}:
+                <span class="text-base-content">{{ weapon.stat_value }}</span>
+              </td>
+              <td>
+                <button class="btn btn-sm btn-accent">Details</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-      <tbody>
-        <tr v-for="weapon in weapons" :key="weapon.id">
-          <td>
-            <figure class="size-16">
-              <img
-                :src="weapon.img_url"
-                :alt="weapon.name"
-                class="size-16 mask mask-squircle object-cover"
-                :class="{
-                  'rarity-5': weapon.rarity === 5,
-                  'rarity-4': weapon.rarity === 4,
-                  'rarity-3': weapon.rarity === 3,
-                }"
-              />
-            </figure>
-          </td>
+      <div v-if="hasMore" class="flex justify-center items-center mt-6">
+        <button
+          :disabled="loadingMore"
+          @click="loadMoreWeapons"
+          class="btn btn-info"
+        >
+          <span v-if="loadingMore" class="loading loading-xs"></span>
+          {{ loadingMore ? "Loading..." : "Load more" }}
+        </button>
+      </div>
 
-          <td>
-            <div class="flex flex-col gap-1">
-              <p class="max-w-64 truncate text-lg font-medium">
-                {{ weapon.name }}
-              </p>
-
-              <div class="leading-none text-yellow-500">
-                <span v-for="n in weapon.rarity" :key="n">★</span>
-              </div>
-            </div>
-          </td>
-
-          <td>
-            <span class="whitespace-nowrap">
-              {{ weapon.weapon_type_id.name }}
-            </span>
-          </td>
-
-          <td>
-            <span class="whitespace-nowrap">
-              {{ weapon.stat }}
-            </span>
-          </td>
-
-          <td>
-            <span class="whitespace-nowrap font-medium">
-              {{ weapon.stat_value }}
-            </span>
-          </td>
-
-          <td>
-            <p class="max-w-64 truncate">
-              {{ weapon.description }}
-            </p>
-          </td>
-
-          <td class="text-right">
-            <NuxtLink
-              :to="`/weapons/${weapon.id}-${slugify(weapon.name)}`"
-              class="btn btn-xs btn-primary"
-            >
-              Details →
-            </NuxtLink>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+      <div v-else role="alert" class="alert alert-warning mt-6">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6 shrink-0 stroke-current"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+          />
+        </svg>
+        <span>You have reached the bottom. No more weapons.</span>
+      </div>
+    </div>
   </article>
 </template>
 
 <script setup>
 const supabase = useSupabaseClient();
 
-const {
-  data: weapons,
-  pending,
-  error,
-} = useAsyncData("weapons", async () => {
-  const { data, error } = await supabase
-    .schema("genshin_impact")
-    .from("weapons")
-    .select("*, weapon_type_id(*)");
-  if (error) throw error;
-  return data;
-});
+const pageSize = 10;
+const weapons = ref([]);
+const currentPage = ref(0);
+const totalCount = ref(0);
+const weaponsLoading = ref(false);
+const loadingMore = ref(false);
+const weaponsError = ref(null);
+
+async function fetchWeapons(page, { append = false } = {}) {
+  if (append) {
+    loadingMore.value = true;
+  } else {
+    weaponsLoading.value = true;
+  }
+  weaponsError.value = null;
+
+  const from = page * pageSize;
+  const to = from + pageSize - 1;
+
+  try {
+    const { data, error, count } = await supabase
+      .schema("genshin_impact")
+      .from("weapons")
+      .select("*, weapon_type_id(*)", { count: "exact" })
+      .order("name", { ascending: true })
+      .range(from, to);
+
+    if (error) throw error;
+
+    weapons.value = append ? [...weapons.value, ...data] : data;
+    totalCount.value = count;
+    currentPage.value = page;
+  } catch (error) {
+    weaponsError.value = error.message;
+  } finally {
+    weaponsLoading.value = false;
+    loadingMore.value = false;
+  }
+}
+
+function getFirstTenWeapons() {
+  return fetchWeapons(0);
+}
+
+function loadMoreWeapons() {
+  if (hasMore.value && !loadingMore.value) {
+    return fetchWeapons(currentPage.value + 1, { append: true });
+  }
+}
+
+const hasMore = computed(() => weapons.value.length < totalCount.value);
+
+// initial load
+getFirstTenWeapons();
 </script>
