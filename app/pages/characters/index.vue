@@ -110,7 +110,7 @@
         class="relative group bg-base-300 p-4 rounded-xl hover:bg-zinc-800 hover:-translate-y-0.5 transition duration-300"
       >
         <figure class="flex justify-between">
-          <div class="flex items-center gap-3">
+          <figure class="flex items-center gap-3">
             <div class="relative w-24 h-24 shrink-0">
               <img
                 class="w-full h-full rounded-2xl object-cover"
@@ -126,6 +126,7 @@
                 class="absolute -top-2.5 -right-2.5 w-8 h-8 bg-gray-800 border border-white/33 rounded-full"
                 :src="character.vision_id.img_url"
                 alt=""
+                loading="lazy"
               />
             </div>
             <figcaption>
@@ -134,11 +135,12 @@
                 <span v-for="n in character.rarity" :key="n">★</span>
               </div>
             </figcaption>
-          </div>
+          </figure>
           <img
             class="h-24 w-auto opacity-50 group-hover:opacity-100 transition duration-300"
             :src="character.splash_art_url"
             :alt="character.name"
+            loading="lazy"
           />
         </figure>
 
