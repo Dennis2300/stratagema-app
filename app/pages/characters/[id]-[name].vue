@@ -230,7 +230,7 @@
               </div>
             </div>
 
-            <p class="p-4 text-white/70">
+            <p v-if="w.details" class="p-4 text-white/70">
               {{ w.details }}
             </p>
           </div>
