@@ -333,7 +333,7 @@
       <section
         class="w-full bg-base-300/66 p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
       >
-        <div class="mb-5">
+        <div>
           <span
             class="text-xs font-medium uppercase tracking-widest text-primary/60"
           >
@@ -346,17 +346,19 @@
           </div>
         </div>
 
-        <div class="space-y-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
           <div
             v-for="team in sortTeams(character.teams)"
             :key="team.id"
-            class="bg-base-300 h-fit p-4 border-2 border-base-content/10 rounded-lg hover:bg-zinc-700/50 transition duration-200"
+            class="bg-base-300/80 p-4 border border-white/15 rounded-xl"
           >
-            <h3 class="mb-3 font-medium text-base-content">
-              {{ team.name }}
-            </h3>
+            <div class="flex justify-between items-center">
+              <h4 class="text-base-content">{{ team.name }}</h4>
+              <span class="text-white/15">#{{ team.id }}</span>
+            </div>
+            <div class="divider mt-0 mb-2"></div>
 
-            <div class="flex items-center gap-2">
+            <div class="flex justify-center items-center gap-4">
               <img
                 class="h-16 w-16 mask mask-squircle"
                 :class="{
@@ -367,9 +369,13 @@
                 :alt="character.name"
               />
               <div class="h-8 w-px bg-base-content/50"></div>
-              <div
+              <NuxtLink
                 v-for="member in sortedMembers(team.members)"
                 :key="member.id"
+                class="tooltip tooltip-bottom tooltip-primary hover:cursor-pointer"
+                :data-tip="member.character.name"
+                :to="`/characters/${member.character.id}-${slugify(member.character.name)}`"
+                target="_blank"
               >
                 <img
                   class="h-16 w-16 mask mask-squircle"
@@ -380,11 +386,7 @@
                   :src="member.character.img_url"
                   :alt="member.character.name"
                 />
-              </div>
-            </div>
-
-            <div class="mt-4 border-t border-base-content/10 pt-3">
-              <MarkdownRender v-if="team.details" :text="team.details" />
+              </NuxtLink>
             </div>
           </div>
         </div>
