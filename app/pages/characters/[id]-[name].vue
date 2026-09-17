@@ -238,7 +238,7 @@
       </section>
 
       <section
-        class="w-full min-h-64 bg-base-300/66 p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
+        class="w-full bg-base-300/66 p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
       >
         <span
           class="block text-sm font-medium uppercase tracking-wide text-white/40 pl-4"
@@ -255,69 +255,74 @@
         <div v-else-if="buildsError">
           <ErrorMessage :error="buildsError" />
         </div>
-        <div v-else-if="builds">
+        <div v-else-if="builds" class="space-y-6">
           <div v-for="build in builds" :key="build.id">
-            <h3 class="text-info">{{ character.name }} {{ build.title }}</h3>
-            <div
-              class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 my-4"
-              v-for="a in build.artifacts"
-              :key="a.artifact.id"
-            >
-              <figure class="flex items-center bg-base-100 p-4 rounded-lg">
-                <img class="w-24 h-24" :src="a.artifact.sands_img_url" alt="" />
-                <figcaption>
-                  <p class="text-base-content/80">Sands</p>
-                  <h4 class="text-primary/95">
-                    {{ build.stats.find((s) => s.slot === "sands")?.stat }}
-                  </h4>
-                </figcaption>
-              </figure>
-
-              <figure class="flex items-center bg-base-100 p-4 rounded-lg">
-                <img
-                  class="w-24 h-24"
-                  :src="a.artifact.goblet_img_url"
-                  alt=""
-                />
-                <figcaption>
-                  <p class="text-base-content/80">Goblet</p>
-                  <h4 class="text-primary/95">
-                    {{ build.stats.find((s) => s.slot === "goblet")?.stat }}
-                  </h4>
-                </figcaption>
-              </figure>
-
-              <figure class="flex items-center bg-base-100 p-4 rounded-lg">
-                <img
-                  class="w-24 h-24"
-                  :src="a.artifact.circlet_img_url"
-                  alt=""
-                />
-                <figcaption>
-                  <p class="text-base-content/80">Circlet</p>
-                  <h4 class="text-primary/95">
-                    {{ build.stats.find((s) => s.slot === "circlet")?.stat }}
-                  </h4>
-                </figcaption>
-              </figure>
-            </div>
-
-            <div>
-              <h3 class="text-info my-3">Substats</h3>
-              <div class="flex flex-wrap gap-4">
-                <span
-                  class="px-4 py-2 bg-base-100 rounded-lg"
-                  v-for="sub in build.stats
-                    .filter((s) => s.slot === 'substat')
-                    .sort((a, b) => a.rank - b.rank)"
-                  :key="sub.id"
-                >
-                  #{{ sub.rank }} {{ sub.stat }}
-                </span>
-              </div>
-            </div>
             <div class="divider"></div>
-            <MarkdownRender :text="build.details" />
+            <h3 class="text-base-content mb-2">
+              {{ character.name }} {{ build.title }}
+            </h3>
+            <template
+              v-for="stats in [statsBySlot(build.stats)]"
+              :key="build.id"
+            >
+              <div v-for="a in build.artifacts" :key="a.artifact.id">
+                <div class="grid grid-cols-1 md:grid-cols-3">
+                  <figure class="flex md:justify-center items-center gap-2">
+                    <img
+                      class="w-24 h-24"
+                      :src="a.artifact.sands_img_url"
+                      alt=""
+                    />
+                    <figcaption>
+                      <h3>Sands</h3>
+                      <p class="text-info" v-html="stats.sands?.join(', ')"></p>
+                    </figcaption>
+                  </figure>
+                  <figure class="flex md:justify-center items-center gap-2">
+                    <img
+                      class="w-24 h-24"
+                      :src="a.artifact.goblet_img_url"
+                      alt=""
+                    />
+                    <figcaption>
+                      <h3>Goblet</h3>
+                      <p
+                        class="text-info"
+                        v-html="stats.goblet?.join(', ')"
+                      ></p>
+                    </figcaption>
+                  </figure>
+                  <figure class="flex md:justify-center items-center gap-2">
+                    <img
+                      class="w-24 h-24"
+                      :src="a.artifact.circlet_img_url"
+                      alt=""
+                    />
+                    <figcaption>
+                      <h3>Circlet</h3>
+                      <p
+                        class="text-info"
+                        v-html="stats.circlet?.join(', ')"
+                      ></p>
+                    </figcaption>
+                  </figure>
+                </div>
+                <h4 class="text-info text-center my-3">Substats</h4>
+                <div class="flex flex-wrap md:justify-center gap-4">
+                  <span
+                    class="px-4 py-2 bg-base-100 rounded-lg"
+                    v-for="sub in build.stats
+                      .filter((s) => s.slot === 'substat')
+                      .sort((a, b) => a.rank - b.rank)"
+                    :key="sub.id"
+                  >
+                    #{{ sub.rank }} {{ sub.stat }}
+                  </span>
+                </div>
+              </div>
+            </template>
+            <div class="divider"></div>
+            <MarkdownRender v-if="build.details" :text="build.details" />
           </div>
         </div>
         <div v-else>
@@ -516,6 +521,23 @@ function sortedMembers(members) {
 
 function sortTeams(teams) {
   return [...teams].sort((a, b) => a.id - b.id);
+}
+
+function statsBySlot(stats) {
+  const groups = {};
+  for (const s of stats ?? []) {
+    const rank = s.rank ?? 0;
+    groups[s.slot] ??= {};
+    (groups[s.slot][rank] ??= []).push(s.stat);
+  }
+
+  const out = {};
+  for (const [slot, ranks] of Object.entries(groups)) {
+    out[slot] = Object.keys(ranks)
+      .sort((a, b) => a - b)
+      .map((r) => ranks[r].join('<span class="text-white/50"> or </span>'));
+  }
+  return out;
 }
 
 const sortedWeapons = computed(() => {
