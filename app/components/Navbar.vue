@@ -36,6 +36,7 @@
           </li>
         </ul>
       </div>
+      <img class="h-12 w-12" :src="logo" alt="Stratagema" />
       <NuxtLink to="/" class="btn btn-ghost text-xl">STRATAGEMA</NuxtLink>
     </div>
     <div class="navbar-center"></div>
@@ -57,3 +58,7 @@
     </div>
   </nav>
 </template>
+
+<script setup>
+import logo from "@/assets/imgs/favicon.webp";
+</script>
