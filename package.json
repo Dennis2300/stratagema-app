@@ -15,7 +15,6 @@
     "approve": "^0.0.12",
     "daisyui": "^5.7.16",
     "esbuild": "^0.28.2",
-    "fsevents": "^2.3.3",
     "marked": "^18.0.11",
     "nuxt": "^4.5.2",
     "tailwindcss": "^4.3.3",
