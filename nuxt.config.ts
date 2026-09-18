@@ -25,7 +25,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       title: "Stratagema",
-      titleTemplate: "Stratagema | %s",
+      titleTemplate: "Stratagema | Simple Genshin Impact Build Guides",
       link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
       meta: [
         {
@@ -41,7 +41,7 @@ export default defineNuxtConfig({
         },
         {
           property: "og:image",
-          content: "https://www.stratagema.app/opengraph.webp",
+          content: "https://www.stratagema.app/og-image.webp",
         },
         { property: "og:type", content: "website" },
         { property: "og:url", content: "https://www.stratagema.app" },
@@ -57,7 +57,7 @@ export default defineNuxtConfig({
         },
         {
           name: "twitter:image",
-          content: "https://www.stratagema.app/opengraph.webp",
+          content: "https://www.stratagema.app/og-image.webp",
         },
       ],
     },
