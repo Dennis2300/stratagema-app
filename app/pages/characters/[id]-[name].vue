@@ -75,25 +75,40 @@
           </div>
 
           <!-- Voice actors -->
-          <div class="flex w-full max-w-xs flex-col gap-2">
-            <a
+          <div class="flex w-fit max-w-md flex-col gap-2">
+            <div
               v-for="voiceActor in sortedVoiceActors"
-              :key="voiceActor.id"
-              :href="voiceActor.voice_actor_id.link"
-              target="_blank"
-              class="group flex items-center justify-between rounded-lg bg-base-300 px-4 py-2.5 border border-white/15 transition-colors hover:bg-white/10 hover:border-white/75"
+              :key="voiceActor.language"
+              class="flex items-center justify-between rounded-lg bg-base-300 px-4 py-2.5 border border-white/15"
             >
               <span
                 class="w-10 text-sm font-bold uppercase tracking-wide text-white/60"
               >
                 {{ voiceActor.language }}
               </span>
+
               <span
-                class="text-sm font-medium text-white group-hover:underline group-hover:text-base-content"
+                class="flex items-center gap-1 text-sm font-medium text-white"
               >
-                {{ voiceActor.voice_actor_id.name }}
+                <template
+                  v-for="(actor, index) in voiceActor.actors"
+                  :key="actor.id"
+                >
+                  <a
+                    :href="actor.link"
+                    target="_blank"
+                    class="hover:underline hover:text-base-content"
+                  >
+                    {{ actor.name }}
+                  </a>
+                  <span
+                    v-if="index < voiceActor.actors.length - 1"
+                    class="text-white/60"
+                    >&</span
+                  >
+                </template>
               </span>
-            </a>
+            </div>
           </div>
         </div>
       </section>
@@ -599,9 +614,26 @@ const groupedMaterials = computed(() => {
 });
 
 const sortedVoiceActors = computed(() => {
-  return [...character.value.voice_actors].sort(
+  const sorted = [...character.value.voice_actors].sort(
     (a, b) =>
       languageOrder.indexOf(a.language) - languageOrder.indexOf(b.language),
   );
+
+  const grouped = [];
+
+  for (const entry of sorted) {
+    const existing = grouped.find((g) => g.language === entry.language);
+
+    if (existing) {
+      existing.actors.push(entry.voice_actor_id);
+    } else {
+      grouped.push({
+        language: entry.language,
+        actors: [entry.voice_actor_id],
+      });
+    }
+  }
+
+  return grouped;
 });
 </script>
