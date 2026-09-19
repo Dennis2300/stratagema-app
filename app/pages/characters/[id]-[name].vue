@@ -129,7 +129,13 @@
               class="w-10 text-sm font-bold uppercase tracking-wide text-white/60"
               >Signature Dish</span
             >
-            <SpecialDishPopUp :dish="character.special_dish" />
+            <SpecialDishPopUp
+              v-if="character.special_dish"
+              :dish="character.special_dish"
+            />
+            <p v-else class="text-lg font-semibold text-red-700">
+              No Special Dish!
+            </p>
           </div>
 
           <div class="bg-base-300/80 p-5">
@@ -145,7 +151,10 @@
               class="w-10 text-sm font-bold uppercase tracking-wide text-white/60"
               >Birthday</span
             >
-            <p class="text-lg font-semibold">{{ character.birthday }}</p>
+            <p class="text-lg font-semibold" v-if="character.birthday">
+              {{ character.birthday }}
+            </p>
+            <p class="text-lg font-semibold text-red-700">No Birthday!</p>
           </div>
 
           <div class="bg-base-300/80 p-5">
