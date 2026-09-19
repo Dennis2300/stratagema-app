@@ -50,18 +50,18 @@
             </h1>
 
             <div
-              class="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs font-medium uppercase tracking-[0.2em] text-white/50 md:justify-start"
+              class="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs font-medium uppercase tracking-[0.2em] text-white md:justify-start"
             >
               <span
                 :class="visionColors[character.vision.name] ?? 'text-white'"
               >
                 {{ character.vision.name }}
               </span>
-              <span class="h-1 w-1 rounded-full bg-white/30"></span>
+              <span class="h-1 w-1 rounded-full bg-white/50"></span>
               <span>{{ character.weapon_type.name }}</span>
-              <span class="h-1 w-1 rounded-full bg-white/30"></span>
+              <span class="h-1 w-1 rounded-full bg-white/50"></span>
               <span>{{ character.role }}</span>
-              <span class="h-1 w-1 rounded-full bg-white/30"></span>
+              <span class="h-1 w-1 rounded-full bg-white/50"></span>
               <span>{{ character.main_stat }}</span>
             </div>
           </figcaption>
@@ -76,30 +76,33 @@
 
           <!-- Voice actors -->
           <div class="flex w-full max-w-xs flex-col gap-2">
-            <div
+            <a
               v-for="voiceActor in sortedVoiceActors"
               :key="voiceActor.id"
-              class="flex items-center justify-between rounded-lg bg-base-300 px-4 py-2.5 transition-colors hover:bg-white/10"
+              :href="voiceActor.voice_actor_id.link"
+              target="_blank"
+              class="group flex items-center justify-between rounded-lg bg-base-300 px-4 py-2.5 border border-white/15 transition-colors hover:bg-white/10 hover:border-white/75"
             >
               <span
                 class="w-10 text-sm font-bold uppercase tracking-wide text-white/60"
               >
                 {{ voiceActor.language }}
               </span>
-
-              <span class="text-sm font-medium text-white">
+              <span
+                class="text-sm font-medium text-white group-hover:underline group-hover:text-base-content"
+              >
                 {{ voiceActor.voice_actor_id.name }}
               </span>
-            </div>
+            </a>
           </div>
         </div>
       </section>
 
       <section
-        class="w-full bg-base-300/66 p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
+        class="relative w-full bg-base-300/66 p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
       >
         <span
-          class="block text-sm font-medium uppercase tracking-wide text-white/40 pl-4"
+          class="text-xs font-medium uppercase tracking-widest text-primary/60"
         >
           Character Profile</span
         >
@@ -126,7 +129,7 @@
               class="w-10 text-sm font-bold uppercase tracking-wide text-white/60"
               >Signature Dish</span
             >
-            <p class="text-lg font-semibold">Signature Dish</p>
+            <SpecialDishPopUp :dish="character.special_dish" />
           </div>
 
           <div class="bg-base-300/80 p-5">
@@ -167,7 +170,7 @@
         class="w-full bg-base-300/66 p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
       >
         <span
-          class="block text-sm font-medium uppercase tracking-wide text-white/40 pl-4"
+          class="text-xs font-medium uppercase tracking-widest text-primary/60"
         >
           Recommended Weapons for {{ character.name }}
         </span>
@@ -241,7 +244,7 @@
         class="w-full bg-base-300/66 p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
       >
         <span
-          class="block text-sm font-medium uppercase tracking-wide text-white/40 pl-4"
+          class="text-xs font-medium uppercase tracking-widest text-primary/60"
         >
           Recommended Build(s) for {{ character.name }}
         </span>
@@ -396,49 +399,55 @@
         class="w-full bg-base-300/66 p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
       >
         <span
-          class="block text-sm font-medium uppercase tracking-wide text-white/40 pl-4"
+          class="text-xs font-medium uppercase tracking-widest text-primary/60"
         >
           All materials needed to reach Level 90 and max out Talents.
         </span>
+
         <div class="flex items-center gap-3 mb-4">
           <div class="w-1 h-9 bg-white rounded-xl"></div>
           <h2>Materials</h2>
         </div>
-        <div v-for="(items, type) in groupedMaterials" :key="type">
-          <h3
-            class="whitespace-nowrap text-xs font-bold uppercase tracking-widest text-primary/70 divider divider-start"
-          >
-            {{ type.replaceAll("_", " ") }}
-          </h3>
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-12">
-            <div
-              v-for="item in items"
-              :key="item.id"
-              class="bg-base-300 p-4 border-2 border-base-content/10 rounded-lg hover:bg-zinc-700/50 transition duration-200"
+
+        <div class="space-y-8 mt-4">
+          <div v-for="(items, type) in groupedMaterials" :key="type">
+            <h3
+              class="whitespace-nowrap text-xs font-bold uppercase tracking-widest text-primary/70 divider divider-start"
             >
-              <figure class="flex items-center gap-3">
-                <img
-                  :src="item.material.img_url"
-                  class="w-16 h-16 mask mask-squircle"
-                  :class="{
-                    'rarity-5': item.material.rarity === 5,
-                    'rarity-4': item.material.rarity === 4,
-                    'rarity-3': item.material.rarity === 3,
-                    'rarity-2': item.material.rarity === 2,
-                    'rarity-1': item.material.rarity === 1,
-                  }"
-                />
-                <figcaption class="min-w-0">
-                  <p class="truncate text-sm font-medium text-base-content/90">
-                    {{ item.material.name }}
-                  </p>
-                  <span
-                    class="mt-1 inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-2 py-0.5 text-xs font-semibold text-primary"
-                  >
-                    ×{{ item.amount.toLocaleString() }}
-                  </span>
-                </figcaption>
-              </figure>
+              {{ type.replaceAll("_", " ") }}
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+              <div
+                v-for="item in items"
+                :key="item.id"
+                class="bg-base-300 p-4 border-2 border-base-content/10 rounded-lg hover:bg-zinc-700/50 transition duration-200"
+              >
+                <figure class="flex items-center gap-3">
+                  <img
+                    :src="item.material.img_url"
+                    class="w-16 h-16 mask mask-squircle"
+                    :class="{
+                      'rarity-5': item.material.rarity === 5,
+                      'rarity-4': item.material.rarity === 4,
+                      'rarity-3': item.material.rarity === 3,
+                      'rarity-2': item.material.rarity === 2,
+                      'rarity-1': item.material.rarity === 1,
+                    }"
+                  />
+                  <figcaption class="min-w-0">
+                    <p
+                      class="truncate text-sm font-medium text-base-content/90"
+                    >
+                      {{ item.material.name }}
+                    </p>
+                    <span
+                      class="mt-1 inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-2 py-0.5 text-xs font-semibold text-primary"
+                    >
+                      ×{{ item.amount.toLocaleString() }}
+                    </span>
+                  </figcaption>
+                </figure>
+              </div>
             </div>
           </div>
         </div>
@@ -450,6 +459,7 @@
 </template>
 
 <script setup>
+import SpecialDishPopUp from "~/components/Character/SpecialDishPopUp.vue";
 import MarkdownRender from "~/components/MarkdownRender.vue";
 
 const supabase = useSupabaseClient();
@@ -486,7 +496,8 @@ const {
     weapons:character_weapon(*, weapon:weapon_id(*)),
     materials:character_material(id, material:material_id(*), usage_type, amount),
     teams(*, members:team_character(*, character:character_id(id, name, rarity, img_url))),
-    voice_actors:character_voice_actor(*, voice_actor_id(*))
+    voice_actors:character_voice_actor(*, voice_actor_id(*)),
+    special_dish(*)
     `,
     )
     .eq("id", param_id)
