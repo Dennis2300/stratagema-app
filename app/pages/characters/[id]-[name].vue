@@ -169,7 +169,7 @@
             <p class="text-lg font-semibold" v-if="character.birthday">
               {{ character.birthday }}
             </p>
-            <p class="text-lg font-semibold text-red-700">No Birthday!</p>
+            <p v-else class="text-lg font-semibold text-red-700">No Birthday!</p>
           </div>
 
           <div class="bg-base-300/80 p-5">
