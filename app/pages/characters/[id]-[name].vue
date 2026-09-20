@@ -169,7 +169,9 @@
             <p class="text-lg font-semibold" v-if="character.birthday">
               {{ character.birthday }}
             </p>
-            <p v-else class="text-lg font-semibold text-red-700">No Birthday!</p>
+            <p v-else class="text-lg font-semibold text-red-700">
+              No Birthday!
+            </p>
           </div>
 
           <div class="bg-base-300/80 p-5">
@@ -400,7 +402,7 @@
                 v-for="member in sortedMembers(team.members)"
                 :key="member.id"
                 class="tooltip tooltip-bottom tooltip-primary hover:cursor-pointer"
-                :data-tip="member.character.name"
+                :data-tip="`${member.character.name} (${member.role})`"
                 :to="`/characters/${member.character.id}-${slugify(member.character.name)}`"
                 target="_blank"
               >
