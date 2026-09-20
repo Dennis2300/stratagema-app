@@ -4,7 +4,9 @@
     @mouseleave="showPopup = false"
     class="w-fit"
   >
-    <p class="text-lg font-semibold hover:cursor-pointer hover:underline">{{ dish.name }}</p>
+    <p class="text-lg font-semibold hover:cursor-pointer hover:underline">
+      {{ dish.name }}
+    </p>
 
     <Transition
       enter-active-class="transition duration-150 ease-out"
@@ -16,7 +18,7 @@
     >
       <div
         v-if="showPopup"
-        class="absolute top-4 right-4 z-10 w-100 rounded-lg bg-secondary p-4 shadow-xl border border-white/25"
+        class="absolute top-4 right-4 z-10 w-100 rounded-lg bg-base-100 p-4 shadow-xl border border-white/25"
       >
         <figure class="flex items-center gap-3">
           <img
@@ -36,14 +38,14 @@
           </figcaption>
         </figure>
 
-        <p class="mt-3 text-xs leading-relaxed text-white/80">
-          {{ dish.description }}
-        </p>
-
         <p
-          class="mt-2 text-xs font-medium uppercase tracking-wide text-white/60"
+          class="mt-2 text-xs font-medium uppercase tracking-wide text-base-content"
         >
           {{ dish.utility }}
+        </p>
+        <div class="divider m-0"></div>
+        <p class="text-xs leading-relaxed text-white/60">
+          {{ dish.description }}
         </p>
       </div>
     </Transition>
