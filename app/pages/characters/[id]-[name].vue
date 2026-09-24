@@ -267,7 +267,7 @@
       </section>
 
       <section
-        class="w-full bg-base-300/66 p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
+        class="w-full bg-base-300/66 p-2 md:p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
       >
         <span
           class="text-xs font-medium uppercase tracking-widest text-primary/60"
@@ -278,84 +278,94 @@
           <div class="w-1 h-9 bg-white rounded-xl"></div>
           <h2>Build(s)</h2>
         </div>
-        <div v-if="buildsLoading" class="flex items-center justify-center">
-          <span class="loading loading-xl"></span>
+        <div v-if="buildsLoading" class="h-75 flex justify-center items-center">
+          <span class="loading loading-xl scale-200"></span>
         </div>
-        <div v-else-if="buildsError">
-          <ErrorMessage :error="buildsError" />
-        </div>
-        <div v-else-if="builds" class="space-y-6">
-          <div v-for="build in builds" :key="build.id">
-            <div class="divider"></div>
-            <h3 class="text-base-content mb-2">
-              {{ character.name }} {{ build.title }}
-            </h3>
-            <template
-              v-for="stats in [statsBySlot(build.stats)]"
+
+        <ErrorMessage v-else-if="buildsError" :error="buildsError" />
+
+        <div v-else-if="builds">
+          <div>
+            <div
+              v-for="build in builds"
               :key="build.id"
+              class="card bg-base-200 shadow-md"
             >
-              <div v-for="a in build.artifacts" :key="a.artifact.id">
-                <div class="grid grid-cols-1 md:grid-cols-3">
-                  <figure class="flex md:justify-center items-center gap-2">
-                    <img
-                      class="w-24 h-24"
-                      :src="a.artifact.sands_img_url"
-                      alt=""
-                    />
-                    <figcaption>
-                      <h3>Sands</h3>
-                      <p class="text-info" v-html="stats.sands?.join(', ')"></p>
-                    </figcaption>
-                  </figure>
-                  <figure class="flex md:justify-center items-center gap-2">
-                    <img
-                      class="w-24 h-24"
-                      :src="a.artifact.goblet_img_url"
-                      alt=""
-                    />
-                    <figcaption>
-                      <h3>Goblet</h3>
-                      <p
-                        class="text-info"
-                        v-html="stats.goblet?.join(', ')"
-                      ></p>
-                    </figcaption>
-                  </figure>
-                  <figure class="flex md:justify-center items-center gap-2">
-                    <img
-                      class="w-24 h-24"
-                      :src="a.artifact.circlet_img_url"
-                      alt=""
-                    />
-                    <figcaption>
-                      <h3>Circlet</h3>
-                      <p
-                        class="text-info"
-                        v-html="stats.circlet?.join(', ')"
-                      ></p>
-                    </figcaption>
-                  </figure>
-                </div>
-                <h4 class="text-info text-center my-3">Substats</h4>
-                <div class="flex flex-wrap md:justify-center gap-4">
-                  <span
-                    class="px-4 py-2 bg-base-100 rounded-lg"
-                    v-for="sub in build.stats
-                      .filter((s) => s.slot === 'substat')
-                      .sort((a, b) => a.rank - b.rank)"
-                    :key="sub.id"
+              <div class="card-body">
+                <h3 class="card-title text-base">{{ build.title }}</h3>
+                <p v-if="build.details" class="text-sm opacity-70">
+                  {{ build.details }}
+                </p>
+                <div class="divider m-0"></div>
+                <!-- Artifact pieces -->
+                <div class="flex flex-col gap-3">
+                  <div
+                    v-for="piece in build.build_artifact"
+                    :key="piece.id"
+                    class="flex items-center gap-3"
                   >
-                    #{{ sub.rank }} {{ sub.stat }}
-                  </span>
+                    <img
+                      :src="piece.artifact_id.flower_img_url"
+                      :alt="piece.artifact_id.name"
+                      class="w-24 h-24 rounded-lg rarity-5 object-contain"
+                    />
+                    <div class="flex-1">
+                      <span class="badge badge-accent badge-xs">
+                        {{ piece.piece_count }} piece
+                      </span>
+                      <h4 class="font-semibold text-sm">
+                        {{ piece.artifact_id.name }}
+                      </h4>
+
+                      <div v-if="piece.piece_count === 4">
+                        <p class="text-xs opacity-70 mt-1 line-clamp-3">
+                          {{ piece.artifact_id.two_piece_bonus_id.name }}
+                        </p>
+                        <p class="text-xs opacity-70 mt-1">
+                          {{ piece.artifact_id.four_piece_bonus }}
+                        </p>
+                      </div>
+                      <p
+                        v-if="piece.piece_count === 2"
+                        class="text-xs opacity-70 mt-1 line-clamp-3"
+                      >
+                        {{ piece.artifact_id.two_piece_bonus_id.name }}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </template>
-            <div class="divider"></div>
-            <MarkdownRender v-if="build.details" :text="build.details" />
+            </div>
           </div>
         </div>
-        <div v-else>
-          <p>No Builds</p>
+
+        <div v-else>No Builds Yet</div>
+
+        <h3 class="divider divider-start">Artifact Stats</h3>
+        <div class="stat-block">
+          <template v-if="groupedStats.sands.length">
+            <h4>Sands</h4>
+            <p>{{ groupedStats.sands.map((s) => s.stat).join(" or ") }}</p>
+          </template>
+
+          <template v-if="groupedStats.goblet.length">
+            <h4>Goblet</h4>
+            <p>{{ groupedStats.goblet.map((s) => s.stat).join(" or ") }}</p>
+          </template>
+
+          <template v-if="groupedStats.circlet.length">
+            <h4>Circlet</h4>
+            <p>{{ groupedStats.circlet.map((s) => s.stat).join(" or ") }}</p>
+          </template>
+
+          <template v-if="groupedStats.substat.length">
+            <h4>Substats (priority order)</h4>
+            <ol>
+              <li v-for="s in groupedStats.substat" :key="s.id">
+                {{ s.stat }}
+              </li>
+            </ol>
+          </template>
         </div>
       </section>
 
@@ -516,14 +526,15 @@ const {
     .from("characters")
     .select(
       `
-    *, 
-    vision:vision_id(*), 
-    weapon_type:weapon_type_id(*), 
+    *,
+    vision:vision_id(*),
+    weapon_type:weapon_type_id(*),
     weapons:character_weapon(*, weapon:weapon_id(*)),
     materials:character_material(id, material:material_id(*), usage_type, amount),
     teams(*, members:team_character(*, character:character_id(id, name, rarity, img_url))),
     voice_actors:character_voice_actor(*, voice_actor_id(*)),
-    special_dish(*)
+    special_dish(*),
+    stats:character_stat(*)
     `,
     )
     .eq("id", param_id)
@@ -543,13 +554,10 @@ const {
     .schema("genshin_impact")
     .from("builds")
     .select(
-      `
-    *,
-    artifacts:build_artifact(id, artifact:artifact_id(*,two_piece_bonus_id(name)), rank),
-    stats:build_stat(id, slot, stat, rank)
-    `,
+      "*, build_artifact(*, artifact_id(name, two_piece_bonus_id(name), four_piece_bonus, flower_img_url))",
     )
-    .eq("character_id", param_id);
+    .eq("character_id", param_id)
+    .order("rank", { ascending: true, nullsFirst: false });
   if (error) throw error;
   return data;
 });
@@ -562,25 +570,32 @@ function sortTeams(teams) {
   return [...teams].sort((a, b) => a.id - b.id);
 }
 
-function statsBySlot(stats) {
-  const groups = {};
-  for (const s of stats ?? []) {
-    const rank = s.rank ?? 0;
-    groups[s.slot] ??= {};
-    (groups[s.slot][rank] ??= []).push(s.stat);
-  }
-
-  const out = {};
-  for (const [slot, ranks] of Object.entries(groups)) {
-    out[slot] = Object.keys(ranks)
-      .sort((a, b) => a - b)
-      .map((r) => ranks[r].join('<span class="text-white/50"> or </span>'));
-  }
-  return out;
-}
-
 const sortedWeapons = computed(() => {
   return [...character.value.weapons].sort((a, b) => a.rank - b.rank);
+});
+
+const sortedVoiceActors = computed(() => {
+  const sorted = [...character.value.voice_actors].sort(
+    (a, b) =>
+      languageOrder.indexOf(a.language) - languageOrder.indexOf(b.language),
+  );
+
+  const grouped = [];
+
+  for (const entry of sorted) {
+    const existing = grouped.find((g) => g.language === entry.language);
+
+    if (existing) {
+      existing.actors.push(entry.voice_actor_id);
+    } else {
+      grouped.push({
+        language: entry.language,
+        actors: [entry.voice_actor_id],
+      });
+    }
+  }
+
+  return grouped;
 });
 
 const categoryPriority = {
@@ -615,27 +630,12 @@ const groupedMaterials = computed(() => {
   }, {});
 });
 
-const sortedVoiceActors = computed(() => {
-  const sorted = [...character.value.voice_actors].sort(
-    (a, b) =>
-      languageOrder.indexOf(a.language) - languageOrder.indexOf(b.language),
-  );
-
-  const grouped = [];
-
-  for (const entry of sorted) {
-    const existing = grouped.find((g) => g.language === entry.language);
-
-    if (existing) {
-      existing.actors.push(entry.voice_actor_id);
-    } else {
-      grouped.push({
-        language: entry.language,
-        actors: [entry.voice_actor_id],
-      });
-    }
+const groupedStats = computed(() => {
+  const groups = { sands: [], goblet: [], circlet: [], substat: [] };
+  for (const s of character.value.stats) {
+    groups[s.slot]?.push(s);
   }
-
-  return grouped;
+  groups.substat.sort((a, b) => (a.rank ?? 0) - (b.rank ?? 0));
+  return groups;
 });
 </script>
