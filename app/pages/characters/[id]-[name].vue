@@ -383,9 +383,11 @@
         >
           <div class="card-body">
             <h4 class="card-title text-base">{{ build.title }}</h4>
-            <p v-if="build.details" class="text-sm opacity-70">
-              {{ build.details }}
-            </p>
+            <MarkdownRender
+              v-if="build.details"
+              :text="build.details"
+              class="text-sm opacity-70"
+            />
             <div class="divider m-0"></div>
             <!-- Artifact pieces -->
             <div class="flex flex-col gap-3">
