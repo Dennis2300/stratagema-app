@@ -267,7 +267,7 @@
       </section>
 
       <section
-        class="w-full bg-base-300/66 p-2 md:p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
+        class="w-full bg-base-300/66 p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
       >
         <span
           class="text-xs font-medium uppercase tracking-widest text-primary/60"
@@ -278,96 +278,153 @@
           <div class="w-1 h-9 bg-white rounded-xl"></div>
           <h2>Build(s)</h2>
         </div>
+
+        <h3 class="divider divider-start">Artifact Stats</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div
+            v-if="groupedStats.sands.length"
+            class="bg-base-300 flex md:items-center md:justify-center h-25 rounded-2xl border border-white/25"
+          >
+            <figure class="flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="white"
+                width="64"
+                height="64"
+              >
+                <path
+                  transform="translate(0,2)"
+                  d="M7 2h10v2c0 2.1-1.1 4-2.9 5L12 10l2.1 1c1.8 1 2.9 2.9 2.9 5v2H7v-2c0-2.1 1.1-4 2.9-5L12 10l-2.1-1C8.1 8 7 6.1 7 4V2zm2 2c0 1.3.7 2.5 1.8 3.1L12 8l1.2-.9C14.3 6.5 15 5.3 15 4H9zm6 14c0-1.3-.7-2.5-1.8-3.1L12 14l-1.2.9C9.7 15.5 9 16.7 9 18h6z"
+                />
+              </svg>
+              <figcaption>
+                <h4>Sands</h4>
+                <p class="text-base-content">
+                  {{ groupedStats.sands.map((s) => s.stat).join(" or ") }}
+                </p>
+              </figcaption>
+            </figure>
+          </div>
+          <div
+            v-if="groupedStats.goblet.length"
+            class="bg-base-300 flex md:items-center md:justify-center h-25 rounded-2xl border border-white/25"
+          >
+            <figure class="flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="white"
+                width="64"
+                height="64"
+              >
+                <path
+                  transform="translate(0,1.5)"
+                  d="M7 3h10v2c0 3-1.7 5.6-4 6.6V16h3v2H8v-2h3v-4.4C8.7 10.6 7 8 7 5V3zm2 2c0 2.2 1.3 4 3 4s3-1.8 3-4H9z"
+                />
+              </svg>
+              <figcaption>
+                <h4>Goblet</h4>
+                <p class="text-base-content">
+                  {{ groupedStats.goblet.map((s) => s.stat).join(" or ") }}
+                </p>
+              </figcaption>
+            </figure>
+          </div>
+          <div
+            v-if="groupedStats.circlet.length"
+            class="bg-base-300 flex md:items-center md:justify-center h-25 rounded-2xl border border-white/25"
+          >
+            <figure class="flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="white"
+                width="64"
+                height="64"
+              >
+                <path
+                  transform="translate(0,-3)"
+                  d="M3 18h18l-1-8-5 4-3-6-3 6-5-4-1 8zm0 2h18v2H3z"
+                />
+              </svg>
+              <figcaption>
+                <h4>Circlet</h4>
+                <p class="text-base-content">
+                  {{ groupedStats.circlet.map((s) => s.stat).join(" or ") }}
+                </p>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+        <div v-if="groupedStats.substat.length">
+          <h4 class="divider">Substats</h4>
+          <ol class="flex flex-wrap justify-center gap-3">
+            <li
+              v-for="(s, i) in groupedStats.substat"
+              :key="s.id"
+              class="bg-base-300 py-2 px-4 border border-white/25 rounded-xl"
+            >
+              <span class="font-bold">{{ i + 1 }}.</span> {{ s.stat }}
+            </li>
+          </ol>
+        </div>
+
+        <h3 class="divider divider-start mt-8 mb-2">Artifacts</h3>
         <div v-if="buildsLoading" class="h-75 flex justify-center items-center">
           <span class="loading loading-xl scale-200"></span>
         </div>
-
         <ErrorMessage v-else-if="buildsError" :error="buildsError" />
+        <div
+          v-else-if="builds"
+          v-for="build in builds"
+          :key="build.id"
+          class="card bg-base-300 my-4 border border-white/25"
+        >
+          <div class="card-body">
+            <h4 class="card-title text-base">{{ build.title }}</h4>
+            <p v-if="build.details" class="text-sm opacity-70">
+              {{ build.details }}
+            </p>
+            <div class="divider m-0"></div>
+            <!-- Artifact pieces -->
+            <div class="flex flex-col gap-3">
+              <div
+                v-for="piece in build.build_artifact"
+                :key="piece.id"
+                class="flex items-center gap-3"
+              >
+                <img
+                  :src="piece.artifact_id.flower_img_url"
+                  :alt="piece.artifact_id.name"
+                  class="w-24 h-24 rounded-lg rarity-5 object-contain"
+                />
+                <div class="flex-1">
+                  <span class="badge badge-accent badge-xs">
+                    {{ piece.piece_count }} piece
+                  </span>
+                  <h4 class="font-semibold text-sm">
+                    {{ piece.artifact_id.name }}
+                  </h4>
 
-        <div v-else-if="builds">
-          <div>
-            <div
-              v-for="build in builds"
-              :key="build.id"
-              class="card bg-base-200 shadow-md"
-            >
-              <div class="card-body">
-                <h3 class="card-title text-base">{{ build.title }}</h3>
-                <p v-if="build.details" class="text-sm opacity-70">
-                  {{ build.details }}
-                </p>
-                <div class="divider m-0"></div>
-                <!-- Artifact pieces -->
-                <div class="flex flex-col gap-3">
-                  <div
-                    v-for="piece in build.build_artifact"
-                    :key="piece.id"
-                    class="flex items-center gap-3"
-                  >
-                    <img
-                      :src="piece.artifact_id.flower_img_url"
-                      :alt="piece.artifact_id.name"
-                      class="w-24 h-24 rounded-lg rarity-5 object-contain"
-                    />
-                    <div class="flex-1">
-                      <span class="badge badge-accent badge-xs">
-                        {{ piece.piece_count }} piece
-                      </span>
-                      <h4 class="font-semibold text-sm">
-                        {{ piece.artifact_id.name }}
-                      </h4>
-
-                      <div v-if="piece.piece_count === 4">
-                        <p class="text-xs opacity-70 mt-1 line-clamp-3">
-                          {{ piece.artifact_id.two_piece_bonus_id.name }}
-                        </p>
-                        <p class="text-xs opacity-70 mt-1">
-                          {{ piece.artifact_id.four_piece_bonus }}
-                        </p>
-                      </div>
-                      <p
-                        v-if="piece.piece_count === 2"
-                        class="text-xs opacity-70 mt-1 line-clamp-3"
-                      >
-                        {{ piece.artifact_id.two_piece_bonus_id.name }}
-                      </p>
-                    </div>
+                  <div v-if="piece.piece_count === 4">
+                    <p class="text-xs opacity-70 mt-1 line-clamp-3">
+                      {{ piece.artifact_id.two_piece_bonus_id.name }}
+                    </p>
+                    <p class="text-xs opacity-70 mt-1">
+                      {{ piece.artifact_id.four_piece_bonus }}
+                    </p>
                   </div>
+                  <p
+                    v-if="piece.piece_count === 2"
+                    class="text-xs opacity-70 mt-1 line-clamp-3"
+                  >
+                    {{ piece.artifact_id.two_piece_bonus_id.name }}
+                  </p>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-
-        <div v-else>No Builds Yet</div>
-
-        <h3 class="divider divider-start">Artifact Stats</h3>
-        <div class="stat-block">
-          <div>
-            <div v-if="groupedStats.sands.length">
-              <h4>Sands</h4>
-              <p>{{ groupedStats.sands.map((s) => s.stat).join(" or ") }}</p>
-            </div>
-
-            <div v-if="groupedStats.goblet.length">
-              <h4>Goblet</h4>
-              <p>{{ groupedStats.goblet.map((s) => s.stat).join(" or ") }}</p>
-            </div>
-
-            <div v-if="groupedStats.circlet.length">
-              <h4>Circlet</h4>
-              <p>{{ groupedStats.circlet.map((s) => s.stat).join(" or ") }}</p>
-            </div>
-          </div>
-
-          <template v-if="groupedStats.substat.length">
-            <h4>Substats (priority order)</h4>
-            <ol>
-              <li v-for="s in groupedStats.substat" :key="s.id">
-                {{ s.stat }}
-              </li>
-            </ol>
-          </template>
         </div>
       </section>
 
@@ -380,8 +437,7 @@
           >
             Possible Teams for {{ character.name }}
           </span>
-
-          <div class="mt-2 flex items-center gap-3">
+          <div class="flex items-center gap-3">
             <div class="h-8 w-1 rounded-full bg-primary"></div>
             <h2 class="text-xl font-semibold">Teams</h2>
           </div>
