@@ -343,20 +343,22 @@
 
         <h3 class="divider divider-start">Artifact Stats</h3>
         <div class="stat-block">
-          <template v-if="groupedStats.sands.length">
-            <h4>Sands</h4>
-            <p>{{ groupedStats.sands.map((s) => s.stat).join(" or ") }}</p>
-          </template>
+          <div>
+            <div v-if="groupedStats.sands.length">
+              <h4>Sands</h4>
+              <p>{{ groupedStats.sands.map((s) => s.stat).join(" or ") }}</p>
+            </div>
 
-          <template v-if="groupedStats.goblet.length">
-            <h4>Goblet</h4>
-            <p>{{ groupedStats.goblet.map((s) => s.stat).join(" or ") }}</p>
-          </template>
+            <div v-if="groupedStats.goblet.length">
+              <h4>Goblet</h4>
+              <p>{{ groupedStats.goblet.map((s) => s.stat).join(" or ") }}</p>
+            </div>
 
-          <template v-if="groupedStats.circlet.length">
-            <h4>Circlet</h4>
-            <p>{{ groupedStats.circlet.map((s) => s.stat).join(" or ") }}</p>
-          </template>
+            <div v-if="groupedStats.circlet.length">
+              <h4>Circlet</h4>
+              <p>{{ groupedStats.circlet.map((s) => s.stat).join(" or ") }}</p>
+            </div>
+          </div>
 
           <template v-if="groupedStats.substat.length">
             <h4>Substats (priority order)</h4>
