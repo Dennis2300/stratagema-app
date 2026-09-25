@@ -285,19 +285,8 @@
             v-if="groupedStats.sands.length"
             class="bg-base-300 flex md:items-center md:justify-center h-25 rounded-2xl border border-white/25"
           >
-            <figure class="flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="white"
-                width="64"
-                height="64"
-              >
-                <path
-                  transform="translate(0,2)"
-                  d="M7 2h10v2c0 2.1-1.1 4-2.9 5L12 10l2.1 1c1.8 1 2.9 2.9 2.9 5v2H7v-2c0-2.1 1.1-4 2.9-5L12 10l-2.1-1C8.1 8 7 6.1 7 4V2zm2 2c0 1.3.7 2.5 1.8 3.1L12 8l1.2-.9C14.3 6.5 15 5.3 15 4H9zm6 14c0-1.3-.7-2.5-1.8-3.1L12 14l-1.2.9C9.7 15.5 9 16.7 9 18h6z"
-                />
-              </svg>
+            <figure class="flex items-center gap-1">
+              <img class="w-16 h-16" src="/imgs/sands.webp" alt="Sands" />
               <figcaption>
                 <h4>Sands</h4>
                 <p class="text-base-content">
@@ -310,19 +299,8 @@
             v-if="groupedStats.goblet.length"
             class="bg-base-300 flex md:items-center md:justify-center h-25 rounded-2xl border border-white/25"
           >
-            <figure class="flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="white"
-                width="64"
-                height="64"
-              >
-                <path
-                  transform="translate(0,1.5)"
-                  d="M7 3h10v2c0 3-1.7 5.6-4 6.6V16h3v2H8v-2h3v-4.4C8.7 10.6 7 8 7 5V3zm2 2c0 2.2 1.3 4 3 4s3-1.8 3-4H9z"
-                />
-              </svg>
+            <figure class="flex items-center gap-1">
+              <img class="w-16 h-16" src="/imgs/goblet.webp" alt="" />
               <figcaption>
                 <h4>Goblet</h4>
                 <p class="text-base-content">
@@ -335,19 +313,8 @@
             v-if="groupedStats.circlet.length"
             class="bg-base-300 flex md:items-center md:justify-center h-25 rounded-2xl border border-white/25"
           >
-            <figure class="flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="white"
-                width="64"
-                height="64"
-              >
-                <path
-                  transform="translate(0,-3)"
-                  d="M3 18h18l-1-8-5 4-3-6-3 6-5-4-1 8zm0 2h18v2H3z"
-                />
-              </svg>
+            <figure class="flex items-center gap-3">
+              <img class="w-16 h-16" src="/imgs/circlet.webp" alt="" />
               <figcaption>
                 <h4>Circlet</h4>
                 <p class="text-base-content">
@@ -358,7 +325,7 @@
           </div>
         </div>
         <div v-if="groupedStats.substat.length">
-          <h4 class="divider">Substats</h4>
+          <h4 class="divider mt-6">Substats</h4>
           <ol class="flex flex-wrap justify-center gap-3">
             <li
               v-for="(s, i) in groupedStats.substat"
