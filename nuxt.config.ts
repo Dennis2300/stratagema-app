@@ -19,9 +19,9 @@ export default defineNuxtConfig({
         "/weapons",
         "/weapons/**",
         "/artifacts",
-        "/about",
         "/team-comps",
-        "/redeem-codes"
+        "/redeem-codes",
+        "/about",
       ],
     },
   },
