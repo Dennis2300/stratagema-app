@@ -13,15 +13,13 @@
   <article v-else-if="character" class="relative min-h-[125vh]">
     <figure class="absolute inset-0">
       <img
-        class="w-full object-cover"
+        class="w-full object-cover opacity-33"
         :src="character.splash_art_url"
         :alt="character.name"
       />
     </figure>
-    <div class="relative w-full z-10 space-y-6">
-      <section
-        class="w-full flex flex-col gap-8 bg-base-300/66 py-6 md:p-6 border border-base-content/50 rounded-xl backdrop-blur-xs md:flex-row md:gap-0"
-      >
+    <div class="relative w-full space-y-4 md:space-y-8 z-10 backdrop-blur-xs">
+      <section class="w-full flex flex-col md:flex-row gap-4 md:gap-0">
         <figure class="flex flex-2 flex-col items-center gap-6 md:flex-row">
           <div class="relative shrink-0 rounded-full overflow-hidden">
             <img
@@ -50,24 +48,24 @@
             </h1>
 
             <div
-              class="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs font-medium uppercase tracking-[0.2em] text-white md:justify-start"
+              class="mt-2 flex flex-wrap items-center justify-center gap-3 font-medium"
             >
-              <span
-                :class="visionColors[character.vision.name] ?? 'text-white'"
-              >
+              <span class="badge badge-primary">
                 {{ character.vision.name }}
               </span>
               <span class="h-1 w-1 rounded-full bg-white/50"></span>
-              <span>{{ character.weapon_type.name }}</span>
+              <span class="badge badge-primary">{{
+                character.weapon_type.name
+              }}</span>
               <span class="h-1 w-1 rounded-full bg-white/50"></span>
-              <span>{{ character.role }}</span>
+              <span class="badge badge-primary">{{ character.role }}</span>
               <span class="h-1 w-1 rounded-full bg-white/50"></span>
-              <span>{{ character.main_stat }}</span>
+              <span class="badge badge-primary">{{ character.main_stat }}</span>
             </div>
           </figcaption>
         </figure>
 
-        <div class="flex flex-1 flex-col items-center md:items-end">
+        <div class="px-4">
           <!-- Section heading -->
           <div class="mb-4 flex items-center gap-3">
             <div class="h-6 w-1 rounded-full bg-white"></div>
@@ -75,7 +73,7 @@
           </div>
 
           <!-- Voice actors -->
-          <div class="flex w-fit max-w-md flex-col gap-2">
+          <div class="space-y-3">
             <div
               v-for="voiceActor in sortedVoiceActors"
               :key="voiceActor.language"
@@ -113,9 +111,7 @@
         </div>
       </section>
 
-      <section
-        class="relative w-full bg-base-300/66 p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
-      >
+      <section class="w-full relative px-4">
         <span
           class="text-xs font-medium uppercase tracking-widest text-primary/60"
         >
@@ -127,7 +123,7 @@
         </div>
 
         <div
-          class="grid grid-cols-2 gap-px overflow-hidden rounded-lg bg-base-content/10"
+          class="grid grid-cols-2 gap-px overflow-hidden rounded-lg bg-base-content/10 border border-white/10"
         >
           <div class="bg-base-300/80 p-5">
             <span
@@ -192,9 +188,7 @@
         </div>
       </section>
 
-      <section
-        class="w-full bg-base-300/66 p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
-      >
+      <section class="w-full px-4">
         <span
           class="text-xs font-medium uppercase tracking-widest text-primary/60"
         >
@@ -266,9 +260,7 @@
         </div>
       </section>
 
-      <section
-        class="w-full bg-base-300/66 p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
-      >
+      <section class="w-full px-4">
         <span
           class="text-xs font-medium uppercase tracking-widest text-primary/60"
         >
@@ -279,7 +271,7 @@
           <h2>Build(s)</h2>
         </div>
 
-        <h3 class="divider divider-start">Artifact Stats</h3>
+        <h3 class="divider">Artifact Main Stats</h3>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div
             v-if="groupedStats.sands.length"
@@ -397,9 +389,7 @@
         </div>
       </section>
 
-      <section
-        class="w-full bg-base-300/66 p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
-      >
+      <section class="w-full px-4">
         <div>
           <span
             class="text-xs font-medium uppercase tracking-widest text-primary/60"
@@ -458,9 +448,7 @@
         </div>
       </section>
 
-      <section
-        class="w-full bg-base-300/66 p-6 border border-base-content/50 rounded-xl backdrop-blur-xs"
-      >
+      <section class="w-full px-4">
         <span
           class="text-xs font-medium uppercase tracking-widest text-primary/60"
         >
@@ -529,16 +517,6 @@ const supabase = useSupabaseClient();
 const route = useRoute();
 
 const param_id = route.params.id;
-
-const visionColors = {
-  Pyro: "text-red-400",
-  Hydro: "text-blue-400",
-  Anemo: "text-teal-300",
-  Electro: "text-purple-400",
-  Dendro: "text-green-400",
-  Cryo: "text-cyan-300",
-  Geo: "text-yellow-400",
-};
 
 const usageOrder = ["character_ascension", "character_talent"];
 const languageOrder = ["EN", "JP", "CN", "KR"];
