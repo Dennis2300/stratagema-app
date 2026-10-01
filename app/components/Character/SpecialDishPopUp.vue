@@ -18,7 +18,7 @@
     >
       <div
         v-if="showPopup"
-        class="absolute top-4 right-4 z-10 w-100 rounded-lg bg-base-100 p-4 shadow-xl border border-white/25"
+        class="absolute top-12 right-0 z-10 w-100 rounded-lg bg-base-100 p-4 shadow-xl border border-white/25"
       >
         <figure class="flex items-center gap-3">
           <img
