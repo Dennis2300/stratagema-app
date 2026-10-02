@@ -389,7 +389,7 @@
         </div>
       </section>
 
-      <section class="w-full px-4">
+      <section v-if="character.teams.length > 0" class="w-full px-4">
         <div>
           <span
             class="text-xs font-medium uppercase tracking-widest text-primary/60"
