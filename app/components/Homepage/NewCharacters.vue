@@ -1,7 +1,7 @@
 <template>
   <article class="min-h-[70vh] flex flex-col justify-around items-center mt-4">
     <h1 class="italic">Say hello to...</h1>
-    <div class="max-w-7xl flex gap-16">
+    <div class="max-w-7xl flex flex-col md:flex-row gap-16">
       <div
         v-for="character in characters"
         class="card bg-base-100 w-96 shadow-sm"
