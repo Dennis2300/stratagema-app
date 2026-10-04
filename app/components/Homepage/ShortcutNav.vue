@@ -1,31 +1,33 @@
 <template>
-  <article class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-    <NuxtLink
-      v-for="link in links"
-      :key="link.name"
-      :to="link.path"
-      class="group rounded-2xl border border-white/25 bg-base-200 p-6 transition-all duration-200 hover:border-primary hover:bg-base-100 hover:shadow-lg"
-    >
-      <div class="flex h-full items-center justify-between">
-        <div>
-          <h2
-            class="text-lg font-semibold transition-colors group-hover:text-primary"
+  <article class="min-h-[30vh] flex justify-center items-center">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <NuxtLink
+        v-for="link in links"
+        :key="link.name"
+        :to="link.path"
+        class="group rounded-2xl border border-white/25 bg-base-200 p-6 transition-all duration-200 hover:border-primary hover:bg-base-100 hover:shadow-lg"
+      >
+        <div class="flex h-full items-center justify-between">
+          <div>
+            <h2
+              class="text-lg font-semibold transition-colors group-hover:text-primary"
+            >
+              {{ link.name }}
+            </h2>
+
+            <p class="mt-2 text-sm text-base-content/70">
+              {{ link.desc }}
+            </p>
+          </div>
+
+          <span
+            class="text-2xl text-base-content/40 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-primary"
           >
-            {{ link.name }}
-          </h2>
-
-          <p class="mt-2 text-sm text-base-content/70">
-            {{ link.desc }}
-          </p>
+            →
+          </span>
         </div>
-
-        <span
-          class="text-2xl text-base-content/40 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-primary"
-        >
-          →
-        </span>
-      </div>
-    </NuxtLink>
+      </NuxtLink>
+    </div>
   </article>
 </template>
 
