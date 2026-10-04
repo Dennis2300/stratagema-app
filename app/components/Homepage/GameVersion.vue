@@ -1,45 +1,45 @@
 <template>
-  <article>
-    <div v-if="pending">
-      <p>Loading</p>
-    </div>
+  <div v-if="pending" class="h-screen flex justify-center items-center">
+    <span class="loader"></span>
+  </div>
 
-    <div v-else-if="error">
-      <p>{{ error.message }}</p>
-    </div>
+  <div v-else-if="error" class="h-screen flex justify-center items-center">
+    <ErrorMessage :error="error" />
+  </div>
 
-    <div v-else-if="currentVersion" class="min-h-170">
-      <figure class="relative w-full h-170 aura">
-        <img
-          class="w-full h-full object-cover rounded-2xl"
-          :src="currentVersion.img_url"
-          alt=""
-        />
-        <div
-          class="absolute inset-0 bg-linear-to-t from-black via-black/50 to-transparent rounded-2xl"
-        ></div>
-        <figcaption class="absolute bottom-5 left-5">
+  <article v-else-if="currentVersion" class="h-screen">
+    <div
+      class="hero min-h-screen"
+      :style="`background-image: url(${currentVersion.img_url})`"
+    >
+      <div class="hero-overlay bg-black/66"></div>
+      <div class="hero-content text-center">
+        <div class="max-w-7xl">
+          <figure class="flex justify-center items-center">
+            <img class="w-64 h-64" src="/favicon.webp" alt="" />
+          </figure>
+          <h1 class="font-bold uppercase">stratagema</h1>
+          <div class="divider divider-accent my-2"></div>
           <span>Genshin Impact | 原神</span>
-          <h1>{{ currentVersion.name }}</h1>
-          <p class="text-lg mt-2">
-            Version {{ currentVersion.version_number }} is available now! |
-            Check out the current banner
-            <NuxtLink
-              class="underline hover:text-white/50 hover:cursor-pointer transition-all"
-              >here!</NuxtLink
-            >
-          </p>
-        </figcaption>
-      </figure>
-    </div>
-
-    <div v-else>
-      <HomepageGameMaintenance />
+          <h2 class="italic">"{{ currentVersion.name }}"</h2>
+          <p>Version {{ currentVersion.version_number }} is available now!</p>
+          <div class="h-33 flex flex-col justify-center items-center gap-4">
+            <span>Check out the new characters!</span>
+            <span class="arrow-down"></span>
+          </div>
+        </div>
+      </div>
     </div>
   </article>
+
+  <div v-else>
+    <HomepageGameMaintenance />
+  </div>
 </template>
 
 <script setup>
+import "@/assets/loader.css";
+import "@/assets/arrow-down.css";
 const supabase = useSupabaseClient();
 
 const {
