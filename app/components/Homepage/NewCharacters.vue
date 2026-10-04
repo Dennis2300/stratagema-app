@@ -20,7 +20,10 @@
             }}</span>
           </div>
           <div class="card-actions justify-end">
-            <button class="btn btn-primary group">
+            <NuxtLink
+              :to="`/characters/${character.id}-${slugify(character.name)}`"
+              class="btn btn-primary group"
+            >
               <span
                 class="transition-transform duration-200 group-hover:translate-x-1"
               >
@@ -40,7 +43,7 @@
                   d="M5 12h14m-6-6l6 6-6 6"
                 />
               </svg>
-            </button>
+            </NuxtLink>
           </div>
         </div>
       </div>
