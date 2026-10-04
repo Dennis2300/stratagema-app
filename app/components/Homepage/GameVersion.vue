@@ -49,7 +49,7 @@ const {
 } = await useAsyncData("game_version", async () => {
   const now = new Date().toISOString();
   // For Testing:
-  //const now = new Date("2026-08-15T00:00:00Z").toISOString();
+  // const now = new Date("2026-10-31T00:00:00Z").toISOString();
 
   const { data, error } = await supabase
     .schema("genshin_impact")
