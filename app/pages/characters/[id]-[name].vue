@@ -1,6 +1,6 @@
 <template>
   <Navbar class="fixed top-0 z-50" />
-  
+
   <div
     v-if="characterLoading"
     class="h-screen flex justify-center items-center"
@@ -131,7 +131,7 @@
         </div>
 
         <div
-          class="grid grid-cols-1 md:grid-cols-2 gap-px overflow-hidden rounded-lg bg-base-content/10 border border-white/10"
+          class="grid grid-cols-1 md:grid-cols-2 gap-px overflow-hidden rounded-lg bg-base-300/10 border border-white/25"
         >
           <div class="bg-base-300/80 p-5">
             <span
@@ -287,7 +287,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div
             v-if="groupedStats.sands.length"
-            class="bg-base-300 flex md:items-center md:justify-center h-25 rounded-2xl border border-white/25"
+            class="bg-base-300/80 flex md:items-center md:justify-center h-25 rounded-2xl border border-white/25"
           >
             <figure class="flex items-center gap-1">
               <img class="w-16 h-16" src="/imgs/sands.webp" alt="Sands" />
@@ -301,7 +301,7 @@
           </div>
           <div
             v-if="groupedStats.goblet.length"
-            class="bg-base-300 flex md:items-center md:justify-center h-25 rounded-2xl border border-white/25"
+            class="bg-base-300/80 flex md:items-center md:justify-center h-25 rounded-2xl border border-white/25"
           >
             <figure class="flex items-center gap-1">
               <img class="w-16 h-16" src="/imgs/goblet.webp" alt="" />
@@ -315,7 +315,7 @@
           </div>
           <div
             v-if="groupedStats.circlet.length"
-            class="bg-base-300 flex md:items-center md:justify-center h-25 rounded-2xl border border-white/25"
+            class="bg-base-300/80 flex md:items-center md:justify-center h-25 rounded-2xl border border-white/25"
           >
             <figure class="flex items-center gap-3">
               <img class="w-16 h-16" src="/imgs/circlet.webp" alt="" />
@@ -335,7 +335,7 @@
             <li
               v-for="(s, i) in groupedStats.substat"
               :key="s.id"
-              class="bg-base-300 py-2 px-4 border border-white/25 rounded-xl"
+              class="bg-base-300/80 py-2 px-4 border border-white/25 rounded-xl"
             >
               <span class="font-bold">{{ i + 1 }}.</span> {{ s.stat }}
             </li>
@@ -353,7 +353,7 @@
           v-else-if="builds"
           v-for="build in builds"
           :key="build.id"
-          class="card bg-base-300 my-4 border border-white/25"
+          class="card bg-base-300/80 my-4 border border-white/25"
         >
           <div class="card-body">
             <h4 class="card-title text-base">{{ build.title }}</h4>
@@ -488,7 +488,7 @@
               <div
                 v-for="item in items"
                 :key="item.id"
-                class="bg-base-300 p-4 border-2 border-base-content/10 rounded-lg hover:bg-zinc-700/50 transition duration-200"
+                class="bg-base-300/80 p-4 border-2 border-base-content/10 rounded-lg hover:bg-zinc-700/50 transition duration-200"
               >
                 <figure class="flex items-center gap-3">
                   <img
