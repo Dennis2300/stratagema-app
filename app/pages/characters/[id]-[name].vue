@@ -22,7 +22,7 @@
       :style="{ backgroundImage: `url(${character.splash_art_url})` }"
     />
 
-    <div class="max-w-7xl mx-auto">
+    <div class="max-w-7xl mx-auto mb-8">
       <!-- Header -->
       <section class="flex flex-col md:flex-row md:justify-between gap-3">
         <!-- Avatar -->
@@ -74,7 +74,7 @@
           <dl
             v-for="voiceActor in sortedVoiceActors"
             :key="voiceActor.language"
-            class="bg-base-300/80 flex justify-between p-4 border border-white/25 rounded-md"
+            class="bg-base-300/90 flex justify-between p-4 border border-white/25 rounded-md"
           >
             <dt>{{ voiceActor.language }}</dt>
             <dd>
@@ -109,7 +109,7 @@
         </div>
 
         <div
-          class="stats stats-vertical bg-base-300/80 w-full shadow md:stats-horizontal"
+          class="stats stats-vertical bg-base-300/90 w-full shadow md:stats-horizontal"
         >
           <div class="stat">
             <div class="stat-title">Rarity</div>
@@ -162,7 +162,7 @@
 
         <div
           v-if="character.special_dish"
-          class="stats stats-vertical bg-base-300/80 w-full shadow md:stats-horizontal mt-1.5"
+          class="stats stats-vertical bg-base-300/90 w-full shadow md:stats-horizontal mt-1.5"
         >
           <div class="stat">
             <div class="stat-title">Signature Dish</div>
@@ -196,12 +196,37 @@
       </section>
 
       <!-- Waepons -->
-
       <section class="px-4 md:px-0">
-        <span class="text-xs text-white/50 italic">Best weapons for {{ character.name }}</span>
+        <span class="text-xs text-white/50 italic"
+          >Best weapons for {{ character.name }}</span
+        >
         <div class="flex items-center gap-2 mb-2">
           <div class="h-9 w-1 rounded-full bg-white"></div>
           <h2>Best Weapons</h2>
+        </div>
+
+        <div class="min-h-[25vh] space-y-6">
+          <div
+            v-for="w in sortedWeapons"
+            :key="w.weapon.id"
+            class="bg-base-300/90 rounded-lg p-4"
+          >
+            <figure class="flex items-center gap-3">
+              <img
+                class="w-20 h-20 mask mask-squircle"
+                :class="`rarity-${w.weapon.rarity}`"
+                :src="w.weapon.img_url"
+                :alt="w.weapon.name"
+              />
+              <figcaption>
+                <h4>{{ w.weapon.name }}</h4>
+                <span>{{ w.weapon.stat }}</span>
+                <span>{{ w.weapon.stat_value }}</span>
+              </figcaption>
+            </figure>
+            <div class="divider" />
+            <p v-if="w.details">{{ w.details }}</p>
+          </div>
         </div>
       </section>
     </div>
