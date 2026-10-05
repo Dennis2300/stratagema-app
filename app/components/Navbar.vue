@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar bg-base-300 shadow-2xl">
+  <nav class="navbar bg-base-300 shadow-2xl border-b border-white/25">
     <div class="navbar-start">
       <div class="dropdown">
         <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">

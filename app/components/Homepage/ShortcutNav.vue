@@ -1,6 +1,6 @@
 <template>
-  <article class="min-h-[30vh] flex justify-center items-center">
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+  <article class="min-h-[30vh] flex justify-center">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 max-w-7xl">
       <NuxtLink
         v-for="link in links"
         :key="link.name"

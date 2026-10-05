@@ -1,29 +1,31 @@
 <template>
-  <h2 class="text-center mt-8">Notice Board</h2>
-  <p class="text-center text-sm text-white/50">
-    Stay informed about website maintenance, downtime, and other important
-    updates.
-  </p>
-  <article class="min-h-100 pt-6">
-    <div v-if="pending" class="flex justify-center items-center">
-      <span class="loading loading-xl"></span>
+  <article class="h-screen flex flex-col items-center">
+    <div class="divider mt-8 md:px-56"></div>
+    <h2 class="">Notice Board</h2>
+    <p class="text-sm text-white/50">
+      Stay informed about website maintenance, downtime, and other important
+      updates.
+    </p>
+
+    <div v-if="pending" class="mt-12">
+      <span class="loading loading-xl scale-200"></span>
     </div>
-    <div v-else-if="error" class="text-center space-y-3">
+
+    <div v-else-if="error" class="mt-12 text-center space-y-4">
       <h3>Sorry about that, but something went wrong</h3>
       <p class="badge badge-error">{{ error.message }}</p>
     </div>
-    <section
-      v-else-if="posts"
-      class="flex flex-col items-center space-y-4 mb-8"
-    >
+
+    <section v-else-if="posts" class="pt-4">
       <div
         v-for="post in posts"
-        class="bg-base-300 max-w-7xl p-4 rounded-xl border border-white/25"
+        :key="post.id"
+        class="bg-base-300 p-6 w-7xl border border-white/25 rounded-xl"
       >
         <div class="flex justify-between items-center">
           <h3>{{ post.title }}</h3>
           <NuxtTime
-            class="text-white/80"
+            class="text-white/50"
             :datetime="post.created_at"
             month="short"
             day="numeric"
