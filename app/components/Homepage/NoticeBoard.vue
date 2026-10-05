@@ -36,6 +36,10 @@
         <p>{{ post.content }}</p>
       </div>
     </section>
+
+    <div v-else>
+      <EmptyFallback />
+    </div>
   </article>
 </template>
 

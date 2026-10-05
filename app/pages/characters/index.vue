@@ -1,5 +1,7 @@
 <template>
-  <header>
+  <Navbar class="fixed top-0 z-50" />
+
+  <article class="max-w-7xl pt-24 pb-12 mx-auto">
     <figure
       class="relative w-full h-48 overflow-hidden rounded-2xl border-2 border-white/25"
     >
@@ -9,61 +11,59 @@
         alt=""
       />
       <div class="absolute top-0 left-0 w-full h-full bg-black/75"></div>
-      <div
+      <figcaption
         class="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center text-center"
       >
         <h1>Characters Archive</h1>
         <p>Here you can find all playable and upcoming playable characters</p>
-      </div>
+      </figcaption>
     </figure>
-  </header>
 
-  <article v-if="upcomingCharacters.length">
-    <div class="my-6 flex items-center gap-3">
-      <div class="h-7 w-1 rounded-full bg-primary"></div>
-      <h2 class="text-2xl font-bold">Upcoming Character(s)</h2>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 px-2">
-      <NuxtLink
-        v-for="character in upcomingCharacters"
-        :key="character.id"
-        :to="`/characters/${character.id}-${slugify(character.name)}`"
-        class="relative group bg-base-300 p-4 rounded-xl hover:bg-zinc-800 hover:-translate-y-0.5 transition duration-300"
-      >
-        <figure class="flex items-center gap-3">
-          <div class="relative w-24 h-24 shrink-0">
-            <img
-              class="w-full h-full rounded-2xl object-cover"
-              :class="{
-                'rarity-5': character.rarity === 5,
-                'rarity-4': character.rarity === 4,
-              }"
-              :src="character.img_url"
-              :alt="character.name"
-              loading="lazy"
-            />
-            <img
-              class="absolute -top-2.5 -right-2.5 w-8 h-8 bg-gray-800 border border-white/33 rounded-full"
-              :src="character.vision_id.img_url"
-              alt=""
-            />
-          </div>
-          <figcaption>
-            <h4 class="truncate max-w-32">{{ character.name }}</h4>
-            <div class="leading-none text-yellow-600">
-              <span v-for="n in character.rarity" :key="n">★</span>
+    <section v-if="upcomingCharacters.length">
+      <div class="my-6 flex items-center gap-3">
+        <div class="h-7 w-1 rounded-full bg-primary"></div>
+        <h3 class="font-bold">Upcoming Character(s)</h3>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 px-2">
+        <NuxtLink
+          v-for="character in upcomingCharacters"
+          :key="character.id"
+          :to="`/characters/${character.id}-${slugify(character.name)}`"
+          class="relative group bg-base-300 p-4 rounded-xl hover:bg-zinc-800 hover:-translate-y-0.5 transition duration-300"
+        >
+          <figure class="flex items-center gap-3">
+            <div class="relative w-24 h-24 shrink-0">
+              <img
+                class="w-full h-full rounded-2xl object-cover"
+                :class="{
+                  'rarity-5': character.rarity === 5,
+                  'rarity-4': character.rarity === 4,
+                }"
+                :src="character.img_url"
+                :alt="character.name"
+                loading="lazy"
+              />
+              <img
+                class="absolute -top-2.5 -right-2.5 w-8 h-8 bg-gray-800 border border-white/33 rounded-full"
+                :src="character.vision_id.img_url"
+                alt=""
+              />
             </div>
-          </figcaption>
-        </figure>
-      </NuxtLink>
-    </div>
-  </article>
+            <figcaption>
+              <h4 class="truncate max-w-32">{{ character.name }}</h4>
+              <div class="leading-none text-yellow-600">
+                <span v-for="n in character.rarity" :key="n">★</span>
+              </div>
+            </figcaption>
+          </figure>
+        </NuxtLink>
+      </div>
+    </section>
 
-  <article class="min-h-screen">
     <div class="my-6">
       <div class="flex items-center gap-3">
         <div class="h-7 w-1 rounded-full bg-primary"></div>
-        <h2 class="text-2xl font-bold">Playable Characters</h2>
+        <h3 class="font-bold">Playable Characters</h3>
       </div>
       <label class="input mt-3">
         <svg
@@ -91,80 +91,84 @@
       </label>
     </div>
 
-    <div v-if="pending" class="text-center py-6">
-      <span class="loading loading-spinner loading-xl"></span>
-    </div>
+    <section class="min-h-screen">
+      <div v-if="pending" class="text-center py-6">
+        <span class="loading loading-spinner loading-xl"></span>
+      </div>
 
-    <div v-else-if="error">
-      <p>{{ error.message }}</p>
-    </div>
+      <div v-else-if="error">
+        <ErrorMessage :error="error" />
+      </div>
 
-    <div
-      v-else-if="characters.length"
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-2"
-    >
-      <NuxtLink
-        v-for="character in filteredPlayableCharacters"
-        :key="character.id"
-        :to="`/characters/${character.id}-${slugify(character.name)}`"
-        class="relative group bg-base-300 p-4 rounded-xl hover:bg-zinc-800 hover:-translate-y-0.5 transition duration-300"
+      <div
+        v-else-if="characters"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-4 md:px-0"
       >
-        <figure class="flex justify-between">
-          <figure class="flex items-center gap-3">
-            <div class="relative w-24 h-24 shrink-0">
-              <img
-                class="w-full h-full rounded-2xl object-cover"
-                :class="{
-                  'rarity-5': character.rarity === 5,
-                  'rarity-4': character.rarity === 4,
-                }"
-                :src="character.img_url"
-                :alt="character.name"
-                loading="lazy"
-              />
-              <img
-                class="absolute -top-2.5 -right-2.5 w-8 h-8 bg-gray-800 border border-white/33 rounded-full"
-                :src="character.vision_id.img_url"
-                alt=""
-                loading="lazy"
-              />
-            </div>
-            <figcaption>
-              <h4 class="truncate max-w-36">{{ character.name }}</h4>
-              <div class="leading-none text-yellow-600">
-                <span v-for="n in character.rarity" :key="n">★</span>
-              </div>
-            </figcaption>
-          </figure>
-          <img
-            class="h-24 w-auto opacity-50 group-hover:opacity-100 transition duration-300"
-            :src="character.splash_art_url"
-            :alt="character.name"
-            loading="lazy"
-          />
-        </figure>
-
-        <div class="grid grid-cols-3 gap-1 mt-3 text-center text-sm">
-          <span class="truncate bg-zinc-700 rounded-md py-1 px-1">{{
-            character?.weapon_type_id?.name
-          }}</span>
-          <span class="truncate bg-zinc-700 rounded-md py-1 px-2">{{
-            character?.main_stat
-          }}</span>
-          <span class="truncate bg-zinc-700 rounded-md py-1 px-1">{{
-            character?.role
-          }}</span>
-        </div>
-
-        <span
-          v-if="character.is_new"
-          class="absolute -top-3 -left-3 badge badge-info badge-sm"
-          >New!</span
+        <NuxtLink
+          v-for="character in filteredPlayableCharacters"
+          :key="character.id"
+          :to="`/characters/${character.id}-${slugify(character.name)}`"
+          class="relative group bg-base-300 p-4 rounded-xl hover:bg-zinc-800 hover:-translate-y-0.5 transition duration-300"
         >
-      </NuxtLink>
-    </div>
+          <figure class="flex justify-between">
+            <figure class="flex items-center gap-3">
+              <div class="relative w-24 h-24 shrink-0">
+                <img
+                  class="w-full h-full rounded-2xl object-cover"
+                  :class="{
+                    'rarity-5': character.rarity === 5,
+                    'rarity-4': character.rarity === 4,
+                  }"
+                  :src="character.img_url"
+                  :alt="character.name"
+                  loading="lazy"
+                />
+                <img
+                  class="absolute -top-2.5 -right-2.5 w-8 h-8 bg-gray-800 border border-white/33 rounded-full"
+                  :src="character.vision_id.img_url"
+                  alt=""
+                  loading="lazy"
+                />
+              </div>
+              <figcaption>
+                <h4 class="truncate max-w-36">{{ character.name }}</h4>
+                <div class="leading-none text-yellow-600">
+                  <span v-for="n in character.rarity" :key="n">★</span>
+                </div>
+              </figcaption>
+            </figure>
+            <img
+              class="h-24 w-auto opacity-50 group-hover:opacity-100 transition duration-300"
+              :src="character.splash_art_url"
+              :alt="character.name"
+              loading="lazy"
+            />
+          </figure>
 
-    <div v-else>Empty Fallback</div>
+          <div class="grid grid-cols-3 gap-1 mt-3 text-center text-sm">
+            <span class="truncate bg-zinc-700 rounded-md py-1 px-1">{{
+              character?.weapon_type_id?.name
+            }}</span>
+            <span class="truncate bg-zinc-700 rounded-md py-1 px-2">{{
+              character?.main_stat
+            }}</span>
+            <span class="truncate bg-zinc-700 rounded-md py-1 px-1">{{
+              character?.role
+            }}</span>
+          </div>
+
+          <span
+            v-if="character.is_new"
+            class="absolute -top-3 -left-3 badge badge-info badge-sm"
+            >New!</span
+          >
+        </NuxtLink>
+      </div>
+
+      <div v-else>
+        <EmptyFallback />
+      </div>
+    </section>
   </article>
 </template>
 
