@@ -1,29 +1,36 @@
 <template>
+  <Navbar class="fixed top-0 z-50" />
+  
   <div
     v-if="characterLoading"
-    class="flex justify-center items-center h-[75vh]"
+    class="h-screen flex justify-center items-center"
   >
-    <span class="loading loading-spinner loading-xl"></span>
+    <span class="loader"></span>
   </div>
 
-  <div v-else-if="characterError">
+  <div
+    v-else-if="characterError"
+    class="h-screen flex justify-center items-center"
+  >
     <ErrorMessage :error="characterError" />
   </div>
 
-  <article v-else-if="character" class="relative min-h-[125vh]">
-    <figure class="absolute inset-0">
+  <article v-else-if="character" class="relative min-h-[200vh]">
+    <figure class="absolute inset-0 blur-xs">
       <img
         class="w-full object-cover opacity-33"
         :src="character.splash_art_url"
         :alt="character.name"
       />
     </figure>
-    <div class="relative w-full space-y-4 md:space-y-8 z-10 backdrop-blur-xs">
+
+    <div class="relative pt-24 max-w-7xl mx-auto space-y-6">
+      <!-- Header -->
       <section class="w-full flex flex-col md:flex-row gap-4 md:gap-0">
         <figure class="flex flex-2 flex-col items-center gap-6 md:flex-row">
           <div class="relative shrink-0 rounded-full overflow-hidden">
             <img
-              class="h-32 w-32 object-cover md:h-40 md:w-40"
+              class="h-32 w-32 object-cover md:h-42 md:w-42"
               :class="{
                 'rarity-5': character.rarity === 5,
                 'rarity-4': character.rarity === 4,
@@ -111,9 +118,10 @@
         </div>
       </section>
 
+      <!-- Dossier -->
       <section class="w-full relative px-4">
         <span
-          class="text-xs font-medium uppercase tracking-widest text-primary/60"
+          class="text-xs font-medium uppercase tracking-widest text-warning"
         >
           Character Profile</span
         >
@@ -123,7 +131,7 @@
         </div>
 
         <div
-          class="grid grid-cols-2 gap-px overflow-hidden rounded-lg bg-base-content/10 border border-white/10"
+          class="grid grid-cols-1 md:grid-cols-2 gap-px overflow-hidden rounded-lg bg-base-content/10 border border-white/10"
         >
           <div class="bg-base-300/80 p-5">
             <span
@@ -188,9 +196,10 @@
         </div>
       </section>
 
-      <section class="w-full px-4">
+      <!-- Weapons -->
+      <section class="w-full relative px-4">
         <span
-          class="text-xs font-medium uppercase tracking-widest text-primary/60"
+          class="text-xs font-medium uppercase tracking-widest text-warning"
         >
           Recommended Weapons for {{ character.name }}
         </span>
@@ -260,18 +269,21 @@
         </div>
       </section>
 
+      <!-- Builds -->
       <section class="w-full px-4">
         <span
-          class="text-xs font-medium uppercase tracking-widest text-primary/60"
+          class="text-xs font-medium uppercase tracking-widest text-warning"
         >
           Recommended Build(s) for {{ character.name }}
         </span>
+
         <div class="flex items-center gap-3 mb-4">
           <div class="w-1 h-9 bg-white rounded-xl"></div>
           <h2>Build(s)</h2>
         </div>
 
         <h3 class="divider">Artifact Main Stats</h3>
+
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div
             v-if="groupedStats.sands.length"
@@ -316,6 +328,7 @@
             </figure>
           </div>
         </div>
+
         <div v-if="groupedStats.substat.length">
           <h4 class="divider mt-6">Substats</h4>
           <ol class="flex flex-wrap justify-center gap-3">
@@ -333,7 +346,9 @@
         <div v-if="buildsLoading" class="h-75 flex justify-center items-center">
           <span class="loading loading-xl scale-200"></span>
         </div>
+
         <ErrorMessage v-else-if="buildsError" :error="buildsError" />
+
         <div
           v-else-if="builds"
           v-for="build in builds"
@@ -389,10 +404,11 @@
         </div>
       </section>
 
+      <!-- Teams -->
       <section v-if="character.teams.length > 0" class="w-full px-4">
         <div>
           <span
-            class="text-xs font-medium uppercase tracking-widest text-primary/60"
+            class="text-xs font-medium uppercase tracking-widest text-warning"
           >
             Possible Teams for {{ character.name }}
           </span>
@@ -448,9 +464,10 @@
         </div>
       </section>
 
+      <!-- Materials -->
       <section class="w-full px-4">
         <span
-          class="text-xs font-medium uppercase tracking-widest text-primary/60"
+          class="text-xs font-medium uppercase tracking-widest text-warning"
         >
           All materials needed to reach Level 90 and max out Talents.
         </span>
@@ -463,7 +480,7 @@
         <div class="space-y-8 mt-4">
           <div v-for="(items, type) in groupedMaterials" :key="type">
             <h3
-              class="whitespace-nowrap text-xs font-bold uppercase tracking-widest text-primary/70 divider divider-start"
+              class="whitespace-nowrap text-xs font-bold uppercase tracking-widest divider divider-start"
             >
               {{ type.replaceAll("_", " ") }}
             </h3>
@@ -492,7 +509,7 @@
                       {{ item.material.name }}
                     </p>
                     <span
-                      class="mt-1 inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-2 py-0.5 text-xs font-semibold text-primary"
+                      class="mt-1 inline-flex items-center rounded-full border border-white/25 bg-base-300 px-2 py-0.5 text-xs font-semibold text-warning"
                     >
                       ×{{ item.amount.toLocaleString() }}
                     </span>
@@ -506,7 +523,9 @@
     </div>
   </article>
 
-  <div v-else>Empty Fallback</div>
+  <div v-else>
+    <EmptyFallback />
+  </div>
 </template>
 
 <script setup>
