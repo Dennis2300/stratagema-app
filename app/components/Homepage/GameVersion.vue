@@ -25,7 +25,11 @@
           <p>Version {{ currentVersion.version_number }} is available now!</p>
           <div class="h-33 flex flex-col justify-center items-center gap-4">
             <span>Check out the new characters!</span>
-            <span class="arrow-down"></span>
+            <NuxtLink
+              to="#new_characters"
+              class="arrow-down"
+              aria-label="Scroll to next section"
+            />
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 <template>
-  <article class="min-h-[70vh] flex flex-col items-center pt-6">
+  <article id="new_characters" class="min-h-[70vh] flex flex-col justify-center items-center mt-12 md:mt-0">
     <h2 class="mb-4 italic">Say hello to...</h2>
-    <div class="flex justify-around items-center gap-8">
+    <div class="flex flex-col md:flex-row justify-around items-center gap-8">
       <div
         v-for="character in characters"
         :key="character.id"

@@ -1,8 +1,8 @@
 <template>
   <article class="h-screen flex flex-col items-center">
     <div class="divider mt-8 md:px-56"></div>
-    <h2 class="">Notice Board</h2>
-    <p class="text-sm text-white/50">
+    <h2 class="mt-8">Notice Board</h2>
+    <p class="text-sm text-white/50 text-center md:text-start">
       Stay informed about website maintenance, downtime, and other important
       updates.
     </p>
@@ -20,9 +20,9 @@
       <div
         v-for="post in posts"
         :key="post.id"
-        class="bg-base-300 p-6 w-7xl border border-white/25 rounded-xl"
+        class="bg-base-300 p-6 md:w-7xl border border-white/25 rounded-xl"
       >
-        <div class="flex justify-between items-center">
+        <div class="flex flex-col md:flex-row justify-between md:items-center">
           <h3>{{ post.title }}</h3>
           <NuxtTime
             class="text-white/50"
