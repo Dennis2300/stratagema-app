@@ -15,509 +15,193 @@
     <ErrorMessage :error="characterError" />
   </div>
 
-  <article v-else-if="character" class="relative min-h-[200vh]">
-    <figure class="absolute inset-0 blur-xs">
-      <img
-        class="w-full object-cover opacity-33"
-        :src="character.splash_art_url"
-        :alt="character.name"
-      />
-    </figure>
+  <article v-else-if="character" class="min-h-screen pt-24">
+    <!-- Splash Art Background -->
+    <div
+      class="fixed inset-0 -z-10 bg-no-repeat bg-center blur-xs opacity-25 md:opacity-50"
+      :style="{ backgroundImage: `url(${character.splash_art_url})` }"
+    />
 
-    <div class="relative pt-24 max-w-7xl mx-auto space-y-6">
+    <div class="max-w-7xl mx-auto">
       <!-- Header -->
-      <section class="w-full flex flex-col md:flex-row gap-4 md:gap-0">
-        <figure class="flex flex-2 flex-col items-center gap-6 md:flex-row">
-          <div class="relative shrink-0 rounded-full overflow-hidden">
+      <section class="flex flex-col md:flex-row md:justify-between gap-3">
+        <!-- Avatar -->
+        <div class="flex flex-col items-center md:flex-row gap-3">
+          <figure class="relative">
             <img
-              class="h-32 w-32 object-cover md:h-42 md:w-42"
+              class="absolute -top-2 -left-2 w-10 bg-gray-700 rounded-full border border-white/50"
+              :src="character.vision.img_url"
+              alt=""
+            />
+            <img
+              class="rounded-full w-32 h-32"
               :class="{
                 'rarity-5': character.rarity === 5,
                 'rarity-4': character.rarity === 4,
               }"
               :src="character.img_url"
-              :alt="character.name"
+              alt=""
             />
-          </div>
-
-          <figcaption class="text-white text-center md:text-left">
-            <span
-              v-if="character.title"
-              class="mb-2 block text-sm font-medium uppercase tracking-[0.3em] text-white/50"
-            >
-              {{ character.title }}
-            </span>
-
-            <h1
-              class="text-6xl font-bold uppercase leading-none tracking-tight md:text-8xl"
-            >
-              {{ character.name }}
-            </h1>
-
-            <div
-              class="mt-2 flex flex-wrap items-center justify-center gap-3 font-medium"
-            >
-              <span class="badge badge-primary">
-                {{ character.vision.name }}
-              </span>
-              <span class="h-1 w-1 rounded-full bg-white/50"></span>
-              <span class="badge badge-primary">{{
+          </figure>
+          <div class="flex flex-col items-center md:items-start">
+            <span class="italic text-white/50">"{{ character.title }}"</span>
+            <h1>{{ character.name }}</h1>
+            <div class="flex flex-wrap items-center gap-2 mt-2">
+              <span class="badge badge-neutral badge-sm">{{
+                character.vision.name
+              }}</span>
+              <span class="h-1 w-1 rounded-full bg-white"></span>
+              <span class="badge badge-neutral badge-sm">{{
                 character.weapon_type.name
               }}</span>
-              <span class="h-1 w-1 rounded-full bg-white/50"></span>
-              <span class="badge badge-primary">{{ character.role }}</span>
-              <span class="h-1 w-1 rounded-full bg-white/50"></span>
-              <span class="badge badge-primary">{{ character.main_stat }}</span>
+              <span class="h-1 w-1 rounded-full bg-white"></span>
+              <span class="badge badge-neutral badge-sm">{{
+                character.role
+              }}</span>
+              <span class="h-1 w-1 rounded-full bg-white"></span>
+              <span class="badge badge-neutral badge-sm">{{
+                character.main_stat
+              }}</span>
             </div>
-          </figcaption>
-        </figure>
-
-        <div class="px-4">
-          <!-- Section heading -->
-          <div class="mb-4 flex items-center gap-3">
+          </div>
+        </div>
+        <!-- Voice Actors -->
+        <div class="space-y-3 mx-2 text-xs">
+          <div class="flex items-center gap-3">
             <div class="h-6 w-1 rounded-full bg-white"></div>
-            <h3 class="font-semibold text-white">Voice Actors</h3>
+            <h6>Voice Actors</h6>
           </div>
-
-          <!-- Voice actors -->
-          <div class="space-y-3">
-            <div
-              v-for="voiceActor in sortedVoiceActors"
-              :key="voiceActor.language"
-              class="flex items-center justify-between rounded-lg bg-base-300 px-4 py-2.5 border border-white/15"
-            >
-              <span
-                class="w-10 text-sm font-bold uppercase tracking-wide text-white/60"
+          <dl
+            v-for="voiceActor in sortedVoiceActors"
+            :key="voiceActor.language"
+            class="bg-base-300/80 flex justify-between p-4 border border-white/25 rounded-md"
+          >
+            <dt>{{ voiceActor.language }}</dt>
+            <dd>
+              <template
+                v-for="(actor, index) in voiceActor.actors"
+                :key="actor.id"
               >
-                {{ voiceActor.language }}
-              </span>
-
-              <span
-                class="flex items-center gap-1 text-sm font-medium text-white"
-              >
-                <template
-                  v-for="(actor, index) in voiceActor.actors"
-                  :key="actor.id"
+                <a
+                  :href="actor.link"
+                  target="_blank"
+                  class="hover:underline hover:text-warning transition duration-100"
                 >
-                  <a
-                    :href="actor.link"
-                    target="_blank"
-                    class="hover:underline hover:text-base-content"
-                  >
-                    {{ actor.name }}
-                  </a>
-                  <span
-                    v-if="index < voiceActor.actors.length - 1"
-                    class="text-white/60"
-                    >&</span
-                  >
-                </template>
-              </span>
-            </div>
-          </div>
+                  {{ actor.name }}
+                </a>
+                <span
+                  v-if="index < voiceActor.actors.length - 1"
+                  class="text-white/60"
+                  >&</span
+                >
+              </template>
+            </dd>
+          </dl>
         </div>
       </section>
 
       <!-- Dossier -->
-      <section class="w-full relative px-4">
-        <span
-          class="text-xs font-medium uppercase tracking-widest text-warning"
-        >
-          Character Profile</span
-        >
-        <div class="flex items-center gap-3 mb-4">
-          <div class="w-1 h-9 bg-white rounded-xl"></div>
+      <section class="px-4 md:px-0">
+        <span class="text-xs text-white/50 italic"> Character Profile</span>
+        <div class="flex items-center gap-2 mb-2">
+          <div class="h-9 w-1 rounded-full bg-white"></div>
           <h2>Dossier</h2>
         </div>
 
         <div
-          class="grid grid-cols-1 md:grid-cols-2 gap-px overflow-hidden rounded-lg bg-base-300/10 border border-white/25"
+          class="stats stats-vertical bg-base-300/80 w-full shadow md:stats-horizontal"
         >
-          <div class="bg-base-300/80 p-5">
-            <span
-              class="w-10 text-sm font-bold uppercase tracking-wide text-white/60"
-              >Rarity</span
-            >
-            <div class="text-lg text-yellow-400">
-              <span v-for="star in character.rarity" :key="star">★</span>
+          <div class="stat">
+            <div class="stat-title">Rarity</div>
+            <div class="stat-value text-yellow-400">
+              {{ "★".repeat(character.rarity) }}
+            </div>
+            <div class="stat-desc">{{ character.rarity }} Star</div>
+          </div>
+
+          <div class="stat">
+            <div class="stat-title">Constellation</div>
+            <div class="stat-value italic">{{ character.constellation }}</div>
+            <div class="stat-desc">{{ character.constellation }}</div>
+          </div>
+
+          <div class="stat">
+            <div class="stat-title">Birthday</div>
+            <div class="stat-value">{{ character.birthday }}</div>
+            <div class="stat-desc">Month/Day</div>
+          </div>
+
+          <div class="stat">
+            <div class="stat-title">Team Role</div>
+            <div class="stat-value">{{ character.role }}</div>
+            <div class="stat-desc">
+              {{ character.vision.name }} {{ character.role }}
             </div>
           </div>
 
-          <div class="bg-base-300/80 p-5">
-            <span
-              class="w-10 text-sm font-bold uppercase tracking-wide text-white/60"
-              >Signature Dish</span
-            >
-            <SpecialDishPopUp
-              v-if="character.special_dish"
-              :dish="character.special_dish"
-            />
-            <p v-else class="text-lg font-semibold text-red-700">
-              No Special Dish!
-            </p>
-          </div>
-
-          <div class="bg-base-300/80 p-5">
-            <span
-              class="w-10 text-sm font-bold uppercase tracking-wide text-white/60"
-              >Constellation</span
-            >
-            <p class="text-lg font-semibold">{{ character.constellation }}</p>
-          </div>
-
-          <div class="bg-base-300/80 p-5">
-            <span
-              class="w-10 text-sm font-bold uppercase tracking-wide text-white/60"
-              >Birthday</span
-            >
-            <p class="text-lg font-semibold" v-if="character.birthday">
-              {{ character.birthday }}
-            </p>
-            <p v-else class="text-lg font-semibold text-red-700">
-              No Birthday!
-            </p>
-          </div>
-
-          <div class="bg-base-300/80 p-5">
-            <span
-              class="w-10 text-sm font-bold uppercase tracking-wide text-white/60"
-              >Team Role</span
-            >
-            <p class="text-lg font-semibold uppercase">{{ character.role }}</p>
-          </div>
-
-          <div class="bg-base-300/80 p-5">
-            <span
-              class="w-10 text-sm font-bold uppercase tracking-wide text-white/60"
-              >Release Date</span
-            >
-            <p class="text-lg font-semibold">{{ character.release_date }}</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Weapons -->
-      <section class="w-full relative px-4">
-        <span
-          class="text-xs font-medium uppercase tracking-widest text-warning"
-        >
-          Recommended Weapons for {{ character.name }}
-        </span>
-        <div class="flex items-center gap-3 mb-4">
-          <div class="w-1 h-9 bg-white rounded-xl"></div>
-          <h2>Weapons</h2>
-        </div>
-        <div class="space-y-6">
-          <div
-            v-for="w in sortedWeapons"
-            :key="w.weapon.id"
-            class="group overflow-hidden rounded-xl border border-white/15 bg-base-300/80 shadow-sm transition-all duration-200 hover:border-white/30 hover:bg-base-300/95"
-          >
-            <div
-              class="flex items-center justify-between gap-3 border-b border-white/10 p-4"
-            >
-              <figure class="flex min-w-0 items-center gap-4">
-                <div
-                  class="shrink-0 overflow-hidden rounded-xl ring-1 ring-white/10"
-                >
-                  <img
-                    class="h-20 w-20 object-cover transition-transform duration-300 group-hover:scale-105"
-                    :class="{
-                      'rarity-5': w.weapon.rarity === 5,
-                      'rarity-4': w.weapon.rarity === 4,
-                      'rarity-3': w.weapon.rarity === 3,
-                    }"
-                    :src="w.weapon.img_url"
-                    :alt="w.weapon.name"
-                  />
-                </div>
-
-                <figcaption class="min-w-0">
-                  <h3 class="truncate">
-                    {{ w.weapon.name }}
-                  </h3>
-
-                  <div
-                    class="mt-2 flex items-center gap-3 text-sm text-white/60"
-                  >
-                    <p>
-                      <span class="text-white/40">STAT:</span>
-                      {{ w.weapon.stat }}
-                    </p>
-
-                    <span class="h-1 w-1 rounded-full bg-white/20"></span>
-
-                    <p>
-                      <span class="text-white/40">VALUE:</span>
-                      {{ w.weapon.stat_value }}
-                    </p>
-                  </div>
-                </figcaption>
-              </figure>
-
-              <div
-                class="hidden md:block shrink-0 text-white/30 transition-all duration-200 group-hover:translate-x-1 group-hover:text-white/70"
-              >
-                <span class="text-xl">→</span>
-              </div>
+          <div class="stat">
+            <div class="stat-title">Release Date</div>
+            <div class="stat-value">
+              <NuxtTime
+                :datetime="character.release_date"
+                month="short"
+                day="numeric"
+                year="numeric"
+              />
             </div>
-
-            <p v-if="w.details" class="p-4 text-white/70">
-              {{ w.details }}
-            </p>
+            <div class="stat-desc">
+              <NuxtTime
+                :datetime="character.release_date"
+                month="long"
+                day="numeric"
+                year="numeric"
+              />
+            </div>
           </div>
         </div>
-      </section>
-
-      <!-- Builds -->
-      <section class="w-full px-4">
-        <span
-          class="text-xs font-medium uppercase tracking-widest text-warning"
-        >
-          Recommended Build(s) for {{ character.name }}
-        </span>
-
-        <div class="flex items-center gap-3 mb-4">
-          <div class="w-1 h-9 bg-white rounded-xl"></div>
-          <h2>Build(s)</h2>
-        </div>
-
-        <h3 class="divider">Artifact Main Stats</h3>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div
-            v-if="groupedStats.sands.length"
-            class="bg-base-300/80 flex md:items-center md:justify-center h-25 rounded-2xl border border-white/25"
-          >
-            <figure class="flex items-center gap-1">
-              <img class="w-16 h-16" src="/imgs/sands.webp" alt="Sands" />
-              <figcaption>
-                <h4>Sands</h4>
-                <p class="text-base-content">
-                  {{ groupedStats.sands.map((s) => s.stat).join(" or ") }}
-                </p>
-              </figcaption>
-            </figure>
-          </div>
-          <div
-            v-if="groupedStats.goblet.length"
-            class="bg-base-300/80 flex md:items-center md:justify-center h-25 rounded-2xl border border-white/25"
-          >
-            <figure class="flex items-center gap-1">
-              <img class="w-16 h-16" src="/imgs/goblet.webp" alt="" />
-              <figcaption>
-                <h4>Goblet</h4>
-                <p class="text-base-content">
-                  {{ groupedStats.goblet.map((s) => s.stat).join(" or ") }}
-                </p>
-              </figcaption>
-            </figure>
-          </div>
-          <div
-            v-if="groupedStats.circlet.length"
-            class="bg-base-300/80 flex md:items-center md:justify-center h-25 rounded-2xl border border-white/25"
-          >
-            <figure class="flex items-center gap-3">
-              <img class="w-16 h-16" src="/imgs/circlet.webp" alt="" />
-              <figcaption>
-                <h4>Circlet</h4>
-                <p class="text-base-content">
-                  {{ groupedStats.circlet.map((s) => s.stat).join(" or ") }}
-                </p>
-              </figcaption>
-            </figure>
-          </div>
-        </div>
-
-        <div v-if="groupedStats.substat.length">
-          <h4 class="divider mt-6">Substats</h4>
-          <ol class="flex flex-wrap justify-center gap-3">
-            <li
-              v-for="(s, i) in groupedStats.substat"
-              :key="s.id"
-              class="bg-base-300/80 py-2 px-4 border border-white/25 rounded-xl"
-            >
-              <span class="font-bold">{{ i + 1 }}.</span> {{ s.stat }}
-            </li>
-          </ol>
-        </div>
-
-        <h3 class="divider divider-start mt-8 mb-2">Artifacts</h3>
-        <div v-if="buildsLoading" class="h-75 flex justify-center items-center">
-          <span class="loading loading-xl scale-200"></span>
-        </div>
-
-        <ErrorMessage v-else-if="buildsError" :error="buildsError" />
 
         <div
-          v-else-if="builds"
-          v-for="build in builds"
-          :key="build.id"
-          class="card bg-base-300/80 my-4 border border-white/25"
+          v-if="character.special_dish"
+          class="stats stats-vertical bg-base-300/80 w-full shadow md:stats-horizontal mt-1.5"
         >
-          <div class="card-body">
-            <h4 class="card-title text-base">{{ build.title }}</h4>
-            <MarkdownRender
-              v-if="build.details"
-              :text="build.details"
-              class="text-sm opacity-70"
-            />
-            <div class="divider m-0"></div>
-            <!-- Artifact pieces -->
-            <div class="flex flex-col gap-3">
-              <div
-                v-for="piece in build.build_artifact"
-                :key="piece.id"
-                class="flex items-center gap-3"
-              >
-                <img
-                  :src="piece.artifact_id.flower_img_url"
-                  :alt="piece.artifact_id.name"
-                  class="w-24 h-24 rounded-lg rarity-5 object-contain"
-                />
-                <div class="flex-1">
-                  <span class="badge badge-accent badge-xs">
-                    {{ piece.piece_count }} piece
-                  </span>
-                  <h4 class="font-semibold text-sm">
-                    {{ piece.artifact_id.name }}
-                  </h4>
+          <div class="stat">
+            <div class="stat-title">Signature Dish</div>
 
-                  <div v-if="piece.piece_count === 4">
-                    <p class="text-xs opacity-70 mt-1 line-clamp-3">
-                      {{ piece.artifact_id.two_piece_bonus_id.name }}
-                    </p>
-                    <p class="text-xs opacity-70 mt-1">
-                      {{ piece.artifact_id.four_piece_bonus }}
-                    </p>
-                  </div>
-                  <p
-                    v-if="piece.piece_count === 2"
-                    class="text-xs opacity-70 mt-1 line-clamp-3"
-                  >
-                    {{ piece.artifact_id.two_piece_bonus_id.name }}
-                  </p>
+            <div class="stat-figure text-secondary">
+              <div class="avatar">
+                <div class="w-16 rounded-2xl">
+                  <img
+                    :src="character.special_dish.img_url"
+                    :alt="character.special_dish.name"
+                    :class="`rarity-${character.special_dish.rarity}`"
+                  />
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      <!-- Teams -->
-      <section v-if="character.teams.length > 0" class="w-full px-4">
-        <div>
-          <span
-            class="text-xs font-medium uppercase tracking-widest text-warning"
-          >
-            Possible Teams for {{ character.name }}
-          </span>
-          <div class="flex items-center gap-3">
-            <div class="h-8 w-1 rounded-full bg-primary"></div>
-            <h2 class="text-xl font-semibold">Teams</h2>
-          </div>
-        </div>
+            <div class="stat-value">{{ character.special_dish.name }}</div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-          <div
-            v-for="team in sortTeams(character.teams)"
-            :key="team.id"
-            class="bg-base-300/80 p-4 border border-white/15 rounded-xl"
-          >
-            <div class="flex justify-between items-center">
-              <h4 class="text-base-content">{{ team.name }}</h4>
-              <span class="text-white/15">#{{ team.id }}</span>
+            <div class="stat-desc text-info">
+              {{ character.special_dish.utility }} Star
             </div>
-            <div class="divider mt-0 mb-2"></div>
 
-            <div class="flex justify-center items-center gap-4">
-              <img
-                class="h-16 w-16 mask mask-squircle"
-                :class="{
-                  'rarity-5': character.rarity === 5,
-                  'rarity-4': character.rarity === 4,
-                }"
-                :src="character.img_url"
-                :alt="character.name"
-              />
-              <div class="h-8 w-px bg-base-content/50"></div>
-              <NuxtLink
-                v-for="member in sortedMembers(team.members)"
-                :key="member.id"
-                class="tooltip tooltip-bottom tooltip-primary hover:cursor-pointer"
-                :data-tip="`${member.character.name} (${member.role})`"
-                :to="`/characters/${member.character.id}-${slugify(member.character.name)}`"
-                target="_blank"
-              >
-                <img
-                  class="h-16 w-16 mask mask-squircle"
-                  :class="{
-                    'rarity-5': member.character.rarity === 5,
-                    'rarity-4': member.character.rarity === 4,
-                  }"
-                  :src="member.character.img_url"
-                  :alt="member.character.name"
-                />
-              </NuxtLink>
+            <div>
+              <div class="divider m-0"></div>
+              <p class="text-xs text-white/50 w-full">
+                {{ character.special_dish.description }}
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Materials -->
-      <section class="w-full px-4">
-        <span
-          class="text-xs font-medium uppercase tracking-widest text-warning"
-        >
-          All materials needed to reach Level 90 and max out Talents.
-        </span>
+      <!-- Waepons -->
 
-        <div class="flex items-center gap-3 mb-4">
-          <div class="w-1 h-9 bg-white rounded-xl"></div>
-          <h2>Materials</h2>
-        </div>
-
-        <div class="space-y-8 mt-4">
-          <div v-for="(items, type) in groupedMaterials" :key="type">
-            <h3
-              class="whitespace-nowrap text-xs font-bold uppercase tracking-widest divider divider-start"
-            >
-              {{ type.replaceAll("_", " ") }}
-            </h3>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
-              <div
-                v-for="item in items"
-                :key="item.id"
-                class="bg-base-300/80 p-4 border-2 border-base-content/10 rounded-lg hover:bg-zinc-700/50 transition duration-200"
-              >
-                <figure class="flex items-center gap-3">
-                  <img
-                    :src="item.material.img_url"
-                    class="w-16 h-16 mask mask-squircle"
-                    :class="{
-                      'rarity-5': item.material.rarity === 5,
-                      'rarity-4': item.material.rarity === 4,
-                      'rarity-3': item.material.rarity === 3,
-                      'rarity-2': item.material.rarity === 2,
-                      'rarity-1': item.material.rarity === 1,
-                    }"
-                  />
-                  <figcaption class="min-w-0">
-                    <p
-                      class="truncate text-sm font-medium text-base-content/90"
-                    >
-                      {{ item.material.name }}
-                    </p>
-                    <span
-                      class="mt-1 inline-flex items-center rounded-full border border-white/25 bg-base-300 px-2 py-0.5 text-xs font-semibold text-warning"
-                    >
-                      ×{{ item.amount.toLocaleString() }}
-                    </span>
-                  </figcaption>
-                </figure>
-              </div>
-            </div>
-          </div>
+      <section class="px-4 md:px-0">
+        <span class="text-xs text-white/50 italic">Best weapons for {{ character.name }}</span>
+        <div class="flex items-center gap-2 mb-2">
+          <div class="h-9 w-1 rounded-full bg-white"></div>
+          <h2>Best Weapons</h2>
         </div>
       </section>
     </div>
@@ -529,7 +213,6 @@
 </template>
 
 <script setup>
-import SpecialDishPopUp from "~/components/Character/SpecialDishPopUp.vue";
 import MarkdownRender from "~/components/MarkdownRender.vue";
 
 const supabase = useSupabaseClient();
