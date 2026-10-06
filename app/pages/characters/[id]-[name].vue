@@ -22,7 +22,7 @@
       :style="{ backgroundImage: `url(${character.splash_art_url})` }"
     />
 
-    <div class="max-w-7xl mx-auto mb-8">
+    <div class="max-w-7xl mx-auto space-y-8 mb-12">
       <!-- Header -->
       <section class="flex flex-col md:flex-row md:justify-between gap-3">
         <!-- Avatar -->
@@ -71,37 +71,39 @@
             <div class="h-6 w-1 rounded-full bg-white"></div>
             <h6>Voice Actors</h6>
           </div>
-          <dl
-            v-for="voiceActor in sortedVoiceActors"
-            :key="voiceActor.language"
-            class="bg-base-300/90 flex justify-between p-4 border border-white/25 rounded-md"
-          >
-            <dt>{{ voiceActor.language }}</dt>
-            <dd>
-              <template
-                v-for="(actor, index) in voiceActor.actors"
-                :key="actor.id"
-              >
-                <a
-                  :href="actor.link"
-                  target="_blank"
-                  class="hover:underline hover:text-warning transition duration-100"
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-1.5 md:gap-3">
+            <dl
+              v-for="voiceActor in sortedVoiceActors"
+              :key="voiceActor.language"
+              class="bg-base-300/90 flex gap-4 justify-between p-4 border border-white/25 rounded-md"
+            >
+              <dt>{{ voiceActor.language }}</dt>
+              <dd>
+                <template
+                  v-for="(actor, index) in voiceActor.actors"
+                  :key="actor.id"
                 >
-                  {{ actor.name }}
-                </a>
-                <span
-                  v-if="index < voiceActor.actors.length - 1"
-                  class="text-white/60"
-                  >&</span
-                >
-              </template>
-            </dd>
-          </dl>
+                  <a
+                    :href="actor.link"
+                    target="_blank"
+                    class="hover:underline hover:text-warning transition duration-100"
+                  >
+                    {{ actor.name }}
+                  </a>
+                  <span
+                    v-if="index < voiceActor.actors.length - 1"
+                    class="text-white/60"
+                    >&</span
+                  >
+                </template>
+              </dd>
+            </dl>
+          </div>
         </div>
       </section>
 
       <!-- Dossier -->
-      <section class="px-4 md:px-0 mb-8">
+      <section class="px-4 md:px-0">
         <span class="text-xs text-white/50 italic"> Character Profile</span>
         <div class="flex items-center gap-2 mb-2">
           <div class="h-9 w-1 rounded-full bg-white"></div>
@@ -196,7 +198,7 @@
       </section>
 
       <!-- Waepons -->
-      <section class="px-4 md:px-0 mb-8">
+      <section class="px-4 md:px-0">
         <span class="text-xs text-white/50 italic"
           >Best weapons for {{ character.name }}</span
         >
@@ -219,7 +221,7 @@
                 :alt="w.weapon.name"
               />
               <figcaption>
-                <p class="font-bold">{{ w.weapon.name }}</p>
+                <p class="md:text-xl font-bold">{{ w.weapon.name }}</p>
                 <div class="space-x-2">
                   <span class="badge badge-sm badge-accent">
                     Stat: {{ w.weapon.stat }}
@@ -239,7 +241,7 @@
       </section>
 
       <!-- Builds -->
-      <section class="px-4 md:px-0 mb-8">
+      <section class="px-4 md:px-0">
         <span class="text-xs text-white/50 italic"
           >Recommended builds for {{ character.name }}</span
         >
@@ -399,7 +401,7 @@
       </section>
 
       <!-- Teams -->
-      <section class="px-4 md:px-0 mb-8" v-if="character.teams.length > 0">
+      <section class="px-4 md:px-0" v-if="character.teams.length > 0">
         <span class="text-xs text-white/50 italic"
           >Possible Team Comps for {{ character.name }}</span
         >
@@ -455,7 +457,7 @@
       </section>
 
       <!-- Materials -->
-      <section class="px-4 md:px-0 mb-8">
+      <section class="px-4 md:px-0">
         <span class="text-xs text-white/50 italic">
           All Materials for {{ character.name }} LvL. 90 & Max Talents
         </span>
