@@ -23,7 +23,7 @@
           <span>Genshin Impact | 原神</span>
           <h2 class="italic">"{{ currentVersion.name }}"</h2>
           <p>Version {{ currentVersion.version_number }} is available now!</p>
-          <div class="h-33 flex flex-col justify-center items-center gap-4">
+          <div class="h-33 flex flex-col justify-center items-center gap-6">
             <span>Check out the new characters!</span>
             <NuxtLink
               to="#new_characters"
