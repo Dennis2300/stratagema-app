@@ -101,7 +101,7 @@
       </section>
 
       <!-- Dossier -->
-      <section class="px-4 md:px-0">
+      <section class="px-4 md:px-0 mb-8">
         <span class="text-xs text-white/50 italic"> Character Profile</span>
         <div class="flex items-center gap-2 mb-2">
           <div class="h-9 w-1 rounded-full bg-white"></div>
@@ -196,7 +196,7 @@
       </section>
 
       <!-- Waepons -->
-      <section class="px-4 md:px-0">
+      <section class="px-4 md:px-0 mb-8">
         <span class="text-xs text-white/50 italic"
           >Best weapons for {{ character.name }}</span
         >
@@ -205,7 +205,7 @@
           <h2>Best Weapons</h2>
         </div>
 
-        <div class="min-h-[25vh] space-y-6">
+        <div class="min-h-[25vh] space-y-3">
           <div
             v-for="w in sortedWeapons"
             :key="w.weapon.id"
@@ -219,13 +219,275 @@
                 :alt="w.weapon.name"
               />
               <figcaption>
-                <h4>{{ w.weapon.name }}</h4>
-                <span>{{ w.weapon.stat }}</span>
-                <span>{{ w.weapon.stat_value }}</span>
+                <p class="font-bold">{{ w.weapon.name }}</p>
+                <div class="space-x-2">
+                  <span class="badge badge-sm badge-accent">
+                    Stat: {{ w.weapon.stat }}
+                  </span>
+                  <span class="badge badge-sm badge-warning">
+                    Value: {{ w.weapon.stat_value }}
+                  </span>
+                </div>
               </figcaption>
             </figure>
-            <div class="divider" />
-            <p v-if="w.details">{{ w.details }}</p>
+            <div v-if="w.details">
+              <div class="divider" />
+              <p>{{ w.details }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Builds -->
+      <section class="px-4 md:px-0 mb-8">
+        <span class="text-xs text-white/50 italic"
+          >Recommended builds for {{ character.name }}</span
+        >
+        <div class="flex items-center gap-2 mb-2">
+          <div class="h-9 w-1 rounded-full bg-white"></div>
+          <h2>Build(s)</h2>
+        </div>
+
+        <div class="min-h-[45vh] bg-base-300/90 p-4 rounded-lg">
+          <h4 class="divider">Artifact Main Stats</h4>
+
+          <div class="flex justify-center items-center">
+            <div class="stats stats-vertical md:stats-horizontal shadow">
+              <!-- Sands -->
+              <div class="stat" v-if="groupedStats.sands.length">
+                <div class="stat-figure text-secondary">
+                  <div class="avatar">
+                    <div class="w-16 rounded-full">
+                      <img
+                        class="flex justify-center items-center"
+                        src="/imgs/sands.webp"
+                        alt="Sands"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="stat-value">Sands</div>
+                <div
+                  class="stat-desc text-info text-base max-w-64 whitespace-normal"
+                >
+                  {{ groupedStats.sands.map((s) => s.stat).join(" or ") }}
+                </div>
+              </div>
+              <!-- Goblet -->
+              <div class="stat" v-if="groupedStats.goblet.length">
+                <div class="stat-figure text-secondary">
+                  <div class="avatar">
+                    <div class="w-16 rounded-full">
+                      <img
+                        class="flex justify-center items-center"
+                        src="/imgs/goblet.webp"
+                        alt="Sands"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="stat-value">Goblet</div>
+                <div
+                  class="stat-desc text-info text-base max-w-64 whitespace-normal"
+                >
+                  {{ groupedStats.goblet.map((s) => s.stat).join(" or ") }}
+                </div>
+              </div>
+              <!-- Circlet -->
+              <div class="stat" v-if="groupedStats.circlet.length">
+                <div class="stat-figure text-secondary">
+                  <div class="avatar">
+                    <div class="w-16 rounded-full">
+                      <img
+                        class="flex justify-center items-center"
+                        src="/imgs/circlet.webp"
+                        alt="Sands"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="stat-value">Circlet</div>
+                <div
+                  class="stat-desc text-info text-base max-w-64 whitespace-normal"
+                >
+                  {{ groupedStats.circlet.map((s) => s.stat).join(" or ") }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Desktop -->
+          <div v-if="groupedStats.substat.length" class="hidden md:block">
+            <h4 class="divider">Substats</h4>
+            <div class="breadcrumbs px-auto">
+              <ul class="justify-center">
+                <li v-for="(s, i) in groupedStats.substat" :key="s.id">
+                  {{ s.stat }}
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Mobile -->
+          <div v-if="groupedStats.substat.length" class="md:hidden">
+            <h4 class="divider mt-6">Substats</h4>
+            <ol>
+              <li v-for="(s, i) in groupedStats.substat" :key="s.id">
+                <span class="font-bold">{{ i + 1 }}.</span> {{ s.stat }}
+              </li>
+            </ol>
+          </div>
+
+          <h4 class="divider md:px-32 mt-6">Artifacts</h4>
+          <div
+            v-if="buildsLoading"
+            class="h-50 flex justify-center items-center"
+          >
+            <span class="loading loading-xl"></span>
+          </div>
+          <ErrorMessage v-else-if="buildsError" :error="buildsError" />
+
+          <div
+            v-else-if="builds"
+            v-for="build in builds"
+            :key="build.id"
+            class="mb-8"
+          >
+            <h5>{{ build.title }}</h5>
+            <div
+              v-for="piece in build.build_artifact"
+              :key="piece.id"
+              class="mb-2"
+            >
+              <div class="flex gap-3">
+                <img
+                  :src="piece.artifact_id.flower_img_url"
+                  :alt="piece.artifact_id.name"
+                  class="w-20 h-20 rounded-xl rarity-5"
+                />
+                <div>
+                  <span
+                    class="badge badge-neutral badge-xs border border-white/50"
+                  >
+                    {{ piece.piece_count }} Piece
+                  </span>
+                  <p class="text-lg font-bold text-info">
+                    {{ piece.artifact_id.name }}
+                  </p>
+                  <div
+                    v-if="piece.piece_count === 4"
+                    class="text-xs text-white/66 space-y-1"
+                  >
+                    <p>
+                      {{ piece.artifact_id.two_piece_bonus_id.name }}
+                    </p>
+                    <p>
+                      {{ piece.artifact_id.four_piece_bonus }}
+                    </p>
+                  </div>
+                  <p
+                    v-if="piece.piece_count === 2"
+                    class="text-xs text-white/66"
+                  >
+                    {{ piece.artifact_id.two_piece_bonus_id.name }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Teams -->
+      <section class="px-4 md:px-0 mb-8" v-if="character.teams.length > 0">
+        <span class="text-xs text-white/50 italic"
+          >Possible Team Comps for {{ character.name }}</span
+        >
+        <div class="flex items-center gap-2 mb-2">
+          <div class="h-9 w-1 rounded-full bg-white"></div>
+          <h2>Teams</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+          <div
+            v-for="team in sortTeams(character.teams)"
+            :key="team.id"
+            class="bg-base-300/90 p-4 rounded-xl"
+          >
+            <div class="flex justify-between items-center">
+              <p class="font-bold">{{ team.name }}</p>
+              <span class="text-white/15">#{{ team.id }}</span>
+            </div>
+            <div class="divider mt-0 mb-2"></div>
+
+            <div class="flex justify-center items-center gap-4">
+              <img
+                class="h-16 w-16 mask mask-squircle"
+                :class="{
+                  'rarity-5': character.rarity === 5,
+                  'rarity-4': character.rarity === 4,
+                }"
+                :src="character.img_url"
+                :alt="character.name"
+              />
+              <div class="h-8 w-px bg-base-content/50"></div>
+              <NuxtLink
+                v-for="member in sortedMembers(team.members)"
+                :key="member.id"
+                class="tooltip tooltip-bottom tooltip-primary hover:cursor-pointer"
+                :data-tip="`${member.character.name} (${member.role})`"
+                :to="`/characters/${member.character.id}-${slugify(member.character.name)}`"
+                target="_blank"
+              >
+                <img
+                  class="h-16 w-16 mask mask-squircle"
+                  :class="{
+                    'rarity-5': member.character.rarity === 5,
+                    'rarity-4': member.character.rarity === 4,
+                  }"
+                  :src="member.character.img_url"
+                  :alt="member.character.name"
+                />
+              </NuxtLink>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Materials -->
+      <section class="px-4 md:px-0 mb-8">
+        <span class="text-xs text-white/50 italic">
+          All Materials for {{ character.name }} LvL. 90 & Max Talents
+        </span>
+        <div class="flex items-center gap-2 mb-2">
+          <div class="h-9 w-1 rounded-full bg-white"></div>
+          <h2>Materials</h2>
+        </div>
+
+        <div
+          v-for="(items, type) in groupedMaterials"
+          :key="type"
+          class="bg-base-300/90 mb-4 min-h-50 p-4"
+        >
+          <h3 class="divider divider-start capitalize">
+            {{ type.replaceAll("_", " ") }}
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-y-4">
+            <div v-for="item in items" :key="item.id">
+              <figure class="flex items-center gap-3">
+                <img
+                  :src="item.material.img_url"
+                  :class="`rarity-${item.material.rarity}`"
+                  class="w-16 h-16 mask mask-squircle"
+                />
+                <figcaption>
+                  <p class="max-w-56 truncate">{{ item.material.name }}</p>
+                  <span class="badge badge-info badge-sm">
+                    ×{{ item.amount.toLocaleString() }}
+                  </span>
+                </figcaption>
+              </figure>
+            </div>
           </div>
         </div>
       </section>
