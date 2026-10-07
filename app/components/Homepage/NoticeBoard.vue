@@ -1,6 +1,10 @@
 <template>
-  <article class="h-screen flex flex-col items-center">
-    <div class="divider mt-8 md:px-56"></div>
+  <article
+    class="h-screen flex flex-col items-center"
+    style="
+      background: radial-gradient(ellipse at top, #1b2735 0%, #090a0f 100%);
+    "
+  >
     <h2 class="mt-8">Notice Board</h2>
     <p class="text-sm text-white/50 text-center md:text-start">
       Stay informed about website maintenance, downtime, and other important
