@@ -13,14 +13,15 @@
     <!-- content -->
     <div class="relative z-10 py-8">
       <!-- Character showcase -->
-      <article class="min-h-[65vh] flex flex-col items-center">
+      <article id="new_characters" class="min-h-[65vh] flex flex-col items-center">
         <h1 class="italic">Say Hello to...</h1>
 
         <div
           class="flex flex-col md:flex-row justify-center items-center gap-8 mt-4"
         >
-          <div
-            class="relative w-xs h-xs bg-zinc-800/75 rounded-2xl border border-white/25"
+          <NuxtLink
+            :to="`/characters/${character.id}-${slugify(character.name)}`"
+            class="relative w-xs h-xs bg-zinc-800/75 rounded-2xl border border-white/25 hover:cursor-pointer hover:border hover:border-white/75 transition duration-300"
             v-for="character in characters"
             :key="character.id"
           >
@@ -52,7 +53,7 @@
                 <p class="text-sm">{{ character.main_stat }}</p>
               </div>
             </div>
-          </div>
+          </NuxtLink>
         </div>
       </article>
 
