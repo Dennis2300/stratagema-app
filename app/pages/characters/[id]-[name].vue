@@ -251,93 +251,86 @@
         </div>
 
         <div class="min-h-[45vh] bg-base-300/90 p-4 rounded-lg">
-          <h4 class="divider">Artifact Main Stats</h4>
-
-          <div class="flex justify-center items-center">
-            <div class="stats stats-vertical md:stats-horizontal shadow">
-              <!-- Sands -->
-              <div class="stat" v-if="groupedStats.sands.length">
-                <div class="stat-figure text-secondary">
-                  <div class="avatar">
-                    <div class="w-16 rounded-full">
-                      <img
-                        class="flex justify-center items-center"
-                        src="/imgs/sands.webp"
-                        alt="Sands"
-                      />
+          <div class="flex flex-col md:flex-row">
+            <div class="flex-1">
+              <h4 class="divider">Main Stats</h4>
+              <div class="stats stats-vertical w-full shadow">
+                <!-- Sands -->
+                <div class="stat" v-if="groupedStats.sands.length">
+                  <div class="stat-title">Sands</div>
+                  <div
+                    class="stat-value text-xl whitespace-pre-line md:whitespace-normal"
+                  >
+                    {{ groupedStats.sands.map((s) => s.stat).join(" or ") }}
+                  </div>
+                  <div class="stat-figure text-secondary">
+                    <div class="avatar">
+                      <div class="w-16 rounded-full">
+                        <img
+                          src="/imgs/sands.webp"
+                          class="flex justify-center items-center"
+                          alt="Sands"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="stat-value">Sands</div>
-                <div
-                  class="stat-desc text-info text-base max-w-64 whitespace-normal"
-                >
-                  {{ groupedStats.sands.map((s) => s.stat).join(" or ") }}
-                </div>
-              </div>
-              <!-- Goblet -->
-              <div class="stat" v-if="groupedStats.goblet.length">
-                <div class="stat-figure text-secondary">
-                  <div class="avatar">
-                    <div class="w-16 rounded-full">
-                      <img
-                        class="flex justify-center items-center"
-                        src="/imgs/goblet.webp"
-                        alt="Sands"
-                      />
+                <!-- Goblet -->
+                <div class="stat" v-if="groupedStats.goblet.length">
+                  <div class="stat-title">Goblet</div>
+                  <div
+                    class="stat-value text-xl whitespace-pre-line md:whitespace-normal"
+                  >
+                    {{ groupedStats.goblet.map((s) => s.stat).join(" or ") }}
+                  </div>
+                  <div class="stat-figure text-secondary">
+                    <div class="avatar">
+                      <div class="w-16 rounded-full">
+                        <img
+                          src="/imgs/goblet.webp"
+                          class="flex justify-center items-center"
+                          alt="Goblet"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="stat-value">Goblet</div>
-                <div
-                  class="stat-desc text-info text-base max-w-64 whitespace-normal"
-                >
-                  {{ groupedStats.goblet.map((s) => s.stat).join(" or ") }}
-                </div>
-              </div>
-              <!-- Circlet -->
-              <div class="stat" v-if="groupedStats.circlet.length">
-                <div class="stat-figure text-secondary">
-                  <div class="avatar">
-                    <div class="w-16 rounded-full">
-                      <img
-                        class="flex justify-center items-center"
-                        src="/imgs/circlet.webp"
-                        alt="Sands"
-                      />
+                <!-- Circlet -->
+                <div class="stat" v-if="groupedStats.circlet.length">
+                  <div class="stat-title">Circlet</div>
+                  <div
+                    class="stat-value text-xl whitespace-pre-line md:whitespace-normal"
+                  >
+                    {{ groupedStats.circlet.map((s) => s.stat).join(" or ") }}
+                  </div>
+                  <div class="stat-figure text-secondary">
+                    <div class="avatar">
+                      <div class="w-16 rounded-full">
+                        <img
+                          src="/imgs/circlet.webp"
+                          class="flex justify-center items-center"
+                          alt="Goblet"
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="stat-value">Circlet</div>
-                <div
-                  class="stat-desc text-info text-base max-w-64 whitespace-normal"
-                >
-                  {{ groupedStats.circlet.map((s) => s.stat).join(" or ") }}
                 </div>
               </div>
             </div>
-          </div>
+            <div class="divider divider-horizontal h-lg"></div>
+            <div class="flex-1">
+              <h4 class="divider">Substats</h4>
 
-          <!-- Desktop -->
-          <div v-if="groupedStats.substat.length" class="hidden md:block">
-            <h4 class="divider">Substats</h4>
-            <div class="breadcrumbs px-auto">
-              <ul class="justify-center">
-                <li v-for="(s, i) in groupedStats.substat" :key="s.id">
-                  {{ s.stat }}
-                </li>
-              </ul>
+              <div v-if="groupedStats.substat.length" class="space-y-4">
+                <div
+                  v-for="(s, i) in groupedStats.substat"
+                  :key="s.id"
+                  class="bg-zinc-500/20 p-4 rounded-lg"
+                >
+                  <span class="font-bold">{{ i + 1 }}.</span> {{ s.stat }}
+                </div>
+              </div>
             </div>
-          </div>
-
-          <!-- Mobile -->
-          <div v-if="groupedStats.substat.length" class="md:hidden">
-            <h4 class="divider mt-6">Substats</h4>
-            <ol>
-              <li v-for="(s, i) in groupedStats.substat" :key="s.id">
-                <span class="font-bold">{{ i + 1 }}.</span> {{ s.stat }}
-              </li>
-            </ol>
           </div>
 
           <h4 class="divider md:px-32 mt-6">Artifacts</h4>
@@ -347,6 +340,7 @@
           >
             <span class="loading loading-xl"></span>
           </div>
+
           <ErrorMessage v-else-if="buildsError" :error="buildsError" />
 
           <div
