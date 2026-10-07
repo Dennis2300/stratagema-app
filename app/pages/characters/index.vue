@@ -1,7 +1,7 @@
 <template>
   <Navbar class="fixed top-0 z-50" />
 
-  <article class="max-w-7xl pt-24 pb-12 mx-auto">
+  <article class="max-w-7xl py-24 mx-auto">
     <figure
       class="relative w-full h-48 overflow-hidden rounded-2xl border-2 border-white/25"
     >
