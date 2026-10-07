@@ -66,12 +66,12 @@
             v-for="link in links"
             :key="link.name"
             :to="link.path"
-            class="group rounded-2xl border border-white/25 bg-base-200/90 p-6 transition-all duration-200 hover:border-primary hover:bg-base-100 hover:shadow-lg"
+            class="group rounded-2xl border border-white/25 bg-base-200/90 p-6 transition-all duration-200 hover:border-info hover:bg-base-100 hover:shadow-lg"
           >
             <div class="flex h-full items-center justify-between">
               <div>
                 <h2
-                  class="text-lg font-semibold transition-colors group-hover:text-primary"
+                  class="text-lg font-semibold transition-colors group-hover:text-info"
                 >
                   {{ link.name }}
                 </h2>
@@ -82,7 +82,7 @@
               </div>
 
               <span
-                class="text-2xl text-base-content/40 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-primary"
+                class="text-2xl text-base-content/40 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-info"
               >
                 →
               </span>

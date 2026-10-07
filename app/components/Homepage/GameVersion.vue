@@ -19,7 +19,7 @@
             <img class="w-64 h-64" src="/favicon.webp" alt="" />
           </figure>
           <h1 class="font-bold uppercase">stratagema</h1>
-          <div class="divider divider-accent my-2"></div>
+          <div class="divider divider-info my-2"></div>
           <span>Genshin Impact | 原神</span>
           <h2 class="italic">"{{ currentVersion.name }}"</h2>
           <p>Version {{ currentVersion.version_number }} is available now!</p>
