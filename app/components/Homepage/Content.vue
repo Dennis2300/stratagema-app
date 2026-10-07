@@ -1,5 +1,5 @@
 <template>
-  <div class="animated-bg">
+  <div class="animated-bg px-4">
     <div class="shooting-stars" aria-hidden="true">
       <div class="stars-left">
         <div v-for="i in 10" :key="'left-' + i" class="shooting-star"></div>
@@ -11,7 +11,7 @@
     </div>
 
     <!-- content -->
-    <div class="relative z-10 py-8">
+    <div class="relative z-10 py-8 space-y-8 md:space-y-0">
       <!-- Character showcase -->
       <article id="new_characters" class="min-h-[65vh] flex flex-col items-center">
         <h1 class="italic">Say Hello to...</h1>

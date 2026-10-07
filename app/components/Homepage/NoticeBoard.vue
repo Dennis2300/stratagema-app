@@ -1,6 +1,6 @@
 <template>
   <article
-    class="h-screen flex flex-col items-center"
+    class="h-screen flex flex-col items-center px-4"
     style="
       background: radial-gradient(ellipse at top, #1b2735 0%, #090a0f 100%);
     "
