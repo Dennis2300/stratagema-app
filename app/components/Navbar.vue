@@ -41,9 +41,7 @@
         </li>
       </ul>
     </div>
-    <div class="navbar-end">
-      <a class="btn">Button</a>
-    </div>
+    <div class="navbar-end"></div>
   </nav>
 </template>
 
