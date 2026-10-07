@@ -37,7 +37,7 @@
     <div class="navbar-center hidden lg:flex">
       <ul class="menu menu-horizontal px-1">
         <li v-for="route in routes">
-          <NuxtLink :to="route.path" href="">{{ route.name }}</NuxtLink>
+          <NuxtLink :to="route.path">{{ route.name }}</NuxtLink>
         </li>
       </ul>
     </div>
