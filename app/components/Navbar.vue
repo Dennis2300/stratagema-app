@@ -63,11 +63,6 @@ const routes = ref([
     desc: "Find the best artifact sets and bonuses",
   },
   {
-    name: "Team Comps",
-    path: "/team-comps",
-    desc: "Discover the strongest team compositions",
-  },
-  {
     name: "Redeem Codes",
     path: "/redeem-codes",
     desc: "Get the latest active redeem codes and rewards",
