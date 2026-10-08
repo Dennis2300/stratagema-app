@@ -13,7 +13,10 @@
     <!-- content -->
     <div class="relative z-10 py-8 space-y-8 md:space-y-0">
       <!-- Character showcase -->
-      <article id="new_characters" class="min-h-[65vh] flex flex-col items-center">
+      <article
+        id="new_characters"
+        class="min-h-[65vh] flex flex-col items-center"
+      >
         <h1 class="italic">Say Hello to...</h1>
 
         <div
@@ -130,11 +133,6 @@ const links = ref([
     name: "Artifacts",
     path: "/artifacts",
     desc: "Find the best artifact sets and bonuses",
-  },
-  {
-    name: "Team Comps",
-    path: "/team-comps",
-    desc: "Discover the strongest team compositions",
   },
   {
     name: "Redeem Codes",
