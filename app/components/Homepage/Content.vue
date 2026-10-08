@@ -36,12 +36,7 @@
               {{ "★".repeat(character.rarity) }}
             </span>
 
-            <div class="text-center my-4">
-              <span class="text-info/90 italic text-sm">
-                {{ character.vision.name }} {{ character.role }}
-              </span>
-              <h2>{{ character.name }}</h2>
-            </div>
+            <h2 class="text-center my-4">{{ character.name }}</h2>
 
             <div
               class="bg-base-200 grid grid-cols-2 py-4 text-center rounded-b-2xl"
@@ -52,8 +47,10 @@
               </div>
 
               <div class="border-l border-white/25">
-                <p class="text-xs italic uppercase text-white/50">Main Stat</p>
-                <p class="text-sm">{{ character.main_stat }}</p>
+                <p class="text-xs italic uppercase text-white/50">Role</p>
+                <p class="text-sm">
+                  {{ character.vision.name }} {{ character.role }}
+                </p>
               </div>
             </div>
           </NuxtLink>
