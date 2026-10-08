@@ -1,5 +1,7 @@
 <template>
-  <article class="space-y-12">
+  <Navbar class="fixed top-0 z-50" />
+
+  <article class="max-w-7xl mx-auto min-h-screen py-24 space-y-12">
     <section class="space-y-3">
       <div class="flex items-center gap-3">
         <div class="w-1 h-12 bg-white rounded-2xl"></div>
@@ -222,6 +224,24 @@
             <path d="M9 12l2 2 4-4"></path>
             <rect x="3" y="3" width="18" height="18" rx="3"></rect>
           </svg>
+          Redeem codes tracker
+        </p>
+        <p
+          class="flex items-center gap-2 bg-base-200 p-4 border border-base-content/50 rounded-xl"
+        >
+          <svg
+            class="w-4 h-4 text-app-accent shrink-0 mt-0.5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M9 12l2 2 4-4"></path>
+            <rect x="3" y="3" width="18" height="18" rx="3"></rect>
+          </svg>
           Team compositions for all playable characters
         </p>
       </div>
@@ -236,7 +256,8 @@
         <p
           class="flex items-center gap-2 bg-base-200 p-4 border border-base-content/50 rounded-xl"
         >
-          <span class="loading loading-xs"></span> Redeem codes tracker
+          <span class="loading loading-xs"></span> Genshin Lore Timeline with
+          cutscenes
         </p>
 
         <p
@@ -299,8 +320,10 @@
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-        <div
-          class="flex items-center gap-3 bg-base-200 p-4 border border-base-content/50 rounded-xl"
+        <a
+          class="flex items-center gap-3 bg-base-200 p-4 border border-white/25 rounded-xl hover:border hover:border-white/50 hover:bg-base-100 transition duration-200"
+          href="https://www.nuxt.com/"
+          target="_blank"
         >
           <svg
             role="img"
@@ -316,10 +339,12 @@
             />
           </svg>
           <h3>NUXT<span class="text-[#01C58E]">JS</span></h3>
-        </div>
+        </a>
 
-        <div
-          class="flex items-center gap-3 bg-base-200 p-4 border border-base-content/50 rounded-xl"
+        <a
+          class="flex items-center gap-3 bg-base-200 p-4 border border-white/25 rounded-xl hover:border hover:border-white/50 hover:bg-base-100 transition duration-200"
+          href="https://www.supabase.com/"
+          target="_blank"
         >
           <svg
             role="img"
@@ -335,10 +360,12 @@
             />
           </svg>
           <h3>Supabase</h3>
-        </div>
+        </a>
 
-        <div
-          class="flex items-center gap-3 bg-base-200 p-4 border border-base-content/50 rounded-xl"
+        <a
+          class="flex items-center gap-3 bg-base-200 p-4 border border-white/25 rounded-xl hover:border hover:border-white/50 hover:bg-base-100 transition duration-200"
+          href="https://www.tailwindcss.com/"
+          target="_blank"
         >
           <svg
             role="img"
@@ -354,11 +381,11 @@
             />
           </svg>
           <h3>TailwindCSS</h3>
-        </div>
+        </a>
       </div>
     </section>
-    <div class="divider mb-2"></div>
-    <p>
+    <div class="divider mb-2">Disclaimer</div>
+    <p class="text-center text-xs">
       This website is a fan-made project and is not affiliated with, endorsed
       by, or sponsored by <span class="text-info">HoYoverse</span> or
       <span class="text-info">miHoYo</span>. All characters, images, names, and
