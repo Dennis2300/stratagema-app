@@ -28,7 +28,16 @@ export default defineNuxtConfig({
     head: {
       title: "Stratagema",
       titleTemplate: "Stratagema | Simple Genshin Impact Build Guides",
-      link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+      link: [
+        { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+        {
+          rel: "preload",
+          href: "/fonts/inter-v13-latin-regular.woff2",
+          as: "font",
+          type: "font/woff2",
+          crossorigin: "anonymous",
+        },
+      ],
       meta: [
         {
           name: "description",

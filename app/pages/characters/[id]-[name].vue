@@ -184,7 +184,7 @@
             <div class="stat-value">{{ character.special_dish.name }}</div>
 
             <div class="stat-desc text-info">
-              {{ character.special_dish.utility }} Star
+              {{ character.special_dish.utility }}
             </div>
 
             <div>
