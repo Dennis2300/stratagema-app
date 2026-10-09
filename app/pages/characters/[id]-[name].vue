@@ -497,6 +497,7 @@
 
 <script setup>
 import MarkdownRender from "~/components/MarkdownRender.vue";
+import "flag-icons/css/flag-icons.min.css";
 
 const supabase = useSupabaseClient();
 const route = useRoute();

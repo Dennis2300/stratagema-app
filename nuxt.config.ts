@@ -21,6 +21,7 @@ export default defineNuxtConfig({
         "/artifacts",
         "/redeem-codes",
         "/about",
+        "/privacy-policy"
       ],
     },
   },
@@ -32,7 +33,7 @@ export default defineNuxtConfig({
         { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
         {
           rel: "preload",
-          href: "/fonts/inter-v13-latin-regular.woff2",
+          href: "/fonts/Inter-Regular.woff2",
           as: "font",
           type: "font/woff2",
           crossorigin: "anonymous",

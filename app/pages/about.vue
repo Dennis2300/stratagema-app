@@ -18,8 +18,20 @@
       </p>
     </section>
 
-    <section>
-      <PrivacyPolicy />
+    <section class="space-y-3">
+      <div class="flex items-center gap-3">
+        <div class="w-1 h-12 bg-white rounded-2xl"></div>
+        <h2>Privacy policy</h2>
+      </div>
+      <p>
+        You can read about or privacy policy
+        <NuxtLink
+          to="/privacy-policy"
+          class="underline bold hover:text-white/50 hover:cursor-pointer transition"
+        >
+          here
+        </NuxtLink>
+      </p>
     </section>
 
     <section class="space-y-3">
