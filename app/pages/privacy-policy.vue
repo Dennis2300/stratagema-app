@@ -1,18 +1,29 @@
 <template>
   <Navbar class="fixed top-0 z-50" />
 
-  <article class="max-w-7xl mx-auto min-h-screen py-24 space-y-12 text-center">
-    <header class="space-y-3">
+  <div class="relative h-64 md:h-128 w-full overflow-hidden my-8 md:my-16">
+    <div class="bg-black/25 absolute h-full w-full"></div>
+    <img
+      class="w-full h-full object-cover object-center"
+      src="/og-image.webp"
+      alt=""
+    />
+  </div>
+
+  <article
+    class="max-w-7xl mx-auto min-h-screen px-4 sm:px-6 lg:px-8 space-y-12"
+  >
+    <header class="max-w-3xl space-y-3">
       <h1 class="text-4xl font-bold tracking-tight">Privacy Policy</h1>
       <p class="opacity-70">Last updated: October 9, 2026</p>
       <p class="leading-relaxed opacity-90">
-        This site is a free. There are no accounts, no sign-ups and no forms, so
-        we collect almost nothing about you. This page explains exactly what
-        happens when you visit.
+        This site is a free, read-only build guide for Genshin Impact. There are
+        no accounts, no sign-ups and no forms, so we collect almost nothing
+        about you. This page explains exactly what happens when you visit.
       </p>
     </header>
 
-    <div class="space-y-10 leading-relaxed">
+    <div class="max-w-3xl space-y-10 leading-relaxed">
       <section class="space-y-3">
         <h2 class="text-2xl font-semibold">1. Information we collect</h2>
         <p class="opacity-90">
@@ -94,13 +105,43 @@
         <p class="opacity-90">
           Technical data handled by our hosting providers is used only to
           deliver the site, keep it secure, and fix errors. We do not sell, rent
-          or share personal information, because we do not collect any
-          ourselves.
+          or share personal information. The only personal details we may
+          receive are those you choose to give us when donating through Ko-fi
+          (see section 6).
         </p>
       </section>
 
       <section class="space-y-3">
-        <h2 class="text-2xl font-semibold">6. External links</h2>
+        <h2 class="text-2xl font-semibold">6. Support and donations (Ko-fi)</h2>
+        <p class="opacity-90">
+          The site is free to use. If you want to help cover server and hosting
+          costs, you can optionally leave a donation through Ko-fi. Donations
+          are voluntary, and the site works the same whether or not you donate.
+        </p>
+        <p class="opacity-90">
+          Donations are handled entirely by Ko-fi and its payment providers
+          (such as PayPal or Stripe), not by this website. We never see or store
+          your card or payment details. Through Ko-fi, we may receive limited
+          information such as the name or username you chose to show, your email
+          address, and any message you include. We use this only to acknowledge
+          your support and do not share it with anyone. Ko-fi's handling of your
+          data is covered by the
+          <a
+            href="https://more.ko-fi.com/privacy"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="underline underline-offset-2 hover:opacity-80"
+            >Ko-fi Privacy Policy</a
+          >.
+        </p>
+        <p class="opacity-90">
+          Clicking a Ko-fi link takes you to Ko-fi's website, where their own
+          terms and privacy practices apply.
+        </p>
+      </section>
+
+      <section class="space-y-3">
+        <h2 class="text-2xl font-semibold">7. External links</h2>
         <p class="opacity-90">
           This site may link to other websites, such as official game pages or
           community resources. We are not responsible for the content or privacy
@@ -109,7 +150,7 @@
       </section>
 
       <section class="space-y-3">
-        <h2 class="text-2xl font-semibold">7. Children's privacy</h2>
+        <h2 class="text-2xl font-semibold">8. Children's privacy</h2>
         <p class="opacity-90">
           This site does not knowingly collect personal information from anyone,
           including children under 13. Because there are no accounts or forms,
@@ -118,20 +159,21 @@
       </section>
 
       <section class="space-y-3">
-        <h2 class="text-2xl font-semibold">8. Your rights</h2>
+        <h2 class="text-2xl font-semibold">9. Your rights</h2>
         <p class="opacity-90">
           Depending on where you live (for example, under the GDPR in the EU/EEA
           or the CCPA in California), you may have rights to access, correct or
           delete personal data held about you. Since we do not store personal
-          data about visitors, there is generally nothing for us to provide or
-          delete. If you have a question about your data, contact us using the
-          details below. For data held by our hosting providers, please refer to
-          their privacy policies.
+          data about visitors, there is generally little for us to provide or
+          delete, apart from any details you shared when donating through Ko-fi.
+          If you have a question about your data, contact us using the details
+          below. For data held by our hosting providers, please refer to their
+          privacy policies.
         </p>
       </section>
 
       <section class="space-y-3">
-        <h2 class="text-2xl font-semibold">9. Disclaimer</h2>
+        <h2 class="text-2xl font-semibold">10. Disclaimer</h2>
         <p class="opacity-90">
           This is an unofficial fan-made website and is not affiliated with,
           endorsed by, or sponsored by HoYoverse or miHoYo. Genshin Impact and
@@ -141,7 +183,7 @@
       </section>
 
       <section class="space-y-3">
-        <h2 class="text-2xl font-semibold">10. Changes to this policy</h2>
+        <h2 class="text-2xl font-semibold">11. Changes to this policy</h2>
         <p class="opacity-90">
           We may update this policy from time to time. When we do, we will
           change the "Last updated" date at the top of this page. Please check
@@ -150,9 +192,14 @@
       </section>
 
       <section class="space-y-3">
-        <h2 class="text-2xl font-semibold">11. Contact</h2>
+        <h2 class="text-2xl font-semibold">12. Contact</h2>
         <p class="opacity-90">
-          If you have questions about this privacy policy, contact me on Discord
+          If you have questions about this privacy policy, email us at
+          <a
+            href="mailto:your-email@example.com"
+            class="underline underline-offset-2 hover:opacity-80"
+            >your-email@example.com</a
+          >.
         </p>
       </section>
     </div>
