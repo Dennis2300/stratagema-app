@@ -29,7 +29,7 @@
         <div class="flex flex-col items-center md:flex-row gap-3">
           <figure class="relative">
             <img
-              class="absolute -top-2 -left-2 w-10 bg-gray-700 rounded-full border border-white/50"
+              class="absolute -top-2 -left-2 w-12 h-12 bg-gray-700 rounded-full border border-white/50"
               :src="character.vision.img_url"
               alt=""
             />
@@ -44,7 +44,9 @@
             />
           </figure>
           <div class="flex flex-col items-center md:items-start">
-            <span class="italic text-white/50">"{{ character.title }}"</span>
+            <span class="italic text-white/50" v-if="character.title"
+              >"{{ character.title }}"</span
+            >
             <h1>{{ character.name }}</h1>
             <div class="flex flex-wrap items-center gap-2 mt-2">
               <span class="badge badge-neutral badge-sm">{{
@@ -67,14 +69,19 @@
         </div>
         <!-- Voice Actors -->
         <div class="space-y-2 mx-2 text-xs">
-          <div class="flex items-center gap-3">
-            <div class="h-6 w-1 rounded-full bg-white"></div>
-            <h6>Voice Actors</h6>
+          <div>
+            <div class="flex items-center gap-3">
+              <div class="h-6 w-1 rounded-full bg-white"></div>
+              <h6>Voice Actors</h6>
+            </div>
+            <p class="text-white/66">
+              Click on their names to see more details
+            </p>
           </div>
           <div
             v-for="group in sortedVoiceActors"
             :key="group.language"
-            class="bg-base-300/90 flex items-center gap-4 p-4 rounded-md"
+            class="bg-base-300/90 flex items-center gap-4 px-4 py-3 rounded-md"
           >
             <div class="flex items-center gap-1 shrink-0">
               <span :class="['fi', `fi-${getFlag(group.language)}`]"></span>
@@ -132,8 +139,10 @@
 
           <div class="stat">
             <div class="stat-title">Birthday</div>
-            <div class="stat-value" v-if="character.birthday">{{ character.birthday }}</div>
-            <div class="stat-value" v-else">none</div>
+            <div class="stat-value" v-if="character.birthday">
+              {{ character.birthday }}
+            </div>
+            <div class="stat-value" v-else>none</div>
             <div class="stat-desc">Month/Day</div>
           </div>
 
