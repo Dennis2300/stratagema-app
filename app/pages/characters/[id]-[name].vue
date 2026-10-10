@@ -18,7 +18,7 @@
   <article v-else-if="character" class="min-h-screen pt-24">
     <!-- Splash Art Background -->
     <div
-      class="fixed inset-0 -z-10 bg-no-repeat bg-center blur-xs opacity-25 md:opacity-50"
+      class="fixed inset-0 -z-10 bg-no-repeat bg-top blur-xs opacity-25 md:opacity-50"
       :style="{ backgroundImage: `url(${character.splash_art_url})` }"
     />
 
@@ -34,7 +34,7 @@
               alt=""
             />
             <img
-              class="rounded-full w-32 h-32"
+              class="rounded-full w-42 h-42"
               :class="{
                 'rarity-5': character.rarity === 5,
                 'rarity-4': character.rarity === 4,
@@ -66,38 +66,41 @@
           </div>
         </div>
         <!-- Voice Actors -->
-        <div class="space-y-3 mx-2 text-xs">
+        <div class="space-y-2 mx-2 text-xs">
           <div class="flex items-center gap-3">
             <div class="h-6 w-1 rounded-full bg-white"></div>
             <h6>Voice Actors</h6>
           </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-1.5 md:gap-3">
-            <dl
-              v-for="voiceActor in sortedVoiceActors"
-              :key="voiceActor.language"
-              class="bg-base-300/90 flex gap-4 justify-between p-4 border border-white/25 rounded-md"
-            >
-              <dt>{{ voiceActor.language }}</dt>
-              <dd>
-                <template
-                  v-for="(actor, index) in voiceActor.actors"
-                  :key="actor.id"
+          <div
+            v-for="group in sortedVoiceActors"
+            :key="group.language"
+            class="bg-base-300/90 flex items-center gap-4 p-4 rounded-md"
+          >
+            <div class="flex items-center gap-1 shrink-0">
+              <span :class="['fi', `fi-${getFlag(group.language)}`]"></span>
+              <span class="hidden md:block">{{ group.language }}</span>
+            </div>
+
+            <p>
+              <template v-for="(actor, i) in group.actors" :key="actor.id">
+                <a
+                  v-if="actor.link"
+                  :href="actor.link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="hover:underline"
+                  >{{ actor.name }}</a
                 >
-                  <a
-                    :href="actor.link"
-                    target="_blank"
-                    class="hover:underline hover:text-warning transition duration-100"
-                  >
-                    {{ actor.name }}
-                  </a>
-                  <span
-                    v-if="index < voiceActor.actors.length - 1"
-                    class="text-white/60"
-                    >&</span
-                  >
-                </template>
-              </dd>
-            </dl>
+                <template v-else>{{ actor.name }}</template>
+                <template v-if="i < group.actors.length - 2">, </template>
+                <span
+                  v-else-if="i === group.actors.length - 2"
+                  class="text-warning"
+                >
+                  &amp;
+                </span>
+              </template>
+            </p>
           </div>
         </div>
       </section>
@@ -129,7 +132,8 @@
 
           <div class="stat">
             <div class="stat-title">Birthday</div>
-            <div class="stat-value">{{ character.birthday }}</div>
+            <div class="stat-value" v-if="character.birthday">{{ character.birthday }}</div>
+            <div class="stat-value" v-else">none</div>
             <div class="stat-desc">Month/Day</div>
           </div>
 
@@ -505,7 +509,9 @@ const route = useRoute();
 const param_id = route.params.id;
 
 const usageOrder = ["character_ascension", "character_talent"];
+const flagMap = { EN: "us", JP: "jp", CN: "cn", KR: "kr" };
 const languageOrder = ["EN", "JP", "CN", "KR"];
+const getFlag = (lang) => flagMap[lang] ?? "xx";
 
 const {
   data: character,
@@ -561,32 +567,28 @@ function sortTeams(teams) {
   return [...teams].sort((a, b) => a.id - b.id);
 }
 
-const sortedWeapons = computed(() => {
-  return [...character.value.weapons].sort((a, b) => a.rank - b.rank);
-});
-
 const sortedVoiceActors = computed(() => {
+  const rank = (lang) => {
+    const i = languageOrder.indexOf(lang);
+    return i === -1 ? Infinity : i;
+  };
+
+  const groups = new Map();
+
   const sorted = [...character.value.voice_actors].sort(
-    (a, b) =>
-      languageOrder.indexOf(a.language) - languageOrder.indexOf(b.language),
+    (a, b) => rank(a.language) - rank(b.language),
   );
 
-  const grouped = [];
-
-  for (const entry of sorted) {
-    const existing = grouped.find((g) => g.language === entry.language);
-
-    if (existing) {
-      existing.actors.push(entry.voice_actor_id);
-    } else {
-      grouped.push({
-        language: entry.language,
-        actors: [entry.voice_actor_id],
-      });
-    }
+  for (const va of sorted) {
+    if (!groups.has(va.language)) groups.set(va.language, []);
+    groups.get(va.language).push(va.voice_actor_id);
   }
 
-  return grouped;
+  return [...groups].map(([language, actors]) => ({ language, actors }));
+});
+
+const sortedWeapons = computed(() => {
+  return [...character.value.weapons].sort((a, b) => a.rank - b.rank);
 });
 
 const categoryPriority = {
