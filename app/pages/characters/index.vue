@@ -1,7 +1,7 @@
 <template>
   <Navbar class="fixed top-0 z-50" />
 
-  <article class="max-w-7xl py-24 mx-auto">
+  <article class="max-w-7xl py-20 md:py-24 mx-auto px-4 md:px-0">
     <figure
       class="relative w-full h-48 overflow-hidden rounded-2xl border-2 border-white/25"
     >
@@ -15,7 +15,9 @@
         class="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center text-center"
       >
         <h1>Characters Archive</h1>
-        <p>Here you can find all playable and upcoming playable characters</p>
+        <p class="text-xs md:text-base">
+          Here you can find all playable and upcoming playable characters
+        </p>
       </figcaption>
     </figure>
 
@@ -60,7 +62,7 @@
       </div>
     </section>
 
-    <div class="my-6">
+    <div class="mt-4 mb-8">
       <div class="flex items-center gap-3">
         <div class="h-7 w-1 rounded-full bg-primary"></div>
         <h3 class="font-bold">Playable Characters</h3>
@@ -102,13 +104,13 @@
 
       <div
         v-else-if="characters"
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-4 md:px-0"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
       >
         <NuxtLink
           v-for="character in filteredPlayableCharacters"
           :key="character.id"
           :to="`/characters/${character.id}-${slugify(character.name)}`"
-          class="relative group bg-base-300 p-4 rounded-xl hover:bg-zinc-800 hover:-translate-y-0.5 transition duration-300"
+          class="relative group hover:-translate-y-1 bg-base-300 p-4 rounded-xl transition duration-300"
         >
           <figure class="flex justify-between">
             <figure class="flex items-center gap-3">
@@ -137,12 +139,14 @@
                 </div>
               </figcaption>
             </figure>
-            <img
-              class="h-24 w-auto opacity-50 group-hover:opacity-100 transition duration-300"
-              :src="character.splash_art_url"
-              :alt="character.name"
-              loading="lazy"
-            />
+            <div class="h-24 w-24 overflow-hidden">
+              <img
+                class="h-full w-full object-cover opacity-50 group-hover:opacity-100 transition duration-300"
+                :src="character.splash_art_url"
+                :alt="character.name"
+                loading="lazy"
+              />
+            </div>
           </figure>
 
           <div class="grid grid-cols-3 gap-1 mt-3 text-center text-sm">
