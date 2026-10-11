@@ -110,7 +110,7 @@
           v-for="character in filteredPlayableCharacters"
           :key="character.id"
           :to="`/characters/${character.id}-${slugify(character.name)}`"
-          class="relative group hover:-translate-y-1 bg-base-300 p-4 rounded-xl transition duration-300"
+          class="relative group hover:scale-105 bg-base-300 p-4 rounded-xl transition duration-300"
         >
           <figure class="flex justify-between">
             <figure class="flex items-center gap-3">
