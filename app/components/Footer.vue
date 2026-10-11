@@ -72,7 +72,7 @@
           class="footer-title hover:underline transition"
           >Privacy Policy</NuxtLink
         >
-        <NuxtLink to="about" class="footer-title hover:underline transition"
+        <NuxtLink to="/about" class="footer-title hover:underline transition"
           >About</NuxtLink
         >
       </div>
