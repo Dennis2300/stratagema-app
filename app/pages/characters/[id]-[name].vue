@@ -69,15 +69,11 @@
         </div>
         <!-- Voice Actors -->
         <div class="space-y-2 mx-2 text-xs">
-          <div>
-            <div class="flex items-center gap-3">
-              <div class="h-6 w-1 rounded-full bg-white"></div>
-              <h6>Voice Actors</h6>
-            </div>
-            <p class="text-white/66">
-              Click on their names to see more details
-            </p>
+          <div class="flex items-center gap-3">
+            <div class="h-6 w-1 rounded-full bg-white"></div>
+            <h6>Voice Actors</h6>
           </div>
+          <p class="text-white/66">Click on their names to see more details</p>
           <div
             v-for="group in sortedVoiceActors"
             :key="group.language"

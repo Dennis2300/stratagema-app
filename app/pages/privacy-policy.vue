@@ -1,7 +1,7 @@
 <template>
   <Navbar class="fixed top-0 z-50" />
 
-  <div class="relative h-64 md:h-128 w-full overflow-hidden my-8 md:my-16">
+  <div class="relative h-64 md:h-128 w-full overflow-hidden mt-8 md:mt-16">
     <div class="bg-black/25 absolute h-full w-full"></div>
     <img
       class="w-full h-full object-cover object-center"
@@ -10,20 +10,11 @@
     />
   </div>
 
-  <article
-    class="max-w-7xl mx-auto min-h-screen px-4 sm:px-6 lg:px-8 space-y-12"
-  >
-    <header class="max-w-3xl space-y-3">
-      <h1 class="text-4xl font-bold tracking-tight">Privacy Policy</h1>
-      <p class="opacity-70">Last updated: October 9, 2026</p>
-      <p class="leading-relaxed opacity-90">
-        This site is a free, read-only build guide for Genshin Impact. There are
-        no accounts, no sign-ups and no forms, so we collect almost nothing
-        about you. This page explains exactly what happens when you visit.
-      </p>
-    </header>
+  <article class="max-w-7xl my-8 mx-auto min-h-screen px-4">
+    <h1 class="divider m-0 py-6">Privacy Policy</h1>
+    <p class="opacity-70 my-4 text-center">Last updated: October 9, 2026</p>
 
-    <div class="max-w-3xl space-y-10 leading-relaxed">
+    <section class="space-y-10 leading-relaxed">
       <section class="space-y-3">
         <h2 class="text-2xl font-semibold">1. Information we collect</h2>
         <p class="opacity-90">
@@ -194,14 +185,10 @@
       <section class="space-y-3">
         <h2 class="text-2xl font-semibold">12. Contact</h2>
         <p class="opacity-90">
-          If you have questions about this privacy policy, email us at
-          <a
-            href="mailto:your-email@example.com"
-            class="underline underline-offset-2 hover:opacity-80"
-            >your-email@example.com</a
-          >.
+          If you have questions about this privacy policy, contact me on
+          Discord.
         </p>
       </section>
-    </div>
+    </section>
   </article>
 </template>
