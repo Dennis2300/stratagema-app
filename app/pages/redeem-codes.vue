@@ -8,7 +8,6 @@
       <img
         class="w-full h-full object-cover object-center"
         src="https://act-upload.hoyoverse.com/event-ugc-hoyowiki/2024/09/30/237301566/41b650fe494d714eb5d65bcbb055daab_552786018036640071.png?x-oss-process=image%2Fformat%2Cwebp"
-        alt=""
       />
       <div class="absolute top-0 left-0 w-full h-full bg-black/75"></div>
       <div
@@ -81,7 +80,6 @@
                 'rarity-1': reward.item.rarity === 1,
               }"
               :src="reward.item.img_url"
-              alt=""
             />
             <figcaption>
               <p>{{ reward.item.name }}</p>

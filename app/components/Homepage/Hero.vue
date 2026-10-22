@@ -16,7 +16,7 @@
       <div class="hero-content text-center">
         <div class="max-w-7xl">
           <figure class="flex justify-center items-center">
-            <img class="w-64 h-64" src="/favicon.webp" alt="" />
+            <img class="w-64 h-64" src="/favicon.webp" alt="stratagema" />
           </figure>
           <h1 class="font-bold uppercase">stratagema</h1>
           <div class="divider divider-info my-2"></div>

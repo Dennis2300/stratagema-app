@@ -6,7 +6,7 @@
     <img
       class="w-full h-full object-cover object-center"
       src="/og-image.webp"
-      alt=""
+      alt="Stratagema"
     />
   </div>
 

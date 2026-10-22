@@ -4,7 +4,7 @@
   >
     <aside>
       <figure class="flex items-center gap-2">
-        <img class="w-12" src="/favicon.webp" alt="" />
+        <img class="w-12" src="/favicon.webp" alt="stratagema" />
         <figcaption>
           <h6>Stratagema</h6>
         </figcaption>

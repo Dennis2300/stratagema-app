@@ -5,7 +5,6 @@
         <img
           class="w-full h-full object-cover object-center rounded-lg"
           src="https://act-upload.hoyoverse.com/event-ugc-hoyowiki/2025/06/01/237301566/9f8546f2983f1c24c15c86861179b994_1774682577090935272.png?x-oss-process=image%2Fformat%2Cwebp"
-          alt=""
         />
         <div class="absolute bg-black/33 top-0 left-0 w-full h-full"></div>
       </figure>

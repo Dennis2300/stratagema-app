@@ -8,7 +8,6 @@
       <img
         class="w-full h-full object-cover object-center"
         src="https://act-upload.hoyoverse.com/event-ugc-hoyowiki/2024/10/23/237301566/bf8ee46d2caba6d5928fbe7b125d37c4_8565732607361309926.png?x-oss-process=image%2Fformat%2Cwebp"
-        alt=""
       />
       <div class="absolute top-0 left-0 w-full h-full bg-black/75"></div>
       <div
@@ -66,7 +65,7 @@
           <div>
             <img
               class="size-12 rounded-box rarity-5"
-              alt="Tailwind CSS list item"
+              :alt="artifact.name"
               :src="artifact.flower_img_url"
             />
           </div>

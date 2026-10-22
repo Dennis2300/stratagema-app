@@ -28,7 +28,11 @@
             v-for="character in characters"
             :key="character.id"
           >
-            <img class="w-full h-full" :src="character.splash_art_url" alt="" />
+            <img
+              class="w-full h-full"
+              :src="character.splash_art_url"
+              :alt="character.name"
+            />
 
             <span
               class="absolute top-3 left-3 badge badge-neutral text-yellow-400 border border-white/25"
