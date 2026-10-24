@@ -18,33 +18,25 @@
       </div>
     </figure>
 
-    <section class="columns-1 md:columns-3 gap-4 space-y-4 mt-8">
+    <section class="max-w-3xl mx-auto space-y-6 mt-6">
       <div
         v-for="redeem in redeem_codes"
         :key="redeem.code"
-        class="card bg-base-200 shadow-sm break-inside-avoid border border-white/25"
+        class="bg-base-300 p-4 h-fit border border-white/25 rounded-2xl"
       >
-        <div class="card-body p-4">
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-sm font-medium text-base-content/70">
-              Redeem code
-            </span>
-
-            <a
-              class="text-sm font-medium text-warning hover:underline"
-              :href="`https://genshin.hoyoverse.com/en/gift?code=${redeem.code}`"
-              target="_blank"
-              >Code Link</a
-            >
-          </div>
-
-          <div class="join w-full">
+        <span
+          v-if="redeem.is_livestream_code"
+          class="badge badge-xs badge-warning mb-2"
+          >Livestream Code</span
+        >
+        <span v-else class="badge badge-xs badge-warning mb-2">Promo Code</span>
+        <div class="flex justify-between items-end">
+          <div class="join">
             <input
+              class="input input-primary font-mono tracking-widest select-text cursor-text focus:outline-none focus:ring-0"
               :value="redeem.code"
               readonly
-              class="input input-ghost join-item font-mono font-light tracking-widest select-text cursor-text border border-white/25 focus:outline-none focus:ring-0"
             />
-
             <button
               class="btn btn-primary join-item"
               @click="copyCode(redeem.code)"
@@ -52,40 +44,34 @@
               Copy
             </button>
           </div>
-
-          <div class="mt-2 flex justify-between text-xs text-base-content/50">
-            <span v-if="redeem.created_at">
-              Created {{ formatDate(redeem.created_at) }}
-            </span>
-
-            <span v-if="redeem.expires_at">
-              Expires {{ formatDate(redeem.expires_at) }}
-            </span>
-          </div>
+          <span v-if="redeem.expires_at" class="text-xs text-white/25">
+            Expires {{ formatDate(redeem.expires_at) }}
+          </span>
         </div>
-
-        <div
-          v-for="reward in redeem.rewards"
-          :key="reward.item.id"
-          class="flex justify-between items-center px-6 mb-4"
-        >
-          <figure class="flex gap-2">
-            <img
-              class="w-10 h-10 mask mask-squircle"
-              :class="{
-                'rarity-5': reward.item.rarity === 5,
-                'rarity-4': reward.item.rarity === 4,
-                'rarity-3': reward.item.rarity === 3,
-                'rarity-2': reward.item.rarity === 2,
-                'rarity-1': reward.item.rarity === 1,
-              }"
-              :src="reward.item.img_url"
-            />
-            <figcaption>
-              <p>{{ reward.item.name }}</p>
-            </figcaption>
-          </figure>
-          <p>x{{ reward.amount.toLocaleString() }}</p>
+        <div class="divider mt-1 mb-2"></div>
+        <div class="space-y-3">
+          <div
+            v-for="reward in redeem.rewards"
+            :key="reward.item.id"
+            class="flex justify-between items-center"
+          >
+            <figure class="flex items-center gap-2">
+              <img
+                class="w-12 h-12 mask mask-squircle"
+                :class="`rarity-${reward.item.rarity}`"
+                :src="reward.item.img_url"
+              />
+              <figcaption>
+                <p>{{ reward.item.name }}</p>
+              </figcaption>
+            </figure>
+            <div>
+              <span class="text-xs">x</span>
+              <span class="text-warning">{{
+                reward.amount.toLocaleString()
+              }}</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -118,7 +104,7 @@ const {
     .schema("genshin_impact")
     .from("redeem_codes")
     .select("*, rewards:redeem_code_reward(id, item:reward_id(*), amount)")
-    .order("created_at", { ascending: true });
+    .order("created_at", { ascending: false });
   if (error) throw error;
   return data;
 });
