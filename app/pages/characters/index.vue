@@ -106,38 +106,62 @@
         <div
           v-for="character in filteredPlayableCharacters"
           :key="character.id"
-          class="relative overflow-hidden h-100 bg-base-300"
+          class="relative overflow-hidden rounded-lg h-100 bg-base-300 group"
         >
           <!-- Background image -->
           <div
-            class="absolute inset-0 z-0 opacity-15"
+            class="absolute inset-0 z-0 transition duration-200 opacity-25 group-hover:opacity-80"
             :style="{
               background: `url(${character.splash_art_url}) center / cover no-repeat`,
             }"
           />
 
           <!-- Card content -->
-          <div class="relative z-10 p-4">
-            <div class="relative">
+          <div class="relative z-10 flex flex-col justify-between h-full p-5">
+            <!-- Portrait -->
+            <div class="relative w-fit">
               <img
-                class="w-24 h-24 rounded-full"
+                class="w-24 h-24 mask mask-diamond"
                 :class="`rarity-${character.rarity}`"
                 :src="character.img_url"
                 alt=""
               />
+
+              <!-- Vision icon -->
               <img
-                class="absolute w-8 h-8 rounded-full -top-2 -left-2 bg-neutral"
+                class="absolute p-1 -translate-x-1/2 rounded-full -bottom-4 left-1/2 h-9 w-9 bg-neutral"
                 :src="character.vision_id.img_url"
                 alt=""
               />
             </div>
-            <h3>{{ character.name }}</h3>
-            <div class="leading-none text-yellow-600">
-              <span v-for="n in character.rarity" :key="n">★</span>
+
+            <!-- Character information -->
+            <div class="flex flex-col gap-2">
+              <!-- Name and rarity -->
+              <div>
+                <div class="mb-1 leading-none tracking-wider text-yellow-500">
+                  <span v-for="n in character.rarity" :key="n">★</span>
+                </div>
+                <h4 class="group-hover:underline">
+                  {{ character.name }}
+                </h4>
+              </div>
+
+              <!-- Character attributes -->
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="badge badge-xs badge-neutral">
+                  {{ character?.weapon_type_id?.name }}
+                </span>
+
+                <span class="badge badge-xs badge-neutral">
+                  {{ character?.main_stat }}
+                </span>
+
+                <span class="badge badge-xs badge-neutral">
+                  {{ character?.role }}
+                </span>
+              </div>
             </div>
-            <span>{{ character?.weapon_type_id?.name }}</span>
-            <span>{{ character?.main_stat }}</span>
-            <span>{{ character?.role }}</span>
           </div>
         </div>
       </div>
