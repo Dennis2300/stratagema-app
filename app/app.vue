@@ -1,5 +1,5 @@
 <template>
-  <main data-theme="black">
+  <main data-theme="black" class="bg-base-200">
     <NuxtPage />
   </main>
   <Footer />
