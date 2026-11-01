@@ -24,7 +24,7 @@
       <div
         v-for="post in posts"
         :key="post.id"
-        class="bg-base-300 p-6 md:w-7xl border border-white/25 rounded-xl"
+        class="bg-base-200 p-6 md:w-7xl border border-white/25 rounded-xl"
       >
         <div class="flex flex-col md:flex-row justify-between md:items-center">
           <h3>{{ post.title }}</h3>

@@ -24,7 +24,7 @@
         >
           <NuxtLink
             :to="`/characters/${character.id}-${slugify(character.name)}`"
-            class="relative w-xs h-xs bg-zinc-800/75 rounded-2xl border border-white/25 hover:cursor-pointer hover:border hover:border-white/75 transition duration-300"
+            class="relative w-xs h-xs bg-base-200/90 rounded-lg border border-white/25 hover:cursor-pointer hover:border hover:border-white/75 transition duration-300"
             v-for="character in characters"
             :key="character.id"
           >
@@ -34,16 +34,15 @@
               :alt="character.name"
             />
 
-            <span
-              class="absolute top-3 left-3 badge badge-neutral text-yellow-400 border border-white/25"
-            >
-              {{ "★".repeat(character.rarity) }}
-            </span>
-
-            <h2 class="text-center my-4">{{ character.name }}</h2>
+            <div class="flex flex-col justify-center items-center">
+              <h2>{{ character.name }}</h2>
+              <span class="text-yellow-500">
+                {{ "★".repeat(character.rarity) }}
+              </span>
+            </div>
 
             <div
-              class="bg-base-200 grid grid-cols-2 py-4 text-center rounded-b-2xl"
+              class="bg-base-300 grid grid-cols-2 py-4 text-center rounded-b-lg mt-2"
             >
               <div class="border-r border-white/25">
                 <p class="text-xs italic uppercase text-white/50">weapon</p>
@@ -63,34 +62,27 @@
 
       <!-- Navigation Shortcuts -->
       <article class="min-h-[35vh]">
-        <h3 class="text-center">There's more to see...</h3>
+        <h3 class="divider md:px-50">There's more to see...</h3>
         <div
-          class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto mt-4"
+          class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto mt-6"
         >
           <NuxtLink
             v-for="link in links"
             :key="link.name"
             :to="link.path"
-            class="group rounded-2xl border border-white/25 bg-base-200/90 p-6 transition-all duration-200 hover:border-info hover:bg-base-100 hover:shadow-lg"
+            class="group bg-base-200 p-4 border border-white/25 rounded-lg hover:border-white/50 transition duration-300"
           >
-            <div class="flex h-full items-center justify-between">
-              <div>
-                <h2
-                  class="text-lg font-semibold transition-colors group-hover:text-info"
-                >
+            <div class="">
+              <div class="flex justify-between items-center">
+                <h2>
                   {{ link.name }}
                 </h2>
-
-                <p class="mt-2 text-sm text-base-content/70">
-                  {{ link.desc }}
-                </p>
+                <span class="group-hover:translate-x-1 transition duration-300"> → </span>
               </div>
-
-              <span
-                class="text-2xl text-base-content/40 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-info"
-              >
-                →
-              </span>
+              <div class="divider mt-0 mb-1"></div>
+              <p class="text-xs text-base-content/90">
+                {{ link.desc }}
+              </p>
             </div>
           </NuxtLink>
         </div>
