@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar bg-[#090a0f]/95 border-y border-white/15 shadow-2xl">
+  <div class="navbar bg-base-100/95 shadow-sm border-t border-white/25">
     <div class="navbar-start">
       <div class="dropdown">
         <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
@@ -30,19 +30,26 @@
           </li>
         </ul>
       </div>
-      <NuxtLink to="/" class="btn btn-ghost text-xl uppercase">
-        Stratagema
-      </NuxtLink>
+      <a href="/" class="btn btn-ghost">
+        <img class="w-full h-full" src="/favicon.webp" alt="" />
+        <span class="uppercase font-inter text-xl tracking-wide"
+          >stratagema</span
+        >
+      </a>
     </div>
     <div class="navbar-center hidden lg:flex">
-      <ul class="menu menu-horizontal px-1">
+      <ul class="menu menu-horizontal px-1 gap-3">
         <li v-for="route in routes">
-          <NuxtLink :to="route.path">{{ route.name }}</NuxtLink>
+          <NuxtLink :to="route.path">
+            {{ route.name }}
+          </NuxtLink>
         </li>
       </ul>
     </div>
-    <div class="navbar-end"></div>
-  </nav>
+    <div class="navbar-end">
+      <NuxtLink to="/about" class="btn">About</NuxtLink>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -66,11 +73,6 @@ const routes = ref([
     name: "Redeem Codes",
     path: "/redeem-codes",
     desc: "Get the latest active redeem codes and rewards",
-  },
-  {
-    name: "About",
-    path: "/about",
-    desc: "Read about the website, features, and future plans",
   },
 ]);
 </script>
