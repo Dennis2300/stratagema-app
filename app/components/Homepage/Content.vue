@@ -34,12 +34,11 @@
               :alt="character.name"
             />
 
-            <div class="flex flex-col justify-center items-center">
-              <h2>{{ character.name }}</h2>
-              <span class="text-yellow-500">
-                {{ "★".repeat(character.rarity) }}
-              </span>
-            </div>
+            <h2 class="text-center">{{ character.name }}</h2>
+
+            <span class="absolute top-3 left-3 text-yellow-500">
+              {{ "★".repeat(character.rarity) }}
+            </span>
 
             <div
               class="bg-base-300 grid grid-cols-2 py-4 text-center rounded-b-lg mt-2"
@@ -77,7 +76,9 @@
                 <h2>
                   {{ link.name }}
                 </h2>
-                <span class="group-hover:translate-x-1 transition duration-300"> → </span>
+                <span class="group-hover:translate-x-1 transition duration-300">
+                  →
+                </span>
               </div>
               <div class="divider mt-0 mb-1"></div>
               <p class="text-xs text-base-content/90">
