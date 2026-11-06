@@ -124,7 +124,7 @@
           <!-- Card content -->
           <div class="relative z-10 flex flex-col justify-between h-full p-5">
             <!-- Portrait -->
-            <div class="relative w-fit">
+            <div class="relative w-fit drop-shadow-[0_0_5px_white]">
               <!-- Border layer -->
               <div
                 class="mask mask-diamond w-25 h-25 bg-black grid place-items-center"
