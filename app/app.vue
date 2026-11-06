@@ -1,6 +1,12 @@
 <template>
-  <main data-theme="black" class="bg-base-200">
-    <NuxtPage />
-  </main>
-  <Footer />
+  <div
+    data-theme="black"
+    class="relative isolate flex min-h-screen flex-col bg-base-100"
+  >
+    <main class="flex-1">
+      <NuxtPage />
+    </main>
+
+    <Footer />
+  </div>
 </template>

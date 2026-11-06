@@ -1,6 +1,6 @@
 <template>
   <footer
-    class="footer sm:footer-horizontal bg-[#090a0f]/95 border-t border-white/15 p-5 md:p-10"
+    class="footer sm:footer-horizontal bg-base-200 border-t border-white/15 p-5 md:p-10"
   >
     <aside>
       <figure class="flex items-center gap-2">

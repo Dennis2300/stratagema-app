@@ -15,14 +15,14 @@
     <ErrorMessage :error="characterError" />
   </div>
 
-  <article v-else-if="character" class="min-h-screen pt-24">
+  <article v-else-if="character" class="relative min-h-screen pt-24">
     <!-- Splash Art Background -->
     <div
-      class="fixed inset-0 -z-10 bg-no-repeat bg-top blur-xs opacity-25 md:opacity-50"
+      class="fixed inset-0 z-0 bg-no-repeat bg-top blur-xs opacity-25 md:opacity-50"
       :style="{ backgroundImage: `url(${character.splash_art_url})` }"
     />
 
-    <div class="max-w-7xl mx-auto space-y-8 mb-12">
+    <div class="relative z-10 max-w-7xl mx-auto space-y-8 mb-12">
       <!-- Header -->
       <section class="flex flex-col md:flex-row md:justify-between gap-3">
         <!-- Avatar -->
