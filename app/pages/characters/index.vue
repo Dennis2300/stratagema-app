@@ -106,7 +106,7 @@
         <div
           v-for="character in filteredPlayableCharacters"
           :key="character.id"
-          class="relative overflow-hidden rounded-lg h-100 bg-base-300 group"
+          class="relative overflow-hidden rounded-lg h-100 bg-base-300 group hover:cursor-pointer"
         >
           <!-- Background image -->
           <div
@@ -116,16 +116,27 @@
             }"
           />
 
+          <!-- Is New -->
+          <div v-if="character.is_new" class="absolute top-3 right-3">
+            <span class="badge badge-sm badge-info">NEW</span>
+          </div>
+
           <!-- Card content -->
           <div class="relative z-10 flex flex-col justify-between h-full p-5">
             <!-- Portrait -->
             <div class="relative w-fit">
-              <img
-                class="w-24 h-24 mask mask-diamond"
-                :class="`rarity-${character.rarity}`"
-                :src="character.img_url"
-                alt=""
-              />
+              <!-- Border layer -->
+              <div
+                class="mask mask-diamond w-25 h-25 bg-black grid place-items-center"
+              >
+                <!-- Image layer, slightly smaller -->
+                <img
+                  class="mask mask-diamond w-24 h-24"
+                  :class="`rarity-${character.rarity}`"
+                  :src="character.img_url"
+                  alt=""
+                />
+              </div>
 
               <!-- Vision icon -->
               <img
