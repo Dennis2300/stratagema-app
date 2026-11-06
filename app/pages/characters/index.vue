@@ -103,7 +103,8 @@
       </div>
 
       <div v-else-if="characters" class="grid grid-cols-1 gap-3 md:grid-cols-4">
-        <div
+        <NuxtLink
+          :to="`/characters/${character.id}-${slugify(character.name)}`"
           v-for="character in filteredPlayableCharacters"
           :key="character.id"
           class="relative overflow-hidden rounded-lg h-100 bg-base-300 group hover:cursor-pointer"
@@ -150,9 +151,12 @@
             <div class="flex flex-col gap-2">
               <!-- Name and rarity -->
               <div>
-                <div class="mb-1 leading-none tracking-wider text-yellow-500">
-                  <span v-for="n in character.rarity" :key="n">★</span>
-                </div>
+                <span
+                  class="mb-1 leading-none tracking-wider text-yellow-500"
+                  v-for="n in character.rarity"
+                  :key="n"
+                  >★</span
+                >
                 <h4 class="group-hover:underline">
                   {{ character.name }}
                 </h4>
@@ -174,7 +178,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </NuxtLink>
       </div>
 
       <div v-else>
