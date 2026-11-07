@@ -219,9 +219,9 @@
           <div
             v-for="w in sortedWeapons"
             :key="w.weapon.id"
-            class="bg-base-300/90 rounded-lg p-4"
+            class="flex justify-between items-center p-4 bg-base-300/90 rounded-lg group hover:bg-base-300 hover:cursor-pointer"
           >
-            <figure class="flex items-center gap-3">
+            <figure class="flex items-center gap-4">
               <img
                 class="w-20 h-20 mask mask-squircle"
                 :class="`rarity-${w.weapon.rarity}`"
@@ -229,20 +229,26 @@
                 :alt="w.weapon.name"
               />
               <figcaption>
-                <p class="md:text-xl font-bold">{{ w.weapon.name }}</p>
-                <div class="space-x-2">
-                  <span class="badge badge-sm badge-accent">
-                    Stat: {{ w.weapon.stat }}
-                  </span>
-                  <span class="badge badge-sm badge-warning">
-                    Value: {{ w.weapon.stat_value }}
-                  </span>
-                </div>
+                <h5 class="group-hover:underline group-hover:text-info transition duration-100">{{ w.weapon.name }}</h5>
+                <span class="text-warning">
+                  {{ w.weapon.stat.replace('%', '') }}: {{ w.weapon.stat_value
+                  }}{{ w.weapon.stat === "Elemental Mastery" ? "" : "%" }}
+                </span>
               </figcaption>
             </figure>
-            <div v-if="w.details">
-              <div class="divider" />
-              <p>{{ w.details }}</p>
+            <div class="pr-4 group-hover:translate-x-2 transition duration-300">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-caret-right-fill"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"
+                />
+              </svg>
             </div>
           </div>
         </div>
