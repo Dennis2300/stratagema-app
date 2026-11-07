@@ -109,8 +109,6 @@ h5 {
 h6 {
   font-size: var(--text-h6);
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
   font-family: "Poppins", sans-serif;
 }
 

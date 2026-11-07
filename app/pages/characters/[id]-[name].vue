@@ -15,14 +15,13 @@
     <ErrorMessage :error="characterError" />
   </div>
 
-  <article v-else-if="character" class="relative min-h-screen pt-24">
-    <!-- Splash Art Background -->
+  <article v-else-if="character" class="min-h-screen">
     <div
-      class="fixed inset-0 z-0 bg-no-repeat bg-top blur-xs opacity-25 md:opacity-50"
+      class="bg-no-repeat bg-top fixed inset-0 -z-10 blur-xs opacity-25 mt-12"
       :style="{ backgroundImage: `url(${character.splash_art_url})` }"
     />
 
-    <div class="relative z-10 max-w-7xl mx-auto space-y-8 mb-12">
+    <div class="max-w-7xl mx-auto mt-24 space-y-8 mb-12">
       <!-- Header -->
       <section class="flex flex-col md:flex-row md:justify-between gap-3">
         <!-- Avatar -->
@@ -417,7 +416,7 @@
           <div
             v-for="team in sortTeams(character.teams)"
             :key="team.id"
-            class="bg-base-300/90 p-4 rounded-xl"
+            class="bg-base-300/90 p-4 rounded-lg"
           >
             <div class="flex justify-between items-center">
               <p class="font-bold">{{ team.name }}</p>
@@ -469,25 +468,30 @@
           <h2>Materials</h2>
         </div>
 
-        <div
-          v-for="(items, type) in groupedMaterials"
-          :key="type"
-          class="bg-base-300/90 mb-4 min-h-50 p-4"
-        >
-          <h3 class="divider divider-start capitalize">
-            {{ type.replaceAll("_", " ") }}
-          </h3>
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-y-4">
-            <div v-for="item in items" :key="item.id">
-              <figure class="flex items-center gap-3">
+        <div class="flex gap-4">
+          <div
+            v-for="(items, type) in groupedMaterials"
+            :key="type"
+            class="flex-1 bg-base-300/90 p-4 rounded-lg"
+          >
+            <h5 class="divider uppercase">
+              {{ type.replaceAll("_", " ") }}
+            </h5>
+
+            <div class="space-y-4">
+              <figure
+                v-for="item in items"
+                :key="item.id"
+                class="flex items-center gap-3"
+              >
                 <img
                   :src="item.material.img_url"
                   :class="`rarity-${item.material.rarity}`"
                   class="w-16 h-16 mask mask-squircle"
                 />
                 <figcaption>
-                  <p class="max-w-56 truncate">{{ item.material.name }}</p>
-                  <span class="badge badge-info badge-sm">
+                  <h6 class="text-white/80">{{ item.material.name }}</h6>
+                  <span class="text-warning">
                     ×{{ item.amount.toLocaleString() }}
                   </span>
                 </figcaption>
@@ -499,7 +503,7 @@
     </div>
   </article>
 
-  <div v-else>
+  <div v-else class="h-screen flex justify-center items-center">
     <EmptyFallback />
   </div>
 </template>
