@@ -281,7 +281,7 @@
           <h2>Build(s)</h2>
         </div>
 
-        <div class="min-h-[45vh] bg-base-300/90 p-4 rounded-lg">
+        <div class="bg-base-300/90 p-4 rounded-lg">
           <div class="flex flex-col md:flex-row">
             <div class="flex-1">
               <h4 class="divider">Main Stats</h4>
@@ -380,7 +380,7 @@
             :key="build.id"
             class="mb-8"
           >
-            <h5>{{ build.title }}</h5>
+            <span class="text-2xl">{{ build.title }}</span>
             <div
               v-for="piece in build.build_artifact"
               :key="piece.id"
@@ -398,9 +398,9 @@
                   >
                     {{ piece.piece_count }} Piece
                   </span>
-                  <p class="text-lg font-bold text-warning">
+                  <h6 class="text-warning">
                     {{ piece.artifact_id.name }}
-                  </p>
+                  </h6>
                   <div
                     v-if="piece.piece_count === 4"
                     class="text-xs text-white/80 space-y-1"

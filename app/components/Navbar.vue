@@ -32,7 +32,7 @@
       </div>
       <a href="/" class="btn btn-ghost">
         <img class="w-full h-full" src="/favicon.webp" alt="" />
-        <span class="uppercase font-inter text-xl tracking-wide"
+        <span class="uppercase font-genshin text-xl tracking-wide"
           >stratagema</span
         >
       </a>
