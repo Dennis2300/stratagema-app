@@ -48,19 +48,19 @@
             >
             <h1>{{ character.name }}</h1>
             <div class="flex flex-wrap items-center gap-2 mt-2">
-              <span class="badge badge-neutral badge-sm">{{
+              <span class="badge badge-warning badge-sm">{{
                 character.vision.name
               }}</span>
               <span class="h-1 w-1 rounded-full bg-white"></span>
-              <span class="badge badge-neutral badge-sm">{{
+              <span class="badge badge-warning badge-sm">{{
                 character.weapon_type.name
               }}</span>
               <span class="h-1 w-1 rounded-full bg-white"></span>
-              <span class="badge badge-neutral badge-sm">{{
+              <span class="badge badge-warning badge-sm">{{
                 character.role
               }}</span>
               <span class="h-1 w-1 rounded-full bg-white"></span>
-              <span class="badge badge-neutral badge-sm">{{
+              <span class="badge badge-warning badge-sm">{{
                 character.main_stat
               }}</span>
             </div>
@@ -219,37 +219,52 @@
           <div
             v-for="w in sortedWeapons"
             :key="w.weapon.id"
-            class="flex justify-between items-center p-4 bg-base-300/90 rounded-lg group hover:bg-base-300 hover:cursor-pointer"
+            class="p-4 bg-base-300/90 rounded-lg group hover:bg-base-300 hover:cursor-pointer"
           >
-            <figure class="flex items-center gap-4">
-              <img
-                class="w-20 h-20 mask mask-squircle"
-                :class="`rarity-${w.weapon.rarity}`"
-                :src="w.weapon.img_url"
-                :alt="w.weapon.name"
-              />
-              <figcaption>
-                <h5 class="group-hover:underline group-hover:text-info transition duration-100">{{ w.weapon.name }}</h5>
-                <span class="text-warning">
-                  {{ w.weapon.stat.replace('%', '') }}: {{ w.weapon.stat_value
-                  }}{{ w.weapon.stat === "Elemental Mastery" ? "" : "%" }}
-                </span>
-              </figcaption>
-            </figure>
-            <div class="pr-4 group-hover:translate-x-2 transition duration-300">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-caret-right-fill"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"
-                />
-              </svg>
-            </div>
+            <NuxtLink :to="`/weapons/${w.weapon.id}-${slugify(w.weapon.name)}`">
+              <div class="flex justify-between items-center">
+                <figure class="flex items-center gap-4">
+                  <img
+                    class="w-20 h-20 mask mask-squircle"
+                    :class="`rarity-${w.weapon.rarity}`"
+                    :src="w.weapon.img_url"
+                    :alt="w.weapon.name"
+                  />
+                  <figcaption>
+                    <h5
+                      class="group-hover:underline group-hover:text-info transition duration-100"
+                    >
+                      {{ w.weapon.name }}
+                    </h5>
+                    <span class="text-warning">
+                      {{ w.weapon.stat.replace("%", "") }}:
+                      {{ w.weapon.stat_value
+                      }}{{ w.weapon.stat === "Elemental Mastery" ? "" : "%" }}
+                    </span>
+                  </figcaption>
+                </figure>
+                <div
+                  class="pr-4 group-hover:translate-x-2 transition duration-300"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-caret-right-fill"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <div v-if="w.details">
+                <div class="divider m-0" />
+                <p class="text-sm">{{ w.details }}</p>
+              </div>
+            </NuxtLink>
           </div>
         </div>
       </section>
@@ -381,12 +396,12 @@
                   >
                     {{ piece.piece_count }} Piece
                   </span>
-                  <p class="text-lg font-bold text-info">
+                  <p class="text-lg font-bold text-warning">
                     {{ piece.artifact_id.name }}
                   </p>
                   <div
                     v-if="piece.piece_count === 4"
-                    class="text-xs text-white/66 space-y-1"
+                    class="text-xs text-white/80 space-y-1"
                   >
                     <p>
                       {{ piece.artifact_id.two_piece_bonus_id.name }}
@@ -397,7 +412,7 @@
                   </div>
                   <p
                     v-if="piece.piece_count === 2"
-                    class="text-xs text-white/66"
+                    class="text-xs text-white/80"
                   >
                     {{ piece.artifact_id.two_piece_bonus_id.name }}
                   </p>

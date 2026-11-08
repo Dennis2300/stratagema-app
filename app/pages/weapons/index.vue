@@ -50,9 +50,10 @@
         <div class="px-2 md:px-0">
           <!-- Mobile: card list -->
           <div class="grid grid-cols-1 gap-3 md:hidden">
-            <div
+            <NuxtLink
               v-for="weapon in weapons"
               :key="weapon.id"
+              :to="`/weapons/${weapon.id}-${slugify(weapon.name)}`"
               class="card card-side bg-base-100 shadow-sm border border-base-300"
             >
               <figure class="w-20 shrink-0 p-2">
@@ -95,7 +96,7 @@
                   <button class="btn btn-xs btn-accent">Details</button>
                 </div>
               </div>
-            </div>
+            </NuxtLink>
           </div>
 
           <!-- Desktop: table -->
@@ -139,14 +140,20 @@
                     ATK:
                     <span class="text-base-content">{{ weapon.base_atk }}</span>
                   </td>
-                  <td>
-                    {{ weapon.stat }}:
-                    <span class="text-base-content">{{
-                      weapon.stat_value
-                    }}</span>
+                  <td class="text-white">
+                    {{ weapon.stat.replace("%", "") }}:
+                    <span class="text-warning">
+                      {{ weapon.stat_value
+                      }}{{ weapon.stat === "Elemental Mastery" ? "" : "%" }}
+                    </span>
                   </td>
                   <td>
-                    <button class="btn btn-sm btn-accent">Details</button>
+                    <NuxtLink
+                      :to="`/weapons/${weapon.id}-${slugify(weapon.name)}`"
+                      class="btn btn-sm btn-warning"
+                    >
+                      Details
+                    </NuxtLink>
                   </td>
                 </tr>
               </tbody>
