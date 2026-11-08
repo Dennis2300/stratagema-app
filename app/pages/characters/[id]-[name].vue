@@ -21,7 +21,7 @@
       :style="{ backgroundImage: `url(${character.splash_art_url})` }"
     />
 
-    <div class="max-w-7xl mx-auto mt-24 space-y-8 mb-12">
+    <div class="max-w-7xl mx-auto mt-24">
       <!-- Header -->
       <section class="flex flex-col md:flex-row md:justify-between gap-3">
         <!-- Avatar -->
@@ -106,7 +106,9 @@
           </div>
         </div>
       </section>
+    </div>
 
+    <div class="max-w-7xl mx-auto space-y-8 mb-12">
       <!-- Dossier -->
       <section class="px-4 md:px-0">
         <span class="text-xs text-white/50 italic"> Character Profile</span>
