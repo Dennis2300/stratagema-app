@@ -525,7 +525,6 @@
 
         <div class="flex gap-4">
           <div
-            v-if="groupedMaterials.length > 0"
             v-for="(items, type) in groupedMaterials"
             :key="type"
             class="flex-1 bg-base-300/90 p-4 rounded-lg"
@@ -553,9 +552,6 @@
                 </figcaption>
               </figure>
             </div>
-          </div>
-          <div v-else class="flex-1 text-center bg-base-300/90 p-4 rounded-lg">
-            Not released yet!
           </div>
         </div>
       </section>
