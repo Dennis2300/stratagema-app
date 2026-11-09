@@ -29,92 +29,42 @@
   </div>
 
   <article v-else-if="characters" class="max-w-7xl mx-auto mb-24">
-    <section v-if="upcomingCharacters.length" class="my-4">
-      <div class="flex items-center gap-3 my-6">
+    <section v-if="upcomingCharacters.length" class="mb-10">
+      <div class="flex items-center gap-3 mt-6 mb-3">
         <div class="w-1 rounded-full h-9 bg-primary"></div>
         <h3 class="">Upcoming</h3>
       </div>
-      <div class="grid grid-cols-4 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
         <NuxtLink
           v-for="character in upcomingCharacters"
           :key="character.id"
           :to="`/characters/${character.id}-${slugify(character.name)}`"
-          class="relative overflow-hidden rounded-lg h-100 bg-base-300 group hover:cursor-pointer"
+          class="bg-base-300 p-4 rounded-lg group border border-base-100 hover:border-white/33 transition duration-300"
         >
-          <!-- Background image -->
-          <div
-            class="absolute inset-0 z-0 transition duration-200 opacity-25 group-hover:opacity-80"
-            :style="{
-              background: `url(${character.splash_art_url}) center / cover no-repeat`,
-            }"
-          />
-
-          <!-- Is New -->
-          <div v-if="character.is_new" class="absolute top-3 right-3">
-            <span class="badge badge-sm badge-info">NEW</span>
-          </div>
-
-          <!-- Card content -->
-          <div class="relative z-10 flex flex-col justify-between h-full p-5">
-            <!-- Portrait -->
-            <div class="relative w-fit drop-shadow-[0_0_5px_white]">
-              <!-- Border layer -->
-              <div
-                class="mask mask-diamond w-25 h-25 bg-black grid place-items-center"
+          <figure class="flex items-center gap-2">
+            <img
+              class="w-24 h-24 mask mask-squircle"
+              :class="`rarity-${character.rarity}`"
+              :src="character.img_url"
+              alt=""
+            />
+            <figcaption>
+              <h4 class="leading-none">
+                {{ character.name }}
+              </h4>
+              <span
+                class="text-yellow-500 leading-none"
+                v-for="n in character.rarity"
+                :key="n"
+                >★</span
               >
-                <!-- Image layer, slightly smaller -->
-                <img
-                  class="mask mask-diamond w-24 h-24"
-                  :class="`rarity-${character.rarity}`"
-                  :src="character.img_url"
-                  alt=""
-                />
-              </div>
-
-              <!-- Vision icon -->
-              <img
-                class="absolute p-1 -translate-x-1/2 rounded-full -bottom-4 left-1/2 h-9 w-9 bg-neutral"
-                :src="character.vision_id.img_url"
-                alt=""
-              />
-            </div>
-
-            <!-- Character information -->
-            <div class="flex flex-col gap-2">
-              <!-- Name and rarity -->
-              <div>
-                <span
-                  class="mb-1 leading-none tracking-wider text-yellow-500"
-                  v-for="n in character.rarity"
-                  :key="n"
-                  >★</span
-                >
-                <h4 class="group-hover:underline">
-                  {{ character.name }}
-                </h4>
-              </div>
-
-              <!-- Character attributes -->
-              <div class="flex flex-wrap items-center gap-2">
-                <span class="badge badge-xs badge-neutral">
-                  {{ character?.weapon_type_id?.name }}
-                </span>
-
-                <span class="badge badge-xs badge-neutral">
-                  {{ character?.main_stat }}
-                </span>
-
-                <span class="badge badge-xs badge-neutral">
-                  {{ character?.role }}
-                </span>
-              </div>
-            </div>
-          </div>
+            </figcaption>
+          </figure>
         </NuxtLink>
       </div>
     </section>
 
-    <section v-if="characters" class="">
+    <section v-if="characters">
       <div class="flex items-center gap-3 mt-4">
         <div class="w-1 rounded-full h-9 bg-primary"></div>
         <h3 class="font-bold">Playable Characters</h3>

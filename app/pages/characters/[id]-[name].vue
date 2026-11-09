@@ -48,26 +48,43 @@
             >
             <h1>{{ character.name }}</h1>
             <div class="flex flex-wrap items-center gap-2 mt-2">
-              <span class="badge badge-warning badge-sm">{{
-                character.vision.name
-              }}</span>
-              <span class="h-1 w-1 rounded-full bg-white"></span>
-              <span class="badge badge-warning badge-sm">{{
-                character.weapon_type.name
-              }}</span>
-              <span class="h-1 w-1 rounded-full bg-white"></span>
-              <span class="badge badge-warning badge-sm">{{
-                character.role
-              }}</span>
-              <span class="h-1 w-1 rounded-full bg-white"></span>
-              <span class="badge badge-warning badge-sm">{{
-                character.main_stat
-              }}</span>
+              <span
+                v-if="character.vision.name"
+                class="badge badge-warning badge-sm"
+                >{{ character.vision.name }}</span
+              >
+              <span
+                v-if="character.weapon_type?.name"
+                class="h-1 w-1 rounded-full bg-white"
+              ></span>
+              <span
+                v-if="character.weapon_type?.name"
+                class="badge badge-warning badge-sm"
+                >{{ character.weapon_type?.name }}</span
+              >
+              <span
+                v-if="character.role"
+                class="h-1 w-1 rounded-full bg-white"
+              ></span>
+              <span
+                v-if="character.role"
+                class="badge badge-warning badge-sm"
+                >{{ character.role }}</span
+              >
+              <span
+                v-if="character.main_stat"
+                class="h-1 w-1 rounded-full bg-white"
+              ></span>
+              <span
+                v-if="character.main_stat"
+                class="badge badge-warning badge-sm"
+                >{{ character.main_stat }}</span
+              >
             </div>
           </div>
         </div>
         <!-- Voice Actors -->
-        <div class="space-y-2 mx-2 text-xs">
+        <div v-if="sortedVoiceActors.length > 0" class="space-y-2 mx-2 text-xs">
           <div class="flex items-center gap-3">
             <div class="h-6 w-1 rounded-full bg-white"></div>
             <h6>Voice Actors</h6>
@@ -130,8 +147,10 @@
 
           <div class="stat">
             <div class="stat-title">Constellation</div>
-            <div class="stat-value italic">{{ character.constellation }}</div>
-            <div class="stat-desc">{{ character.constellation }}</div>
+            <div class="stat-value italic">
+              {{ character.constellation ?? "N/A" }}
+            </div>
+            <div class="stat-desc">{{ character.constellation ?? "N/A" }}</div>
           </div>
 
           <div class="stat">
@@ -208,7 +227,7 @@
       </section>
 
       <!-- Waepons -->
-      <section class="px-4 md:px-0">
+      <section v-if="sortedWeapons.length > 0" class="px-4 md:px-0">
         <span class="text-xs text-white/50 italic"
           >Best weapons for {{ character.name }}</span
         >
@@ -287,13 +306,15 @@
               <h4 class="divider">Main Stats</h4>
               <div class="stats stats-vertical w-full shadow">
                 <!-- Sands -->
-                <div class="stat" v-if="groupedStats.sands.length">
+                <div class="stat">
                   <div class="stat-title">Sands</div>
                   <div
+                    v-if="groupedStats.sands.length"
                     class="stat-value text-xl whitespace-pre-line md:whitespace-normal"
                   >
                     {{ groupedStats.sands.map((s) => s.stat).join(" or ") }}
                   </div>
+                  <div v-else>N/A</div>
                   <div class="stat-figure text-secondary">
                     <div class="avatar">
                       <div class="w-16 rounded-full">
@@ -307,13 +328,15 @@
                   </div>
                 </div>
                 <!-- Goblet -->
-                <div class="stat" v-if="groupedStats.goblet.length">
+                <div class="stat">
                   <div class="stat-title">Goblet</div>
                   <div
+                    v-if="groupedStats.goblet.length"
                     class="stat-value text-xl whitespace-pre-line md:whitespace-normal"
                   >
                     {{ groupedStats.goblet.map((s) => s.stat).join(" or ") }}
                   </div>
+                  <div v-else>N/A</div>
                   <div class="stat-figure text-secondary">
                     <div class="avatar">
                       <div class="w-16 rounded-full">
@@ -327,13 +350,15 @@
                   </div>
                 </div>
                 <!-- Circlet -->
-                <div class="stat" v-if="groupedStats.circlet.length">
+                <div class="stat">
                   <div class="stat-title">Circlet</div>
                   <div
+                    v-if="groupedStats.circlet.length"
                     class="stat-value text-xl whitespace-pre-line md:whitespace-normal"
                   >
                     {{ groupedStats.circlet.map((s) => s.stat).join(" or ") }}
                   </div>
+                  <div v-else>N/A</div>
                   <div class="stat-figure text-secondary">
                     <div class="avatar">
                       <div class="w-16 rounded-full">
@@ -361,6 +386,9 @@
                   <span class="font-bold">{{ i + 1 }}.</span> {{ s.stat }}
                 </div>
               </div>
+              <div v-else class="h-25 flex justify-center items-center">
+                Not released yet
+              </div>
             </div>
           </div>
 
@@ -375,7 +403,7 @@
           <ErrorMessage v-else-if="buildsError" :error="buildsError" />
 
           <div
-            v-else-if="builds"
+            v-else-if="builds.length > 0"
             v-for="build in builds"
             :key="build.id"
             class="mb-8"
@@ -421,6 +449,10 @@
                 </div>
               </div>
             </div>
+          </div>
+
+          <div v-else class="h-25 flex justify-center items-center">
+            Not released yet
           </div>
         </div>
       </section>
@@ -493,6 +525,7 @@
 
         <div class="flex gap-4">
           <div
+            v-if="groupedMaterials.length > 0"
             v-for="(items, type) in groupedMaterials"
             :key="type"
             class="flex-1 bg-base-300/90 p-4 rounded-lg"
@@ -520,6 +553,9 @@
                 </figcaption>
               </figure>
             </div>
+          </div>
+          <div v-else class="flex-1 text-center bg-base-300/90 p-4 rounded-lg">
+            Not released yet!
           </div>
         </div>
       </section>
