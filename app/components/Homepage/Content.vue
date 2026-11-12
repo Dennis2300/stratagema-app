@@ -1,5 +1,5 @@
 <template>
-  <div class="animated-bg px-4">
+  <article class="animated-bg border-t border-white/50">
     <div class="shooting-stars" aria-hidden="true">
       <div class="stars-left">
         <div v-for="i in 10" :key="'left-' + i" class="shooting-star"></div>
@@ -10,86 +10,74 @@
       </div>
     </div>
 
-    <!-- content -->
-    <div class="relative z-10 py-8 space-y-8 md:space-y-0">
-      <!-- Character showcase -->
-      <article
-        id="new_characters"
-        class="min-h-[65vh] flex flex-col items-center"
-      >
-        <h1 class="italic">Say Hello to...</h1>
-
-        <div
-          class="flex flex-col md:flex-row justify-center items-center gap-8 mt-4"
+    <section
+      id="new_characters"
+      class="relative z-10 max-w-7xl mx-auto space-y-8 py-24"
+    >
+      <h1 class="text-center">Say hello to...</h1>
+      <div class="flex flex-wrap justify-center items-center gap-8">
+        <NuxtLink
+          v-for="character in characters"
+          :key="character.id"
+          :to="`/characters/${character.id}-${slugify(character.name)}`"
+          class="relative bg-base-300 rounded-lg border border-white/25 hover:border-white/50 hover:cursor-pointer transition duration-300 group"
         >
-          <NuxtLink
-            :to="`/characters/${character.id}-${slugify(character.name)}`"
-            class="relative w-xs h-xs bg-base-200/90 rounded-lg border border-white/25 hover:cursor-pointer hover:border hover:border-white/75 transition duration-300"
-            v-for="character in characters"
-            :key="character.id"
-          >
+          <figure>
             <img
-              class="w-full h-full"
+              class="w-82 h-auto opacity-50 object-cover object-center group-hover:opacity-90 transition duration-300"
               :src="character.splash_art_url"
               :alt="character.name"
             />
-
-            <h2 class="text-center">{{ character.name }}</h2>
-
-            <span class="absolute top-3 left-3 text-yellow-500">
-              {{ "★".repeat(character.rarity) }}
-            </span>
-
-            <div
-              class="bg-base-300 grid grid-cols-2 py-4 text-center rounded-b-lg mt-2"
-            >
-              <div class="border-r border-white/25">
-                <p class="text-xs italic uppercase text-white/50">weapon</p>
-                <p class="text-sm">{{ character.weapon_type.name }}</p>
-              </div>
-
-              <div class="border-l border-white/25">
-                <p class="text-xs italic uppercase text-white/50">Role</p>
-                <p class="text-sm">
-                  {{ character.vision.name }} {{ character.role }}
-                </p>
-              </div>
-            </div>
-          </NuxtLink>
-        </div>
-      </article>
-
-      <!-- Navigation Shortcuts -->
-      <article class="min-h-[35vh]">
-        <h3 class="divider md:px-50">There's more to see...</h3>
-        <div
-          class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto mt-6"
-        >
-          <NuxtLink
-            v-for="link in links"
-            :key="link.name"
-            :to="link.path"
-            class="group bg-base-200 p-4 border border-white/25 rounded-lg hover:border-white/50 transition duration-300"
-          >
-            <div class="">
-              <div class="flex justify-between items-center">
-                <h2>
-                  {{ link.name }}
-                </h2>
-                <span class="group-hover:translate-x-1 transition duration-300">
-                  →
+            <figcaption class="absolute bottom-4 left-4">
+              <h2>{{ character.name }}</h2>
+              <div class="flex items-center gap-2">
+                <span class="badge badge-sm badge-primary">{{
+                  character.vision.name
+                }}</span>
+                <span class="badge badge-sm badge-primary"
+                  >{{ character.weapon_type.name }}
                 </span>
+                <span class="badge badge-sm badge-primary">{{
+                  character.role
+                }}</span>
               </div>
-              <div class="divider mt-0 mb-1"></div>
-              <p class="text-xs text-base-content/90">
-                {{ link.desc }}
-              </p>
+            </figcaption>
+          </figure>
+
+          <span class="absolute top-3 left-3 text-yellow-500">
+            {{ "★".repeat(character.rarity) }}
+          </span>
+        </NuxtLink>
+      </div>
+
+      <h2 class="divider">There's more to see...</h2>
+      <div
+        class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto mt-6"
+      >
+        <NuxtLink
+          v-for="link in links"
+          :key="link.name"
+          :to="link.path"
+          class="group bg-base-200 p-4 border border-white/25 rounded-lg hover:border-white/50 transition duration-300"
+        >
+          <div class="">
+            <div class="flex justify-between items-center">
+              <h2>
+                {{ link.name }}
+              </h2>
+              <span class="group-hover:translate-x-1 transition duration-300">
+                →
+              </span>
             </div>
-          </NuxtLink>
-        </div>
-      </article>
-    </div>
-  </div>
+            <div class="divider mt-0 mb-1"></div>
+            <p class="text-xs text-base-content/90">
+              {{ link.desc }}
+            </p>
+          </div>
+        </NuxtLink>
+      </div>
+    </section>
+  </article>
 </template>
 
 <script setup>
