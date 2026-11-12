@@ -50,7 +50,7 @@
         </NuxtLink>
       </div>
 
-      <h2 class="divider">There's more to see...</h2>
+      <h2 class="divider mt-12">There's more to see...</h2>
       <div
         class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto mt-6"
       >
