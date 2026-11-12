@@ -12,8 +12,8 @@
         </NuxtLink>
       </div>
 
-      <!-- Middle: navigation -->
-      <div class="navbar-center">
+      <!-- Middle: navigation (desktop only) -->
+      <div class="navbar-center hidden md:flex">
         <ul class="menu menu-horizontal gap-1 p-0">
           <li v-for="route in routes" :key="route.path">
             <NuxtLink
@@ -28,9 +28,10 @@
         </ul>
       </div>
 
-      <!-- Right: empty for future use -->
+      <!-- Right -->
       <div class="navbar-end">
-        <ul class="menu menu-horizontal gap-1 p-0">
+        <!-- Desktop: About -->
+        <ul class="menu menu-horizontal hidden gap-1 p-0 md:flex">
           <li>
             <NuxtLink
               to="/about"
@@ -41,6 +42,59 @@
             </NuxtLink>
           </li>
         </ul>
+
+        <!-- Mobile: hamburger dropdown -->
+        <div class="dropdown dropdown-end md:hidden">
+          <button
+            tabindex="0"
+            class="btn btn-ghost btn-circle"
+            aria-label="Open menu"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+
+          <!-- onclick blurs the dropdown so it closes after picking a link -->
+          <ul
+            tabindex="0"
+            class="menu dropdown-content z-10 mt-4 w-56 gap-1 rounded-3xl border border-base-300 bg-base-100 p-3 shadow-lg"
+            onclick="document.activeElement?.blur()"
+          >
+            <li v-for="route in routes" :key="route.path">
+              <NuxtLink
+                :to="route.path"
+                class="rounded-full"
+                :active-class="
+                  route.path === '/' ? '' : 'bg-base-200 font-medium'
+                "
+                exact-active-class="bg-base-200 font-medium"
+              >
+                {{ route.name }}
+              </NuxtLink>
+            </li>
+            <li>
+              <NuxtLink
+                to="/about"
+                class="rounded-full"
+                active-class="bg-base-200 font-medium"
+              >
+                About
+              </NuxtLink>
+            </li>
+          </ul>
+        </div>
       </div>
     </nav>
   </header>
