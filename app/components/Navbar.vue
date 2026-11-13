@@ -1,7 +1,7 @@
 <template>
   <header class="fixed inset-x-0 top-4 z-50 px-4 font-genshin">
     <nav
-      class="navbar mx-auto max-w-5xl bg-base-300/80 rounded-full border border-white/25 px-4 shadow-lg backdrop-blur"
+      class="navbar mx-auto max-w-7xl bg-base-300/80 rounded-full border border-white/25 px-4 shadow-lg backdrop-blur"
       aria-label="Main"
     >
       <!-- Left: logo -->
