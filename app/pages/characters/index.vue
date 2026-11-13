@@ -39,7 +39,7 @@
           v-for="character in upcomingCharacters"
           :key="character.id"
           :to="`/characters/${character.id}-${slugify(character.name)}`"
-          class="bg-base-300 p-4 rounded-lg group border border-white/25 hover:border-white/50 hover:bg-base-200 transition duration-300"
+          class="bg-base-200 p-4 rounded-lg group border border-white/25 hover:border-white/50 hover:bg-base-200 transition duration-300"
         >
           <figure class="flex items-center gap-4">
             <img
@@ -254,11 +254,11 @@
           v-for="character in filteredPlayableCharacters"
           :key="character.id"
           :to="`/characters/${character.id}-${slugify(character.name)}`"
-          class="relative overflow-hidden rounded-lg h-100 bg-base-300 group hover:cursor-pointer"
+          class="relative overflow-hidden rounded-lg h-100 bg-base-200 group hover:cursor-pointer"
         >
           <!-- Background image -->
           <div
-            class="absolute inset-0 z-0 transition duration-200 opacity-25 group-hover:opacity-80"
+            class="absolute inset-0 z-0 transition duration-200 opacity-25 group-hover:opacity-95"
             :style="{
               background: `url(${character.splash_art_url}) center / cover no-repeat`,
             }"

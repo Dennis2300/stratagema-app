@@ -20,7 +20,7 @@
           v-for="character in characters"
           :key="character.id"
           :to="`/characters/${character.id}-${slugify(character.name)}`"
-          class="relative bg-base-300 rounded-lg border border-white/25 hover:border-white/50 hover:cursor-pointer transition duration-300 group"
+          class="relative bg-base-200 rounded-lg border border-white/25 hover:border-white/50 hover:cursor-pointer transition duration-300 group"
         >
           <figure>
             <img
