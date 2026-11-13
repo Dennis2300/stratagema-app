@@ -24,20 +24,20 @@
         >
           <figure>
             <img
-              class="w-82 h-auto opacity-50 object-cover object-center group-hover:opacity-90 transition duration-300"
+              class="w-82 h-auto opacity-50 object-cover object-center group-hover:opacity-95 transition duration-300"
               :src="character.splash_art_url"
               :alt="character.name"
             />
             <figcaption class="absolute bottom-4 left-4">
               <h2>{{ character.name }}</h2>
               <div class="flex items-center gap-2">
-                <span class="badge badge-sm badge-primary">{{
+                <span class="badge badge-sm badge-accent">{{
                   character.vision.name
                 }}</span>
-                <span class="badge badge-sm badge-primary"
+                <span class="badge badge-sm badge-accent"
                   >{{ character.weapon_type.name }}
                 </span>
-                <span class="badge badge-sm badge-primary">{{
+                <span class="badge badge-sm badge-accent">{{
                   character.role
                 }}</span>
               </div>
@@ -52,7 +52,7 @@
 
       <h2 class="divider mt-12">There's more to see...</h2>
       <div
-        class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto mt-6"
+        class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto mt-6 px-4 md:px-0"
       >
         <NuxtLink
           v-for="link in links"

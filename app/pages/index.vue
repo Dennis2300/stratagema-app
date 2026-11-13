@@ -1,6 +1,5 @@
 <template>
   <HomepageHero />
   <HomepageContent />
-  <!-- 
-  <HomepageNoticeBoard />  -->
+  <HomepageNoticeBoard />  
 </template>

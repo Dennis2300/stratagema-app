@@ -7,7 +7,7 @@
     <ErrorMessage :error="error" />
   </div>
 
-  <article v-else-if="currentVersion" class="h-screen">
+  <article v-else-if="currentVersion" class="h-screen w-screen">
     <div
       class="hero min-h-screen"
       :style="`background-image: url(${currentVersion.img_url})`"

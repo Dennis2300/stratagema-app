@@ -1,7 +1,7 @@
 <template>
   <header class="fixed inset-x-0 top-4 z-50 px-4 font-genshin">
     <nav
-      class="navbar mx-auto max-w-5xl rounded-full border border-base-300 bg-base-100/80 px-4 shadow-lg backdrop-blur"
+      class="navbar mx-auto max-w-5xl bg-base-300/80 rounded-full border border-white/25 px-4 shadow-lg backdrop-blur"
       aria-label="Main"
     >
       <!-- Left: logo -->
@@ -14,13 +14,15 @@
 
       <!-- Middle: navigation (desktop only) -->
       <div class="navbar-center hidden md:flex">
-        <ul class="menu menu-horizontal gap-1 p-0">
+        <ul class="flex items-center gap-1">
           <li v-for="route in routes" :key="route.path">
             <NuxtLink
               :to="route.path"
-              class="relative hover:bg-transparent focus:bg-transparent focus-visible:bg-transparent active:bg-transparent aria-[current=page]:bg-transparent hover:shadow-none focus:shadow-none focus-visible:shadow-none active:shadow-none aria-[current=page]:shadow-none after:absolute after:inset-x-4 after:bottom-1 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-current after:transition-transform after:duration-300 after:content-[''] hover:after:scale-x-100 focus-visible:after:scale-x-100"
-              :active-class="route.path === '/' ? '' : 'after:scale-x-100'"
-              exact-active-class="after:scale-x-100"
+              class="relative block px-4 py-2 after:absolute after:inset-x-4 after:bottom-1 after:h-0.5 after:origin-right after:scale-x-0 after:rounded-full after:bg-current after:transition-transform after:duration-300 after:content-[''] hover:after:origin-left hover:after:scale-x-100 focus-visible:after:origin-left focus-visible:after:scale-x-100"
+              :active-class="
+                route.path === '/' ? '' : 'after:origin-left after:scale-x-100'
+              "
+              exact-active-class="after:origin-left after:scale-x-100"
             >
               {{ route.name }}
             </NuxtLink>

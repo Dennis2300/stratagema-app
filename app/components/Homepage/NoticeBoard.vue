@@ -1,32 +1,31 @@
 <template>
   <article
-    class="h-screen flex flex-col items-center px-4"
+    class="h-screen"
     style="
       background: radial-gradient(ellipse at top, #1b2735 0%, #090a0f 100%);
     "
   >
-    <h2 class="mt-8">Notice Board</h2>
-    <p class="text-sm text-white/50 text-center md:text-start">
+    <h2 class="text-center">Notice Board</h2>
+    <p class="text-sm text-white/75 text-center">
       Stay informed about website maintenance, downtime, and other important
       updates.
     </p>
 
-    <div v-if="pending" class="mt-12">
-      <span class="loading loading-xl scale-200"></span>
+    <div v-if="pending" class="h-24 flex justify-center items-center">
+      <span class="loading loading-xl"></span>
     </div>
 
-    <div v-else-if="error" class="mt-12 text-center space-y-4">
-      <h3>Sorry about that, but something went wrong</h3>
-      <p class="badge badge-error">{{ error.message }}</p>
+    <div v-else-if="error" class="mt-8">
+      <ErrorMessage :error="error" />
     </div>
 
-    <section v-else-if="posts" class="pt-4">
+    <section v-else-if="posts" class="max-w-7xl mx-auto mt-4">
       <div
         v-for="post in posts"
         :key="post.id"
-        class="bg-base-200 p-6 md:w-7xl border border-white/25 rounded-xl"
+        class="bg-base-200 p-4 border border-white/25 rounded-lg"
       >
-        <div class="flex flex-col md:flex-row justify-between md:items-center">
+        <div class="flex justify-between items-end border-b border-white/25 mb-4">
           <h3>{{ post.title }}</h3>
           <NuxtTime
             class="text-white/50"
@@ -36,14 +35,9 @@
             year="numeric"
           />
         </div>
-        <div class="divider mt-0 mb-2"></div>
         <p>{{ post.content }}</p>
       </div>
     </section>
-
-    <div v-else>
-      <EmptyFallback />
-    </div>
   </article>
 </template>
 
