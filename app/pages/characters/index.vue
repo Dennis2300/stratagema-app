@@ -93,7 +93,12 @@
               placeholder="Search..."
             />
           </label>
-          <button class="btn btn-primary">
+          <button
+            class="btn btn-primary"
+            :class="{ 'btn-active': showFilters }"
+            :aria-expanded="showFilters"
+            @click="showFilters = !showFilters"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -107,11 +112,144 @@
               />
             </svg>
             Filters
+            <span v-if="activeFilterCount" class="badge badge-sm">{{
+              activeFilterCount
+            }}</span>
           </button>
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <Teleport to="body">
+        <Transition name="modal">
+          <div
+            v-if="showFilters"
+            class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4"
+            @click.self="showFilters = false"
+          >
+            <div
+              class="modal-panel bg-base-300 border border-white/25 rounded-lg w-2xl h-auto overflow-y-auto p-6"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Filters"
+            >
+              <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold">Filters</h3>
+                <button
+                  class="btn btn-ghost btn-sm btn-circle"
+                  aria-label="Close filters"
+                  @click="showFilters = false"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <!-- Filter controls will go here -->
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <h4>Vision</h4>
+                  <div class="flex flex-col gap-2">
+                    <label class="label" v-for="vision in visions">
+                      <input
+                        v-model="selectedVisions"
+                        :value="vision.name"
+                        type="checkbox"
+                        class="checkbox"
+                      />
+                      {{ vision.name }}
+                    </label>
+                  </div>
+                </div>
+
+                <div>
+                  <h4>Weapon Type</h4>
+                  <div class="flex flex-col gap-2">
+                    <label class="label" v-for="weapon_type in weapon_types">
+                      <input
+                        v-model="selectedWeapons"
+                        :value="weapon_type.name"
+                        type="checkbox"
+                        class="checkbox"
+                      />
+                      {{ weapon_type.name }}
+                    </label>
+                  </div>
+                </div>
+
+                <div>
+                  <h4>Team Role</h4>
+                  <div class="flex flex-col gap-2">
+                    <label class="label" v-for="role in roles">
+                      <input
+                        v-model="selectedRoles"
+                        :value="role.name"
+                        type="checkbox"
+                        class="checkbox"
+                      />
+                      {{ role.name }}
+                    </label>
+                  </div>
+                </div>
+
+                <div>
+                  <h4>Rarity</h4>
+                  <div class="flex flex-col gap-2">
+                    <label class="label">
+                      <input
+                        v-model="selectedRarities"
+                        value="5"
+                        type="checkbox"
+                        class="checkbox"
+                      />
+                      <div>
+                        <span
+                          class="text-yellow-500 leading-none"
+                          v-for="i in 5"
+                          :key="i"
+                          >★</span
+                        >
+                      </div>
+                    </label>
+                    <label class="label">
+                      <input
+                        v-model="selectedRarities"
+                        value="4"
+                        type="checkbox"
+                        class="checkbox"
+                      />
+                      <div>
+                        <span
+                          class="text-yellow-500 leading-none"
+                          v-for="i in 4"
+                          :key="i"
+                          >★</span
+                        >
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex justify-end gap-2 mt-6">
+                <button
+                  class="btn btn-ghost"
+                  :disabled="!activeFilterCount"
+                  @click="clearFilters"
+                >
+                  Clear
+                </button>
+                <button class="btn btn-error" @click="showFilters = false">
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </Transition>
+      </Teleport>
+
+      <div
+        v-if="filteredPlayableCharacters.length"
+        class="grid grid-cols-1 md:grid-cols-4 gap-4"
+      >
         <NuxtLink
           v-for="character in filteredPlayableCharacters"
           :key="character.id"
@@ -189,13 +327,136 @@
           </div>
         </NuxtLink>
       </div>
+
+      <div
+        v-else
+        class="flex flex-col items-center justify-center text-center gap-3 py-24 border border-dashed border-white/25 rounded-lg"
+      >
+        <svg
+          class="h-10 w-10 opacity-40"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.3-4.3" />
+        </svg>
+        <h3 class="text-lg font-semibold">No characters found</h3>
+        <p class="text-sm opacity-70">
+          {{
+            hasActiveFilters
+              ? "No characters match your current search or filters."
+              : "There are no playable characters yet."
+          }}
+        </p>
+        <button
+          v-if="hasActiveFilters"
+          class="btn btn-primary btn-sm"
+          @click="resetAll"
+        >
+          Clear search & filters
+        </button>
+      </div>
     </section>
   </article>
 </template>
 
 <script setup>
 const supabase = useSupabaseClient();
-const search = ref("");
+const route = useRoute();
+const router = useRouter();
+
+const showFilters = ref(false);
+
+const search = computed({
+  get: () => route.query.q ?? "",
+  set: (val) => {
+    router.replace({ query: { ...route.query, q: val || undefined } });
+  },
+});
+
+const visions = [
+  { name: "Anemo" },
+  { name: "Geo" },
+  { name: "Electro" },
+  { name: "Dendro" },
+  { name: "Hydro" },
+  { name: "Pyro" },
+  { name: "Cryo" },
+];
+
+const weapon_types = [
+  { name: "Sword" },
+  { name: "Claymore" },
+  { name: "Polearm" },
+  { name: "Catalyst" },
+  { name: "Bow" },
+];
+
+const roles = [
+  { name: "DPS" },
+  { name: "Sub-DPS" },
+  { name: "Support" },
+  { name: "Shielder" },
+  { name: "Healer" },
+];
+
+function onKeydown(e) {
+  if (e.key === "Escape") showFilters.value = false;
+}
+
+function toArray(value) {
+  if (!value) return [];
+  return (Array.isArray(value) ? value : [value])
+    .flatMap((v) => String(v).split(","))
+    .filter(Boolean);
+}
+
+function useQueryArray(key) {
+  return computed({
+    get: () => toArray(route.query[key]),
+    set: (val) => {
+      router.replace({
+        query: {
+          ...route.query,
+          [key]: val.length ? val.join(",") : undefined,
+        },
+      });
+    },
+  });
+}
+
+function clearFilters() {
+  router.replace({
+    query: {
+      ...route.query,
+      vision: undefined,
+      weapon: undefined,
+      role: undefined,
+      rarity: undefined,
+    },
+  });
+}
+
+function resetAll() {
+  router.replace({ query: {} });
+}
+
+const selectedVisions = useQueryArray("vision");
+const selectedWeapons = useQueryArray("weapon");
+const selectedRoles = useQueryArray("role");
+const selectedRarities = useQueryArray("rarity");
+const activeFilterCount = computed(
+  () =>
+    selectedVisions.value.length +
+    selectedWeapons.value.length +
+    selectedRoles.value.length +
+    selectedRarities.value.length,
+);
 
 const {
   data: characters,
@@ -223,10 +484,65 @@ const playableCharacters = computed(() =>
 const filteredPlayableCharacters = computed(() => {
   const query = search.value.toLowerCase().trim();
 
-  if (!query) return playableCharacters.value;
+  return playableCharacters.value.filter((c) => {
+    if (query && !c.name.toLowerCase().startsWith(query)) return false;
 
-  return playableCharacters.value.filter((character) =>
-    character.name.toLowerCase().startsWith(query),
-  );
+    if (
+      selectedVisions.value.length &&
+      !selectedVisions.value.includes(c.vision_id?.name)
+    )
+      return false;
+
+    if (
+      selectedWeapons.value.length &&
+      !selectedWeapons.value.includes(c.weapon_type_id?.name)
+    )
+      return false;
+
+    if (selectedRoles.value.length && !selectedRoles.value.includes(c.role))
+      return false;
+
+    if (
+      selectedRarities.value.length &&
+      !selectedRarities.value.includes(String(c.rarity))
+    )
+      return false;
+
+    return true;
+  });
+});
+
+const hasActiveFilters = computed(
+  () => activeFilterCount.value > 0 || search.value.trim() !== "",
+);
+
+onMounted(() => window.addEventListener("keydown", onKeydown));
+onBeforeUnmount(() => {
+  window.removeEventListener("keydown", onKeydown);
+  document.body.style.overflow = "";
+});
+
+watch(showFilters, (open) => {
+  document.body.style.overflow = open ? "hidden" : "";
 });
 </script>
+
+<style scoped>
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity 0.2s ease;
+}
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+}
+
+.modal-enter-active .modal-panel,
+.modal-leave-active .modal-panel {
+  transition: transform 0.2s ease;
+}
+.modal-enter-from .modal-panel,
+.modal-leave-to .modal-panel {
+  transform: scale(0.95) translateY(8px);
+}
+</style>
