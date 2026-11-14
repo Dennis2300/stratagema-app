@@ -62,8 +62,8 @@ const {
     .lte("start_date", now)
     .gte("end_date", now)
     .maybeSingle();
-
   if (error) throw error;
+
   return data;
 });
 </script>

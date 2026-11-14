@@ -15,9 +15,20 @@
       class="relative z-10 max-w-7xl mx-auto space-y-8 py-24"
     >
       <h1 class="text-center">Say hello to...</h1>
-      <div class="flex flex-wrap justify-center items-center gap-8">
+      <div v-if="pending" class="min-h-82 flex justify-center items-center">
+        <span class="loading loading-xl"></span>
+      </div>
+
+      <div v-else-if="error">
+        <ErrorMessage :error="error" />
+      </div>
+
+      <div
+        v-else-if="new_characters"
+        class="flex flex-wrap justify-center items-center gap-8"
+      >
         <NuxtLink
-          v-for="character in characters"
+          v-for="character in new_characters"
           :key="character.id"
           :to="`/characters/${character.id}-${slugify(character.name)}`"
           class="relative bg-base-200 rounded-lg border border-white/25 hover:border-white/50 hover:cursor-pointer transition duration-300 group"
@@ -48,6 +59,10 @@
             {{ "★".repeat(character.rarity) }}
           </span>
         </NuxtLink>
+      </div>
+
+      <div v-else>
+        <EmptyFallback />
       </div>
 
       <h2 class="divider mt-12">There's more to see...</h2>
@@ -84,22 +99,6 @@
 import "@/assets/shooting-star.css";
 const supabase = useSupabaseClient();
 
-const {
-  data: characters,
-  pending,
-  error,
-} = useAsyncData("new_characters", async () => {
-  const { data, error } = await supabase
-    .schema("genshin_impact")
-    .from("characters")
-    .select(
-      "*, vision:vision_id(name), weapon_type:weapon_type_id(name), main_stat, rarity",
-    )
-    .eq("is_new", true);
-  if (error) throw error;
-  return data;
-});
-
 const links = ref([
   {
     name: "Characters",
@@ -127,4 +126,21 @@ const links = ref([
     desc: "Read about the website, features, and future plans",
   },
 ]);
+
+const {
+  data: new_characters,
+  pending,
+  error,
+} = useAsyncData("new_characters", async () => {
+  const { data, error } = await supabase
+    .schema("genshin_impact")
+    .from("characters")
+    .select(
+      "*, vision:vision_id(name), weapon_type:weapon_type_id(name), main_stat, rarity",
+    )
+    .eq("is_new", true);
+  if (error) throw error;
+
+  return data;
+});
 </script>

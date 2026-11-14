@@ -54,6 +54,7 @@ const {
     .from("announcements")
     .select("*");
   if (error) throw error;
+  
   return data;
 });
 </script>
