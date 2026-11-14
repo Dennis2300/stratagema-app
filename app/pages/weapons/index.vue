@@ -21,15 +21,37 @@
   </section>
 
   <article class="max-w-7xl mx-auto px-4 md:px-0 mb-16">
-    <header class="flex items-center gap-3 my-6 border-b border-white/25">
-      <div class="w-1 rounded-full h-9 bg-primary"></div>
-      <h2 class="">Equippable Weapons</h2>
+    <header class="my-6 border-b border-white/25">
+      <div class="flex items-center gap-3">
+        <div class="w-1 rounded-full h-9 bg-primary"></div>
+        <h2 class="">Equippable Weapons</h2>
+      </div>
+      <div
+        class="flex flex-col md:flex-row justify-center items-center gap-4 pt-4 pb-6"
+      >
+        <select class="select">
+          <option selected>Rarity</option>
+          <option value="4">5 Star</option>
+          <option value="5">4 Star</option>
+        </select>
+        <select class="select">
+          <option selected>Type</option>
+          <option v-for="type in types" :value="type.id">
+            {{ type.name }}
+          </option>
+        </select>
+        <select class="select">
+          <option selected>Stat</option>
+          <option v-for="stat in stats" :value="stat.name">
+            {{ stat.name }}
+          </option>
+        </select>
+      </div>
     </header>
 
     <section>
       <div class="overflow-x-auto">
         <table class="table">
-          <!-- head -->
           <thead>
             <tr>
               <th>Name</th>
