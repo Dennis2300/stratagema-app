@@ -1,5 +1,5 @@
 <template>
-  <header class="max-w-7xl mx-auto pt-24 px-4 md:px-0">
+  <section class="max-w-7xl mx-auto pt-24 px-4 md:px-0">
     <figure
       class="relative h-48 w-full overflow-hidden border border-white/25 rounded-lg"
     >
@@ -18,7 +18,7 @@
         </p>
       </figcaption>
     </figure>
-  </header>
+  </section>
 
   <div v-if="pending" class="h-100 flex justify-center items-center">
     <div class="loader"></div>
@@ -29,229 +29,82 @@
   </div>
 
   <article v-else-if="characters" class="max-w-7xl mx-auto px-4 md:px-0 mb-16">
-    <section v-if="upcomingCharacters.length">
-      <div class="flex items-center gap-3 mt-6 mb-2">
-        <div class="w-1 rounded-full h-9 bg-primary"></div>
-        <h2 class="">Upcoming</h2>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <NuxtLink
-          v-for="character in upcomingCharacters"
-          :key="character.id"
-          :to="`/characters/${character.id}-${slugify(character.name)}`"
-          class="bg-base-200 p-4 rounded-lg group border border-white/25 hover:border-white/50 hover:bg-base-200 transition duration-300"
-        >
-          <figure class="flex items-center gap-4">
-            <img
-              class="w-24 h-24 mask mask-squircle"
-              :class="`rarity-${character.rarity}`"
-              :src="character.img_url"
-              :alt="character.name"
-            />
-            <figcaption>
-              <h3 class="leading-none">{{ character.name }}</h3>
-              <span
-                class="text-yellow-500 leading-none"
-                v-for="n in character.rarity"
-                :key="n"
-                >★</span
-              >
-            </figcaption>
-          </figure>
-        </NuxtLink>
-      </div>
+    <header
+      v-if="upcomingCharacters.length"
+      class="flex items-center gap-3 my-6 border-b border-white/25"
+    >
+      <div class="w-1 rounded-full h-9 bg-primary"></div>
+      <h2 class="">Upcoming</h2>
+    </header>
+    <section
+      v-if="upcomingCharacters.length"
+      class="grid grid-cols-1 md:grid-cols-3 gap-4"
+    >
+      <NuxtLink
+        v-for="character in upcomingCharacters"
+        :key="character.id"
+        :to="`/characters/${character.id}-${slugify(character.name)}`"
+        class="bg-base-200 p-4 rounded-lg group border border-white/25 hover:border-white/50 hover:bg-base-200 transition duration-300"
+      >
+        <figure class="flex items-center gap-4">
+          <img
+            class="w-24 h-24 mask mask-squircle"
+            :class="`rarity-${character.rarity}`"
+            :src="character.img_url"
+            :alt="character.name"
+          />
+          <figcaption>
+            <h3 class="leading-none">{{ character.name }}</h3>
+            <span
+              class="text-yellow-500 leading-none"
+              v-for="n in character.rarity"
+              :key="n"
+              >★</span
+            >
+          </figcaption>
+        </figure>
+      </NuxtLink>
     </section>
 
-    <section v-if="characters">
-      <div class="flex justify-between items-center mt-6 mb-2">
-        <div class="flex items-center gap-3">
-          <div class="w-1 rounded-full h-9 bg-primary"></div>
-          <h2 class="">Playable Characters</h2>
-        </div>
-        <div class="flex items-center gap-4">
-          <label class="input">
-            <svg
-              class="h-[1em] opacity-50"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-            >
-              <g
-                stroke-linejoin="round"
-                stroke-linecap="round"
-                stroke-width="2.5"
-                fill="none"
-                stroke="currentColor"
-              >
-                <circle cx="11" cy="11" r="8"></circle>
-                <path d="m21 21-4.3-4.3"></path>
-              </g>
-            </svg>
-            <input
-              v-model="search"
-              type="search"
-              required
-              placeholder="Search..."
-            />
-          </label>
-          <button
-            class="btn btn-primary"
-            :class="{ 'btn-active': showFilters }"
-            :aria-expanded="showFilters"
-            @click="showFilters = !showFilters"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-funnel-fill"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5z"
-              />
-            </svg>
-            Filters
-            <span v-if="activeFilterCount" class="badge badge-sm">{{
-              activeFilterCount
-            }}</span>
-          </button>
-        </div>
+    <header
+      class="flex flex-col md:flex-row justify-between items-center my-6 border-b border-white/25"
+    >
+      <div class="flex items-center gap-3">
+        <div class="w-1 rounded-full h-9 bg-primary"></div>
+        <h2>Playable Characters</h2>
       </div>
-
-      <Teleport to="body">
-        <Transition name="modal">
-          <div
-            v-if="showFilters"
-            class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4"
-            @click.self="showFilters = false"
-          >
-            <div
-              class="modal-panel bg-base-300 border border-white/25 rounded-lg w-2xl h-auto overflow-y-auto p-6"
-              role="dialog"
-              aria-modal="true"
-              aria-label="Filters"
-            >
-              <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-semibold">Filters</h3>
-                <button
-                  class="btn btn-ghost btn-sm btn-circle"
-                  aria-label="Close filters"
-                  @click="showFilters = false"
-                >
-                  ✕
-                </button>
-              </div>
-
-              <!-- Filter controls will go here -->
-              <div class="grid grid-cols-2 gap-4">
-                <div>
-                  <h4>Vision</h4>
-                  <div class="flex flex-col gap-2">
-                    <label class="label" v-for="vision in visions">
-                      <input
-                        v-model="selectedVisions"
-                        :value="vision.name"
-                        type="checkbox"
-                        class="checkbox"
-                      />
-                      {{ vision.name }}
-                    </label>
-                  </div>
-                </div>
-
-                <div>
-                  <h4>Weapon Type</h4>
-                  <div class="flex flex-col gap-2">
-                    <label class="label" v-for="weapon_type in weapon_types">
-                      <input
-                        v-model="selectedWeapons"
-                        :value="weapon_type.name"
-                        type="checkbox"
-                        class="checkbox"
-                      />
-                      {{ weapon_type.name }}
-                    </label>
-                  </div>
-                </div>
-
-                <div>
-                  <h4>Team Role</h4>
-                  <div class="flex flex-col gap-2">
-                    <label class="label" v-for="role in roles">
-                      <input
-                        v-model="selectedRoles"
-                        :value="role.name"
-                        type="checkbox"
-                        class="checkbox"
-                      />
-                      {{ role.name }}
-                    </label>
-                  </div>
-                </div>
-
-                <div>
-                  <h4>Rarity</h4>
-                  <div class="flex flex-col gap-2">
-                    <label class="label">
-                      <input
-                        v-model="selectedRarities"
-                        value="5"
-                        type="checkbox"
-                        class="checkbox"
-                      />
-                      <div>
-                        <span
-                          class="text-yellow-500 leading-none"
-                          v-for="i in 5"
-                          :key="i"
-                          >★</span
-                        >
-                      </div>
-                    </label>
-                    <label class="label">
-                      <input
-                        v-model="selectedRarities"
-                        value="4"
-                        type="checkbox"
-                        class="checkbox"
-                      />
-                      <div>
-                        <span
-                          class="text-yellow-500 leading-none"
-                          v-for="i in 4"
-                          :key="i"
-                          >★</span
-                        >
-                      </div>
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-              <div class="flex justify-end gap-2 mt-6">
-                <button
-                  class="btn btn-ghost"
-                  :disabled="!activeFilterCount"
-                  @click="clearFilters"
-                >
-                  Clear
-                </button>
-                <button class="btn btn-error" @click="showFilters = false">
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        </Transition>
-      </Teleport>
-
       <div
-        v-if="filteredPlayableCharacters.length"
-        class="grid grid-cols-1 md:grid-cols-4 gap-4"
+        class="flex flex-col md:flex-row my-4 md:my-0 items-center gap-4 w-2xl"
       >
+        <select class="select" v-model="filters.rarity">
+          <option value="" selected>Rarity</option>
+          <option value="5">5 Star</option>
+          <option value="4">4 Star</option>
+        </select>
+        <select class="select" v-model="filters.vision">
+          <option value="" selected>Vision</option>
+          <option v-for="vision in visions" :value="vision.id">
+            {{ vision.name }}
+          </option>
+        </select>
+        <select class="select" v-model="filters.weapon_type">
+          <option value="" selected>Weapon Type</option>
+          <option v-for="weapon_type in weapon_types" :value="weapon_type.id">
+            {{ weapon_type.name }}
+          </option>
+        </select>
+        <button
+          @click="resetFilters"
+          class="btn bg-[#FEE502] text-[#181600] border-[#f1d800]"
+        >
+          Reset
+        </button>
+      </div>
+    </header>
+    <section class="min-h-screen grid grid-cols-1 md:grid-cols-4 gap-4">
+      <template v-if="playableCharacters.length">
         <NuxtLink
-          v-for="character in filteredPlayableCharacters"
+          v-for="character in playableCharacters"
           :key="character.id"
           :to="`/characters/${character.id}-${slugify(character.name)}`"
           class="relative overflow-hidden rounded-lg h-100 bg-base-200 group hover:cursor-pointer"
@@ -326,11 +179,11 @@
             </div>
           </div>
         </NuxtLink>
-      </div>
+      </template>
 
       <div
         v-else
-        class="flex flex-col items-center justify-center text-center gap-3 py-24 border border-dashed border-white/25 rounded-lg"
+        class="md:col-span-4 flex flex-col items-center justify-center text-center gap-3 py-24 border border-dashed border-white/25 rounded-lg"
       >
         <svg
           class="h-10 w-10 opacity-40"
@@ -353,12 +206,8 @@
               : "There are no playable characters yet."
           }}
         </p>
-        <button
-          v-if="hasActiveFilters"
-          class="btn btn-primary btn-sm"
-          @click="resetAll"
-        >
-          Clear search & filters
+        <button class="btn btn-primary btn-sm" @click="resetFilters">
+          Clear filters
         </button>
       </div>
     </section>
@@ -367,96 +216,30 @@
 
 <script setup>
 const supabase = useSupabaseClient();
-const route = useRoute();
-const router = useRouter();
 
-const showFilters = ref(false);
+const visions = ref([
+  { id: 1, name: "Pyro" },
+  { id: 2, name: "Hydro" },
+  { id: 3, name: "Dendro" },
+  { id: 4, name: "Electro" },
+  { id: 5, name: "Anemo" },
+  { id: 6, name: "Cryo" },
+  { id: 7, name: "Geo" },
+]);
 
-const search = computed({
-  get: () => route.query.q ?? "",
-  set: (val) => {
-    router.replace({ query: { ...route.query, q: val || undefined } });
-  },
+const weapon_types = ref([
+  { id: 1, name: "Sword" },
+  { id: 2, name: "Claymore" },
+  { id: 3, name: "Bow" },
+  { id: 4, name: "Catalyst" },
+  { id: 5, name: "Polearm" },
+]);
+
+const filters = reactive({
+  rarity: "",
+  vision: "",
+  weapon_type: "",
 });
-
-const visions = [
-  { name: "Anemo" },
-  { name: "Geo" },
-  { name: "Electro" },
-  { name: "Dendro" },
-  { name: "Hydro" },
-  { name: "Pyro" },
-  { name: "Cryo" },
-];
-
-const weapon_types = [
-  { name: "Sword" },
-  { name: "Claymore" },
-  { name: "Polearm" },
-  { name: "Catalyst" },
-  { name: "Bow" },
-];
-
-const roles = [
-  { name: "DPS" },
-  { name: "Sub-DPS" },
-  { name: "Support" },
-  { name: "Shielder" },
-  { name: "Healer" },
-];
-
-function onKeydown(e) {
-  if (e.key === "Escape") showFilters.value = false;
-}
-
-function toArray(value) {
-  if (!value) return [];
-  return (Array.isArray(value) ? value : [value])
-    .flatMap((v) => String(v).split(","))
-    .filter(Boolean);
-}
-
-function useQueryArray(key) {
-  return computed({
-    get: () => toArray(route.query[key]),
-    set: (val) => {
-      router.replace({
-        query: {
-          ...route.query,
-          [key]: val.length ? val.join(",") : undefined,
-        },
-      });
-    },
-  });
-}
-
-function clearFilters() {
-  router.replace({
-    query: {
-      ...route.query,
-      vision: undefined,
-      weapon: undefined,
-      role: undefined,
-      rarity: undefined,
-    },
-  });
-}
-
-function resetAll() {
-  router.replace({ query: {} });
-}
-
-const selectedVisions = useQueryArray("vision");
-const selectedWeapons = useQueryArray("weapon");
-const selectedRoles = useQueryArray("role");
-const selectedRarities = useQueryArray("rarity");
-const activeFilterCount = computed(
-  () =>
-    selectedVisions.value.length +
-    selectedWeapons.value.length +
-    selectedRoles.value.length +
-    selectedRarities.value.length,
-);
 
 const {
   data: characters,
@@ -473,58 +256,35 @@ const {
   return data;
 });
 
-const upcomingCharacters = computed(() =>
-  (characters.value ?? []).filter((character) => character.is_upcoming),
-);
-
-const playableCharacters = computed(() =>
-  (characters.value ?? []).filter((character) => !character.is_upcoming),
-);
-
-const filteredPlayableCharacters = computed(() => {
-  const query = search.value.toLowerCase().trim();
-
-  return playableCharacters.value.filter((c) => {
-    if (query && !c.name.toLowerCase().startsWith(query)) return false;
-
+const filteredCharacters = computed(() => {
+  return (characters.value ?? []).filter((character) => {
+    // v-model on a <select> returns strings, so compare as strings (or use .number)
+    if (filters.rarity && String(character.rarity) !== filters.rarity)
+      return false;
+    if (filters.vision && character.vision_id?.id !== Number(filters.vision))
+      return false;
     if (
-      selectedVisions.value.length &&
-      !selectedVisions.value.includes(c.vision_id?.name)
+      filters.weapon_type &&
+      character.weapon_type_id?.id !== Number(filters.weapon_type)
     )
       return false;
-
-    if (
-      selectedWeapons.value.length &&
-      !selectedWeapons.value.includes(c.weapon_type_id?.name)
-    )
-      return false;
-
-    if (selectedRoles.value.length && !selectedRoles.value.includes(c.role))
-      return false;
-
-    if (
-      selectedRarities.value.length &&
-      !selectedRarities.value.includes(String(c.rarity))
-    )
-      return false;
-
     return true;
   });
 });
 
-const hasActiveFilters = computed(
-  () => activeFilterCount.value > 0 || search.value.trim() !== "",
+const upcomingCharacters = computed(() =>
+  characters.value.filter((character) => character.is_upcoming),
 );
 
-onMounted(() => window.addEventListener("keydown", onKeydown));
-onBeforeUnmount(() => {
-  window.removeEventListener("keydown", onKeydown);
-  document.body.style.overflow = "";
-});
+const playableCharacters = computed(() =>
+  filteredCharacters.value.filter((character) => !character.is_upcoming),
+);
 
-watch(showFilters, (open) => {
-  document.body.style.overflow = open ? "hidden" : "";
-});
+function resetFilters() {
+  filters.rarity = "";
+  filters.vision = "";
+  filters.weapon_type = "";
+}
 </script>
 
 <style scoped>
