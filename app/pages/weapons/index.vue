@@ -1,193 +1,92 @@
 <template>
-  <Navbar class="fixed top-0 z-50" />
-
-  <article class="min-h-screen max-w-7xl mx-auto py-24">
+  <section class="max-w-7xl mx-auto pt-24 px-4 md:px-0">
     <figure
-      class="relative w-full h-48 overflow-hidden rounded-2xl border-2 border-white/25"
+      class="relative h-48 w-full overflow-hidden border border-white/25 rounded-lg"
     >
       <img
-        class="w-full h-full object-cover object-center"
+        class="w-full h-full object-center object-cover"
         src="https://act-upload.hoyoverse.com/event-ugc-hoyowiki/2026/06/30/237301566/c029e8b74f0a08c1f9c105a33d920256_1477983527310349538.png?x-oss-process=image%2Fformat%2Cwebp"
-        alt=""
+        alt="Stratagema"
       />
-      <div class="absolute top-0 left-0 w-full h-full bg-black/75"></div>
+      <div class="absolute top-0 left-0 w-full h-full bg-black/66"></div>
       <figcaption
-        class="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center text-center"
+        class="absolute top-0 left-0 h-full w-full flex flex-col justify-center items-center text-center"
       >
         <h1>Weapons Archive</h1>
-        <p>Explore the complete collection of weapons you can equip.</p>
+        <p class="text-sm my-2">
+          Explore the complete collection of weapons you can equip.
+        </p>
       </figcaption>
     </figure>
+  </section>
 
-    <div
-      class="my-4 flex flex-col md:flex-row justify-center items-center gap-4"
-    >
-      <select class="select">
-        <option selected disabled>Rarity</option>
-      </select>
-      <select class="select">
-        <option selected disabled>Type</option>
-      </select>
-      <select class="select">
-        <option selected disabled>Attribute</option>
-      </select>
-    </div>
+  <article class="max-w-7xl mx-auto px-4 md:px-0 mb-16">
+    <header class="flex items-center gap-3 my-6 border-b border-white/25">
+      <div class="w-1 rounded-full h-9 bg-primary"></div>
+      <h2 class="">Equippable Weapons</h2>
+    </header>
 
     <section>
-      <div class="h-100 flex justify-center items-center" v-if="weaponsLoading">
-        <span class="loader"></span>
-      </div>
-
-      <div
-        class="flex flex-col justify-center items-center h-100"
-        v-else-if="weaponsError"
-      >
-        <h2>Something Went Wrong!</h2>
-        <p>{{ weaponsError }}</p>
-      </div>
-
-      <div v-else>
-        <div class="px-2 md:px-0">
-          <!-- Mobile: card list -->
-          <div class="grid grid-cols-1 gap-3 md:hidden">
-            <NuxtLink
-              v-for="weapon in weapons"
-              :key="weapon.id"
-              :to="`/weapons/${weapon.id}-${slugify(weapon.name)}`"
-              class="card card-side bg-base-100 shadow-sm border border-base-300"
-            >
-              <figure class="w-20 shrink-0 p-2">
-                <img
-                  :src="weapon.img_url"
-                  :alt="weapon.name"
-                  class="w-full h-auto mask mask-squircle"
-                  :class="{
-                    'rarity-5': weapon.rarity === 5,
-                    'rarity-4': weapon.rarity === 4,
-                    'rarity-3': weapon.rarity === 3,
-                  }"
-                />
-              </figure>
-
-              <div class="card-body p-3 gap-1">
-                <div class="text-xl underline">{{ weapon.name }}</div>
-                <div class="leading-none">
-                  <span
-                    v-for="n in weapon.rarity"
-                    :key="n"
-                    class="text-yellow-500"
-                    >★</span
-                  >
+      <div class="overflow-x-auto">
+        <table class="table">
+          <!-- head -->
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th class="hidden md:table-cell">Base Attack</th>
+              <th class="hidden md:table-cell">Stat</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="weapon in weapons">
+              <td>
+                <div class="flex items-center gap-3">
+                  <div class="avatar">
+                    <div class="mask mask-squircle h-16 w-16">
+                      <img
+                        :src="weapon.img_url"
+                        :alt="weapon.name"
+                        :class="`rarity-${weapon.rarity}`"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <div class="font-bold">{{ weapon.name }}</div>
+                    <div class="text-sm">
+                      <span
+                        class="text-yellow-500 leading-none"
+                        v-for="n in weapon.rarity"
+                        :key="n"
+                        >★</span
+                      >
+                    </div>
+                  </div>
                 </div>
-
-                <div class="text-sm text-base-content/70">
-                  {{ weapon.weapon_type_id.name }}
-                </div>
-                <div class="text-sm">
-                  ATK:
-                  <span class="text-base-content">{{ weapon.base_atk }}</span>
-                </div>
-                <div class="text-sm">
-                  {{ weapon.stat }}:
-                  <span class="text-base-content">{{ weapon.stat_value }}</span>
-                </div>
-
-                <div class="card-actions justify-end mt-1">
-                  <button class="btn btn-xs btn-accent">Details</button>
-                </div>
-              </div>
-            </NuxtLink>
-          </div>
-
-          <!-- Desktop: table -->
-          <div class="hidden md:block overflow-x-auto">
-            <table class="table table-zebra">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Name</th>
-                  <th>Type</th>
-                  <th>Base ATK</th>
-                  <th>Stat</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="weapon in weapons" :key="weapon.id">
-                  <td class="w-24">
-                    <img
-                      :src="weapon.img_url"
-                      :alt="weapon.name"
-                      class="w-full h-auto mask mask-squircle"
-                      :class="{
-                        'rarity-5': weapon.rarity === 5,
-                        'rarity-4': weapon.rarity === 4,
-                        'rarity-3': weapon.rarity === 3,
-                      }"
-                    />
-                  </td>
-                  <td class="w-100">
-                    <h4 class="truncate w-100">{{ weapon.name }}</h4>
-                    <span
-                      v-for="n in weapon.rarity"
-                      :key="n"
-                      class="text-yellow-500 leading-none"
-                      >★</span
-                    >
-                  </td>
-                  <td>{{ weapon.weapon_type_id.name }}</td>
-                  <td>
-                    ATK:
-                    <span class="text-base-content">{{ weapon.base_atk }}</span>
-                  </td>
-                  <td class="text-white">
-                    {{ weapon.stat.replace("%", "") }}:
-                    <span class="text-warning">
-                      {{ weapon.stat_value
-                      }}{{ weapon.stat === "Elemental Mastery" ? "" : "%" }}
-                    </span>
-                  </td>
-                  <td>
-                    <NuxtLink
-                      :to="`/weapons/${weapon.id}-${slugify(weapon.name)}`"
-                      class="btn btn-sm btn-warning"
-                    >
-                      Details
-                    </NuxtLink>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div v-if="hasMore" class="flex justify-center items-center mt-6">
-          <button
-            :disabled="loadingMore"
-            @click="loadMoreWeapons"
-            class="btn btn-info"
-          >
-            <span v-if="loadingMore" class="loading loading-xs"></span>
-            {{ loadingMore ? "Loading..." : "Load more" }}
-          </button>
-        </div>
-
-        <div v-else role="alert" class="alert alert-warning mt-6">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6 shrink-0 stroke-current"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-            />
-          </svg>
-          <span>You have reached the bottom. No more weapons.</span>
-        </div>
+              </td>
+              <td class="text-white/90 hidden md:table-cell">
+                Base ATK:
+                <span class="text-info">{{ weapon.base_atk }}</span>
+              </td>
+              <td class="text-white/90 hidden md:table-cell">
+                {{ weapon.stat.replace("%", "") }}:
+                <span class="text-info">
+                  {{ weapon.stat_value
+                  }}{{ weapon.stat === "Elemental Mastery" ? "" : "%" }}
+                </span>
+              </td>
+              <th>
+                <NuxtLink
+                  :to="`/weapons/${weapon.id}-${slugify(weapon.name)}`"
+                  class="btn btn-primary btn-sm"
+                >
+                  Details
+                </NuxtLink>
+              </th>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </section>
   </article>
@@ -196,58 +95,52 @@
 <script setup>
 const supabase = useSupabaseClient();
 
-const pageSize = 10;
-const weapons = ref([]);
-const currentPage = ref(0);
-const totalCount = ref(0);
-const weaponsLoading = ref(false);
-const loadingMore = ref(false);
-const weaponsError = ref(null);
+const types = ref([
+  { id: 1, name: "Sword" },
+  { id: 2, name: "Claymore" },
+  { id: 3, name: "Bow" },
+  { id: 4, name: "Catalyst" },
+  { id: 5, name: "Polearm" },
+]);
 
-async function fetchWeapons(page, { append = false } = {}) {
-  if (append) {
-    loadingMore.value = true;
-  } else {
-    weaponsLoading.value = true;
-  }
-  weaponsError.value = null;
+const stats = ref([
+  { name: "ATK" },
+  { name: "ATK%" },
+  { name: "DEF" },
+  { name: "DEF%" },
+  { name: "HP" },
+  { name: "HP%" },
+  { name: "Elemental Mastery" },
+  { name: "Energy Recharge" },
+  { name: "Healing Bonus" },
+  { name: "CRIT Rate" },
+  { name: "CRIT DMG" },
+  { name: "Pyro DMG Bonus" },
+  { name: "Anemo DMG Bonus" },
+  { name: "Cryo DMG Bonus" },
+  { name: "Hydro DMG Bonus" },
+  { name: "Geo DMG Bonus" },
+  { name: "Electro DMG Bonus" },
+  { name: "Dendro DMG Bonus" },
+  { name: "Physical DMG Bonus" },
+  { name: "CRIT Rate/CRIT DMG" },
+  { name: "EM" },
+]);
 
-  const from = page * pageSize;
-  const to = from + pageSize - 1;
+const {
+  data: weapons,
+  pending,
+  error,
+} = useAsyncData("weapons", async () => {
+  const { data, error } = await supabase
+    .schema("genshin_impact")
+    .from("weapons")
+    .select(
+      "id, name, rarity, weapon_type_id(id,name), stat, stat_value, base_atk, img_url",
+    )
+    .order("name", { ascending: true });
+  if (error) throw error;
 
-  try {
-    const { data, error, count } = await supabase
-      .schema("genshin_impact")
-      .from("weapons")
-      .select("*, weapon_type_id(*)", { count: "exact" })
-      .order("name", { ascending: true })
-      .range(from, to);
-
-    if (error) throw error;
-
-    weapons.value = append ? [...weapons.value, ...data] : data;
-    totalCount.value = count;
-    currentPage.value = page;
-  } catch (error) {
-    weaponsError.value = error.message;
-  } finally {
-    weaponsLoading.value = false;
-    loadingMore.value = false;
-  }
-}
-
-function getFirstTenWeapons() {
-  return fetchWeapons(0);
-}
-
-function loadMoreWeapons() {
-  if (hasMore.value && !loadingMore.value) {
-    return fetchWeapons(currentPage.value + 1, { append: true });
-  }
-}
-
-const hasMore = computed(() => weapons.value.length < totalCount.value);
-
-// initial load
-getFirstTenWeapons();
+  return data;
+});
 </script>
