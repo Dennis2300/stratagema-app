@@ -63,7 +63,7 @@
             <a
               :href="`https://genshin.hoyoverse.com/en/gift?code=${redeem.code}`"
               target="_blank"
-              class="btn btn-accent join-item"
+              class="btn btn-secondary join-item"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
