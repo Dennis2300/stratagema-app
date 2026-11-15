@@ -258,7 +258,6 @@ const {
 
 const filteredCharacters = computed(() => {
   return (characters.value ?? []).filter((character) => {
-    // v-model on a <select> returns strings, so compare as strings (or use .number)
     if (filters.rarity && String(character.rarity) !== filters.rarity)
       return false;
     if (filters.vision && character.vision_id?.id !== Number(filters.vision))

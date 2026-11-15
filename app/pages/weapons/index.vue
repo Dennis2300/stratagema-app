@@ -21,7 +21,7 @@
   </section>
 
   <article class="max-w-7xl mx-auto px-4 md:px-0 mb-16">
-    <header class="my-6 border-b border-white/25">
+    <header class="mt-6">
       <div class="flex items-center gap-3">
         <div class="w-1 rounded-full h-9 bg-primary"></div>
         <h2 class="">Equippable Weapons</h2>
@@ -29,29 +29,40 @@
       <div
         class="flex flex-col md:flex-row justify-center items-center gap-4 pt-4 pb-6"
       >
-        <select class="select">
-          <option selected>Rarity</option>
-          <option value="4">5 Star</option>
-          <option value="5">4 Star</option>
+        <select class="select" v-model="filters.rarity">
+          <option value="" selected disabled>Rarity</option>
+          <option
+            v-for="rarity in [3, 4, 5]"
+            :key="rarity"
+            :value="String(rarity)"
+          >
+            {{ rarity }}★
+          </option>
         </select>
-        <select class="select">
-          <option selected>Type</option>
-          <option v-for="type in types" :value="type.id">
+        <select class="select" v-model="filters.type">
+          <option value="" selected disabled>Type</option>
+          <option v-for="type in types" :key="type.id" :value="type.id">
             {{ type.name }}
           </option>
         </select>
-        <select class="select">
-          <option selected>Stat</option>
+        <select class="select" v-model="filters.stat">
+          <option value="" selected disabled>Stat</option>
           <option v-for="stat in stats" :value="stat.name">
             {{ stat.name }}
           </option>
         </select>
+        <button
+          @click="resetFilters"
+          class="btn bg-[#FEE502] text-[#181600] border-[#f1d800]"
+        >
+          Reset
+        </button>
       </div>
     </header>
 
     <section>
       <div class="overflow-x-auto">
-        <table class="table">
+        <table class="table table-zebra border border-white/25">
           <thead>
             <tr>
               <th>Name</th>
@@ -61,7 +72,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="weapon in weapons">
+            <tr v-for="weapon in filteredWeapons">
               <td>
                 <div class="flex items-center gap-3">
                   <div class="avatar">
@@ -149,6 +160,12 @@ const stats = ref([
   { name: "EM" },
 ]);
 
+const filters = reactive({
+  rarity: "",
+  type: "",
+  stat: "",
+});
+
 const {
   data: weapons,
   pending,
@@ -165,4 +182,28 @@ const {
 
   return data;
 });
+
+const filteredWeapons = computed(() => {
+  return (weapons.value ?? []).filter((weapon) => {
+    if (filters.rarity && String(weapon.rarity) !== String(filters.rarity))
+      return false;
+
+    const rel = Array.isArray(weapon.weapon_type_id)
+      ? weapon.weapon_type_id[0]
+      : weapon.weapon_type_id;
+    const typeId = rel?.id ?? rel;
+
+    if (filters.type && String(typeId) !== String(filters.type)) return false;
+
+    if (filters.stat && weapon.stat !== filters.stat) return false;
+
+    return true;
+  });
+});
+
+function resetFilters() {
+  filters.rarity = "";
+  filters.type = "";
+  filters.stat = "";
+}
 </script>
