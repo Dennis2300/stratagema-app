@@ -61,7 +61,13 @@
     </header>
 
     <section>
-      <div class="overflow-x-auto">
+      <div v-if="pending" class="h-100 flex justify-center items-center">
+        <div class="loader"></div>
+      </div>
+      <div v-else-if="error">
+        <ErrorMessage :error="error" />
+      </div>
+      <div v-else-if="weapons" class="overflow-x-auto">
         <table class="table table-zebra border border-white/25">
           <thead>
             <tr>
@@ -72,6 +78,14 @@
             </tr>
           </thead>
           <tbody>
+            <tr v-if="filteredWeapons.length === 0">
+              <td colspan="4" class="text-center py-10 text-white/60">
+                <p class="mb-3">No weapons match your filters.</p>
+                <button class="btn btn-sm btn-outline" @click="resetFilters">
+                  Clear filters
+                </button>
+              </td>
+            </tr>
             <tr v-for="weapon in filteredWeapons">
               <td>
                 <div class="flex items-center gap-3">
@@ -100,11 +114,11 @@
               </td>
               <td class="text-white/90 hidden md:table-cell">
                 Base ATK:
-                <span class="text-info">{{ weapon.base_atk }}</span>
+                <span class="text-accent">{{ weapon.base_atk }}</span>
               </td>
               <td class="text-white/90 hidden md:table-cell">
                 {{ weapon.stat.replace("%", "") }}:
-                <span class="text-info">
+                <span class="text-accent">
                   {{ weapon.stat_value
                   }}{{ weapon.stat === "Elemental Mastery" ? "" : "%" }}
                 </span>
@@ -121,11 +135,14 @@
           </tbody>
         </table>
       </div>
+      <div v-else></div>
     </section>
   </article>
 </template>
 
 <script setup>
+import { setInterval } from "#imports";
+
 const supabase = useSupabaseClient();
 
 const types = ref([

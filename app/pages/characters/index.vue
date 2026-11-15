@@ -164,15 +164,15 @@
 
               <!-- Character attributes -->
               <div class="flex flex-wrap items-center gap-2">
-                <span class="badge badge-xs badge-neutral">
+                <span class="badge badge-xs badge-secondary">
                   {{ character?.weapon_type_id?.name }}
                 </span>
 
-                <span class="badge badge-xs badge-neutral">
+                <span class="badge badge-xs badge-secondary">
                   {{ character?.main_stat }}
                 </span>
 
-                <span class="badge badge-xs badge-neutral">
+                <span class="badge badge-xs badge-secondary">
                   {{ character?.role }}
                 </span>
               </div>
