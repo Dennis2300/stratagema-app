@@ -1,27 +1,151 @@
 <template>
-  <Navbar class="fixed top-0 z-50" />
+  <section v-if="characterLoading" class="max-w-7xl mx-auto pt-24">
+    <!-- Header Skeleton -->
+    <div class="flex flex-col md:flex-row md:justify-between gap-3">
+      <!-- Avatar -->
+      <div class="flex flex-col items-center md:flex-row gap-3">
+        <figure class="relative">
+          <!-- Vision icon -->
+          <div
+            class="skeleton absolute -top-2 -left-2 w-12 h-12 rounded-full"
+          ></div>
+          <!-- Character image -->
+          <div class="skeleton rounded-full w-42 h-42"></div>
+        </figure>
 
-  <div
-    v-if="characterLoading"
-    class="h-screen flex justify-center items-center"
-  >
-    <span class="loader"></span>
-  </div>
+        <div class="flex flex-col items-center md:items-start gap-2">
+          <!-- Title -->
+          <div class="skeleton h-4 w-32"></div>
+          <!-- Name -->
+          <div class="skeleton h-8 w-52"></div>
+          <!-- Badges -->
+          <div class="flex flex-wrap items-center gap-2 mt-2">
+            <div class="skeleton h-5 w-16 rounded-full"></div>
+            <div class="skeleton h-1 w-1 rounded-full"></div>
+            <div class="skeleton h-5 w-20 rounded-full"></div>
+            <div class="skeleton h-1 w-1 rounded-full"></div>
+            <div class="skeleton h-5 w-14 rounded-full"></div>
+            <div class="skeleton h-1 w-1 rounded-full"></div>
+            <div class="skeleton h-5 w-16 rounded-full"></div>
+          </div>
+        </div>
+      </div>
 
-  <div
+      <!-- Voice Actors -->
+      <div class="space-y-2 mx-2 text-xs md:w-72">
+        <div class="flex items-center gap-3">
+          <div class="skeleton h-6 w-1 rounded-full"></div>
+          <div class="skeleton h-4 w-24"></div>
+        </div>
+        <div class="skeleton h-3 w-56"></div>
+
+        <div
+          v-for="n in 3"
+          :key="n"
+          class="bg-base-300/90 flex items-center gap-4 px-4 py-3 rounded-md"
+        >
+          <div class="flex items-center gap-1 shrink-0">
+            <div class="skeleton h-4 w-6"></div>
+            <div class="skeleton h-4 w-16 hidden md:block"></div>
+          </div>
+          <div class="skeleton h-4 w-32"></div>
+        </div>
+      </div>
+    </div>
+    <!-- Content Container -->
+    <div class="space-y-8 my-4">
+      <!-- Dossier Skeleton -->
+      <div class="px-4 md:px-0">
+        <div class="skeleton h-3 w-24 mb-1"></div>
+        <div class="flex items-center gap-2 mb-2">
+          <div class="skeleton h-9 w-1 rounded-full"></div>
+          <div class="skeleton h-7 w-28"></div>
+        </div>
+
+        <div
+          class="stats stats-vertical bg-base-300/90 w-full shadow md:stats-horizontal"
+        >
+          <div v-for="n in 5" :key="n" class="stat">
+            <div class="skeleton h-4 w-20 mb-2"></div>
+            <div class="skeleton h-8 w-24 mb-2"></div>
+            <div class="skeleton h-3 w-16"></div>
+          </div>
+        </div>
+
+        <!-- Signature Dish -->
+        <div
+          class="stats stats-vertical bg-base-300/90 w-full shadow md:stats-horizontal mt-1.5"
+        >
+          <div class="stat">
+            <div class="skeleton h-4 w-28 mb-2"></div>
+
+            <div class="stat-figure">
+              <div class="skeleton w-16 h-16 rounded-2xl"></div>
+            </div>
+
+            <div class="skeleton h-8 w-48 mb-2"></div>
+            <div class="skeleton h-3 w-40"></div>
+
+            <div>
+              <div class="divider m-0"></div>
+              <div class="space-y-1.5">
+                <div class="skeleton h-3 w-full"></div>
+                <div class="skeleton h-3 w-4/5"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Weapons Skeleton -->
+      <div class="px-4 md:px-0">
+        <div class="skeleton h-3 w-40 mb-1"></div>
+        <div class="flex items-center gap-2 mb-2">
+          <div class="skeleton h-9 w-1 rounded-full"></div>
+          <div class="skeleton h-7 w-40"></div>
+        </div>
+
+        <div class="min-h-[25vh] space-y-3">
+          <div v-for="n in 3" :key="n" class="p-4 bg-base-300/90 rounded-lg">
+            <div class="flex justify-between items-center">
+              <div class="flex items-center gap-4">
+                <div
+                  class="skeleton w-20 h-20 mask mask-squircle shrink-0"
+                ></div>
+                <div class="space-y-2">
+                  <div class="skeleton h-5 w-40"></div>
+                  <div class="skeleton h-4 w-32"></div>
+                </div>
+              </div>
+              <div class="skeleton h-4 w-4 mr-4"></div>
+            </div>
+
+            <div class="divider m-0" />
+            <div class="space-y-1.5">
+              <div class="skeleton h-3.5 w-full"></div>
+              <div class="skeleton h-3.5 w-3/4"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section
     v-else-if="characterError"
     class="h-screen flex justify-center items-center"
   >
     <ErrorMessage :error="characterError" />
-  </div>
+  </section>
 
-  <article v-else-if="character" class="min-h-screen">
+  <div v-else-if="character" class="relative">
+    <!-- Background (blurred + faded, on its own) -->
     <div
-      class="bg-no-repeat bg-top fixed inset-0 -z-10 blur-xs opacity-25 mt-12"
       :style="{ backgroundImage: `url(${character.splash_art_url})` }"
-    />
+      class="fixed inset-0 z-0 bg-no-repeat bg-top bg-cover blur-xs opacity-33 pointer-events-none"
+      aria-hidden="true"
+    ></div>
 
-    <div class="max-w-7xl mx-auto mt-24">
+    <div class="relative z-10 max-w-7xl mx-auto pt-32">
       <!-- Header -->
       <section class="flex flex-col md:flex-row md:justify-between gap-3">
         <!-- Avatar -->
@@ -34,10 +158,7 @@
             />
             <img
               class="rounded-full w-42 h-42"
-              :class="{
-                'rarity-5': character.rarity === 5,
-                'rarity-4': character.rarity === 4,
-              }"
+              :class="`rarity-${character.rarity}`"
               :src="character.img_url"
               alt=""
             />
@@ -46,38 +167,36 @@
             <span class="italic text-white/50" v-if="character.title"
               >"{{ character.title }}"</span
             >
-            <h1>{{ character.name }}</h1>
-            <div class="flex flex-wrap items-center gap-2 mt-2">
+            <h1 class="mb-4 mt-2">{{ character.name }}</h1>
+            <div class="flex flex-wrap items-center gap-2">
               <span
                 v-if="character.vision.name"
-                class="badge badge-warning badge-sm"
+                class="badge badge-info badge-sm"
                 >{{ character.vision.name }}</span
               >
               <span
                 v-if="character.weapon_type?.name"
-                class="h-1 w-1 rounded-full bg-white"
+                class="h-1 w-1 rounded-info bg-white"
               ></span>
               <span
                 v-if="character.weapon_type?.name"
-                class="badge badge-warning badge-sm"
+                class="badge badge-info badge-sm"
                 >{{ character.weapon_type?.name }}</span
               >
               <span
                 v-if="character.role"
                 class="h-1 w-1 rounded-full bg-white"
               ></span>
-              <span
-                v-if="character.role"
-                class="badge badge-warning badge-sm"
-                >{{ character.role }}</span
-              >
+              <span v-if="character.role" class="badge badge-info badge-sm">{{
+                character.role
+              }}</span>
               <span
                 v-if="character.main_stat"
                 class="h-1 w-1 rounded-full bg-white"
               ></span>
               <span
                 v-if="character.main_stat"
-                class="badge badge-warning badge-sm"
+                class="badge badge-info badge-sm"
                 >{{ character.main_stat }}</span
               >
             </div>
@@ -123,444 +242,444 @@
           </div>
         </div>
       </section>
-    </div>
 
-    <div class="max-w-7xl mx-auto space-y-8 mb-12">
-      <!-- Dossier -->
-      <section class="px-4 md:px-0">
-        <span class="text-xs text-white/50 italic"> Character Profile</span>
-        <div class="flex items-center gap-2 mb-2">
-          <div class="h-9 w-1 rounded-full bg-white"></div>
-          <h2>Dossier</h2>
-        </div>
-
-        <div
-          class="stats stats-vertical bg-base-300/90 w-full shadow md:stats-horizontal"
-        >
-          <div class="stat">
-            <div class="stat-title">Rarity</div>
-            <div class="stat-value text-yellow-400">
-              {{ "★".repeat(character.rarity) }}
-            </div>
-            <div class="stat-desc">{{ character.rarity }} Star</div>
+      <div class="space-y-8 pb-24">
+        <!-- Dossier -->
+        <section class="px-4 md:px-0">
+          <span class="text-xs text-white/50 italic"> Character Profile</span>
+          <div class="flex items-center gap-2 mb-2">
+            <div class="h-9 w-1 rounded-full bg-white"></div>
+            <h2>Dossier</h2>
           </div>
 
-          <div class="stat">
-            <div class="stat-title">Constellation</div>
-            <div class="stat-value italic">
-              {{ character.constellation ?? "N/A" }}
+          <div
+            class="stats stats-vertical bg-base-300/90 w-full shadow md:stats-horizontal rounded-lg"
+          >
+            <div class="stat">
+              <div class="stat-title">Rarity</div>
+              <div class="stat-value text-yellow-400">
+                {{ "★".repeat(character.rarity) }}
+              </div>
+              <div class="stat-desc">{{ character.rarity }} Star</div>
             </div>
-            <div class="stat-desc">{{ character.constellation ?? "N/A" }}</div>
-          </div>
 
-          <div class="stat">
-            <div class="stat-title">Birthday</div>
-            <div class="stat-value" v-if="character.birthday">
-              {{ character.birthday }}
-            </div>
-            <div class="stat-value" v-else>none</div>
-            <div class="stat-desc">Month/Day</div>
-          </div>
-
-          <div class="stat">
-            <div class="stat-title">Team Role</div>
-            <div class="stat-value">{{ character.role }}</div>
-            <div class="stat-desc">
-              {{ character.vision.name }} {{ character.role }}
-            </div>
-          </div>
-
-          <div class="stat">
-            <div class="stat-title">Release Date</div>
-            <div class="stat-value">
-              <NuxtTime
-                :datetime="character.release_date"
-                month="short"
-                day="numeric"
-                year="numeric"
-              />
-            </div>
-            <div class="stat-desc">
-              <NuxtTime
-                :datetime="character.release_date"
-                month="long"
-                day="numeric"
-                year="numeric"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div
-          v-if="character.special_dish"
-          class="stats stats-vertical bg-base-300/90 w-full shadow md:stats-horizontal mt-1.5"
-        >
-          <div class="stat">
-            <div class="stat-title">Signature Dish</div>
-
-            <div class="stat-figure text-secondary">
-              <div class="avatar">
-                <div class="w-16 rounded-2xl">
-                  <img
-                    :src="character.special_dish.img_url"
-                    :alt="character.special_dish.name"
-                    :class="`rarity-${character.special_dish.rarity}`"
-                  />
-                </div>
+            <div class="stat">
+              <div class="stat-title">Constellation</div>
+              <div class="stat-value italic">
+                {{ character.constellation ?? "N/A" }}
+              </div>
+              <div class="stat-desc">
+                {{ character.constellation ?? "N/A" }}
               </div>
             </div>
 
-            <div class="stat-value">{{ character.special_dish.name }}</div>
-
-            <div class="stat-desc text-info">
-              {{ character.special_dish.utility }}
+            <div class="stat">
+              <div class="stat-title">Birthday</div>
+              <div class="stat-value" v-if="character.birthday">
+                {{ character.birthday }}
+              </div>
+              <div class="stat-value" v-else>none</div>
+              <div class="stat-desc">Month/Day</div>
             </div>
 
-            <div>
-              <div class="divider m-0"></div>
-              <p class="text-xs text-white/50 w-full">
-                {{ character.special_dish.description }}
-              </p>
+            <div class="stat">
+              <div class="stat-title">Team Role</div>
+              <div class="stat-value">{{ character.role }}</div>
+              <div class="stat-desc">
+                {{ character.vision.name }} {{ character.role }}
+              </div>
+            </div>
+
+            <div class="stat">
+              <div class="stat-title">Release Date</div>
+              <div class="stat-value">
+                <NuxtTime
+                  :datetime="character.release_date"
+                  month="short"
+                  day="numeric"
+                  year="numeric"
+                />
+              </div>
+              <div class="stat-desc">
+                <NuxtTime
+                  :datetime="character.release_date"
+                  month="long"
+                  day="numeric"
+                  year="numeric"
+                />
+              </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      <!-- Waepons -->
-      <section v-if="sortedWeapons.length > 0" class="px-4 md:px-0">
-        <span class="text-xs text-white/50 italic"
-          >Best weapons for {{ character.name }}</span
-        >
-        <div class="flex items-center gap-2 mb-2">
-          <div class="h-9 w-1 rounded-full bg-white"></div>
-          <h2>Best Weapons</h2>
-        </div>
-
-        <div class="min-h-[25vh] space-y-3">
           <div
-            v-for="w in sortedWeapons"
-            :key="w.weapon.id"
-            class="p-4 bg-base-300/90 rounded-lg group hover:bg-base-300 hover:cursor-pointer"
+            v-if="character.special_dish"
+            class="stats stats-vertical bg-base-300/90 w-full shadow md:stats-horizontal mt-1.5"
           >
-            <NuxtLink :to="`/weapons/${w.weapon.id}-${slugify(w.weapon.name)}`">
-              <div class="flex justify-between items-center">
-                <figure class="flex items-center gap-4">
-                  <img
-                    class="w-20 h-20 mask mask-squircle"
-                    :class="`rarity-${w.weapon.rarity}`"
-                    :src="w.weapon.img_url"
-                    :alt="w.weapon.name"
-                  />
-                  <figcaption>
-                    <h5
-                      class="group-hover:underline group-hover:text-info transition duration-100"
-                    >
-                      {{ w.weapon.name }}
-                    </h5>
-                    <span class="text-warning">
-                      {{ w.weapon.stat.replace("%", "") }}:
-                      {{ w.weapon.stat_value
-                      }}{{ w.weapon.stat === "Elemental Mastery" ? "" : "%" }}
-                    </span>
-                  </figcaption>
-                </figure>
-                <div
-                  class="pr-4 group-hover:translate-x-2 transition duration-300"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-caret-right-fill"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"
+            <div class="stat">
+              <div class="stat-title">Signature Dish</div>
+
+              <div class="stat-figure text-secondary">
+                <div class="avatar">
+                  <div class="w-16 rounded-2xl">
+                    <img
+                      :src="character.special_dish.img_url"
+                      :alt="character.special_dish.name"
+                      :class="`rarity-${character.special_dish.rarity}`"
                     />
-                  </svg>
+                  </div>
                 </div>
               </div>
-              <div v-if="w.details">
-                <div class="divider m-0" />
-                <p class="text-sm">{{ w.details }}</p>
-              </div>
-            </NuxtLink>
-          </div>
-        </div>
-      </section>
 
-      <!-- Builds -->
-      <section class="px-4 md:px-0">
-        <span class="text-xs text-white/50 italic"
-          >Recommended builds for {{ character.name }}</span
-        >
-        <div class="flex items-center gap-2 mb-2">
-          <div class="h-9 w-1 rounded-full bg-white"></div>
-          <h2>Build(s)</h2>
-        </div>
+              <div class="stat-value">{{ character.special_dish.name }}</div>
 
-        <div class="bg-base-300/90 p-4 rounded-lg">
-          <div class="flex flex-col md:flex-row">
-            <div class="flex-1">
-              <h4 class="divider">Main Stats</h4>
-              <div class="stats stats-vertical w-full shadow">
-                <!-- Sands -->
-                <div class="stat">
-                  <div class="stat-title">Sands</div>
-                  <div
-                    v-if="groupedStats.sands.length"
-                    class="stat-value text-xl whitespace-pre-line md:whitespace-normal"
-                  >
-                    {{ groupedStats.sands.map((s) => s.stat).join(" or ") }}
-                  </div>
-                  <div v-else>N/A</div>
-                  <div class="stat-figure text-secondary">
-                    <div class="avatar">
-                      <div class="w-16 rounded-full">
-                        <img
-                          src="/imgs/sands.webp"
-                          class="flex justify-center items-center"
-                          alt="Sands"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- Goblet -->
-                <div class="stat">
-                  <div class="stat-title">Goblet</div>
-                  <div
-                    v-if="groupedStats.goblet.length"
-                    class="stat-value text-xl whitespace-pre-line md:whitespace-normal"
-                  >
-                    {{ groupedStats.goblet.map((s) => s.stat).join(" or ") }}
-                  </div>
-                  <div v-else>N/A</div>
-                  <div class="stat-figure text-secondary">
-                    <div class="avatar">
-                      <div class="w-16 rounded-full">
-                        <img
-                          src="/imgs/goblet.webp"
-                          class="flex justify-center items-center"
-                          alt="Goblet"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- Circlet -->
-                <div class="stat">
-                  <div class="stat-title">Circlet</div>
-                  <div
-                    v-if="groupedStats.circlet.length"
-                    class="stat-value text-xl whitespace-pre-line md:whitespace-normal"
-                  >
-                    {{ groupedStats.circlet.map((s) => s.stat).join(" or ") }}
-                  </div>
-                  <div v-else>N/A</div>
-                  <div class="stat-figure text-secondary">
-                    <div class="avatar">
-                      <div class="w-16 rounded-full">
-                        <img
-                          src="/imgs/circlet.webp"
-                          class="flex justify-center items-center"
-                          alt="Goblet"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <div class="stat-desc text-info">
+                {{ character.special_dish.utility }}
               </div>
-            </div>
-            <div class="divider divider-horizontal h-lg"></div>
-            <div class="flex-1">
-              <h4 class="divider">Substats</h4>
 
-              <div v-if="groupedStats.substat.length" class="space-y-4">
-                <div
-                  v-for="(s, i) in groupedStats.substat"
-                  :key="s.id"
-                  class="bg-zinc-500/20 p-4 rounded-lg"
-                >
-                  <span class="font-bold">{{ i + 1 }}.</span> {{ s.stat }}
-                </div>
-              </div>
-              <div v-else class="h-25 flex justify-center items-center">
-                Not released yet
+              <div>
+                <div class="divider m-0"></div>
+                <p class="text-xs text-white/50 w-full">
+                  {{ character.special_dish.description }}
+                </p>
               </div>
             </div>
           </div>
+        </section>
 
-          <h4 class="divider md:px-32 mt-6">Artifacts</h4>
-          <div
-            v-if="buildsLoading"
-            class="h-50 flex justify-center items-center"
+        <!-- Waepons -->
+        <section v-if="sortedWeapons.length > 0" class="px-4 md:px-0">
+          <span class="text-xs text-white/50 italic"
+            >Best weapons for {{ character.name }}</span
           >
-            <span class="loading loading-xl"></span>
+          <div class="flex items-center gap-2 mb-2">
+            <div class="h-9 w-1 rounded-full bg-white"></div>
+            <h2>Best Weapons</h2>
           </div>
 
-          <ErrorMessage v-else-if="buildsError" :error="buildsError" />
-
-          <div
-            v-else-if="builds.length > 0"
-            v-for="build in builds"
-            :key="build.id"
-            class="mb-8"
-          >
-            <span class="text-2xl">{{ build.title }}</span>
+          <div class="min-h-[25vh] space-y-3">
             <div
-              v-for="piece in build.build_artifact"
-              :key="piece.id"
-              class="mb-2"
+              v-for="w in sortedWeapons"
+              :key="w.weapon.id"
+              class="p-4 bg-base-300/90 rounded-lg group hover:bg-base-300 hover:cursor-pointer"
             >
-              <div class="flex gap-3">
-                <img
-                  :src="piece.artifact_id.flower_img_url"
-                  :alt="piece.artifact_id.name"
-                  class="w-20 h-20 rounded-xl rarity-5"
-                />
-                <div>
-                  <span
-                    class="badge badge-neutral badge-xs border border-white/50"
-                  >
-                    {{ piece.piece_count }} Piece
-                  </span>
-                  <h6 class="text-warning">
-                    {{ piece.artifact_id.name }}
-                  </h6>
-                  <div
-                    v-if="piece.piece_count === 4"
-                    class="text-xs text-white/80 space-y-1"
-                  >
-                    <p>
-                      {{ piece.artifact_id.two_piece_bonus_id.name }}
-                    </p>
-                    <p>
-                      {{ piece.artifact_id.four_piece_bonus }}
-                    </p>
-                  </div>
-                  <p
-                    v-if="piece.piece_count === 2"
-                    class="text-xs text-white/80"
-                  >
-                    {{ piece.artifact_id.two_piece_bonus_id.name }}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div v-else class="h-25 flex justify-center items-center">
-            Not released yet
-          </div>
-        </div>
-      </section>
-
-      <!-- Teams -->
-      <section class="px-4 md:px-0" v-if="character.teams.length > 0">
-        <span class="text-xs text-white/50 italic"
-          >Possible Team Comps for {{ character.name }}</span
-        >
-        <div class="flex items-center gap-2 mb-2">
-          <div class="h-9 w-1 rounded-full bg-white"></div>
-          <h2>Teams</h2>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-          <div
-            v-for="team in sortTeams(character.teams)"
-            :key="team.id"
-            class="bg-base-300/90 p-4 rounded-lg"
-          >
-            <div class="flex justify-between items-center">
-              <p class="font-bold">{{ team.name }}</p>
-              <span class="text-white/15">#{{ team.id }}</span>
-            </div>
-            <div class="divider mt-0 mb-2"></div>
-
-            <div class="flex justify-center items-center gap-4">
-              <img
-                class="h-16 w-16 mask mask-squircle"
-                :class="{
-                  'rarity-5': character.rarity === 5,
-                  'rarity-4': character.rarity === 4,
-                }"
-                :src="character.img_url"
-                :alt="character.name"
-              />
-              <div class="h-8 w-px bg-base-content/50"></div>
               <NuxtLink
-                v-for="member in sortedMembers(team.members)"
-                :key="member.id"
-                class="tooltip tooltip-bottom tooltip-primary hover:cursor-pointer"
-                :data-tip="`${member.character.name} (${member.role})`"
-                :to="`/characters/${member.character.id}-${slugify(member.character.name)}`"
-                target="_blank"
+                :to="`/weapons/${w.weapon.id}-${slugify(w.weapon.name)}`"
               >
-                <img
-                  class="h-16 w-16 mask mask-squircle"
-                  :class="{
-                    'rarity-5': member.character.rarity === 5,
-                    'rarity-4': member.character.rarity === 4,
-                  }"
-                  :src="member.character.img_url"
-                  :alt="member.character.name"
-                />
+                <div class="flex justify-between items-center">
+                  <figure class="flex items-center gap-4">
+                    <img
+                      class="w-20 h-20 mask mask-squircle"
+                      :class="`rarity-${w.weapon.rarity}`"
+                      :src="w.weapon.img_url"
+                      :alt="w.weapon.name"
+                    />
+                    <figcaption>
+                      <h5 class="group-hover:underline">
+                        {{ w.weapon.name }}
+                      </h5>
+                      <span class="text-info">
+                        {{ w.weapon.stat.replace("%", "") }}:
+                        {{ w.weapon.stat_value
+                        }}{{ w.weapon.stat === "Elemental Mastery" ? "" : "%" }}
+                      </span>
+                    </figcaption>
+                  </figure>
+                  <div
+                    class="pr-4 group-hover:translate-x-2 transition duration-300"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-caret-right-fill"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <div v-if="w.details">
+                  <div class="divider m-0" />
+                  <p class="text-sm">{{ w.details }}</p>
+                </div>
               </NuxtLink>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- Materials -->
-      <section class="px-4 md:px-0">
-        <span class="text-xs text-white/50 italic">
-          All Materials for {{ character.name }} LvL. 90 & Max Talents
-        </span>
-        <div class="flex items-center gap-2 mb-2">
-          <div class="h-9 w-1 rounded-full bg-white"></div>
-          <h2>Materials</h2>
-        </div>
-
-        <div class="flex gap-4">
-          <div
-            v-for="(items, type) in groupedMaterials"
-            :key="type"
-            class="flex-1 bg-base-300/90 p-4 rounded-lg"
+        <!-- Builds -->
+        <section class="px-4 md:px-0">
+          <span class="text-xs text-white/50 italic"
+            >Recommended builds for {{ character.name }}</span
           >
-            <h5 class="divider uppercase">
-              {{ type.replaceAll("_", " ") }}
-            </h5>
+          <div class="flex items-center gap-2 mb-2">
+            <div class="h-9 w-1 rounded-full bg-white"></div>
+            <h2>Build(s)</h2>
+          </div>
 
-            <div class="space-y-4">
-              <figure
-                v-for="item in items"
-                :key="item.id"
-                class="flex items-center gap-3"
+          <div class="bg-base-300/90 p-4 rounded-lg">
+            <div class="flex flex-col md:flex-row">
+              <div class="flex-1">
+                <h4 class="divider">Main Stats</h4>
+                <div class="stats stats-vertical w-full shadow">
+                  <!-- Sands -->
+                  <div class="stat">
+                    <div class="stat-title">Sands</div>
+                    <div
+                      v-if="groupedStats.sands.length"
+                      class="stat-value text-xl whitespace-pre-line md:whitespace-normal"
+                    >
+                      {{ groupedStats.sands.map((s) => s.stat).join(" or ") }}
+                    </div>
+                    <div v-else>N/A</div>
+                    <div class="stat-figure text-secondary">
+                      <div class="avatar">
+                        <div class="w-16 rounded-full">
+                          <img
+                            src="/imgs/sands.webp"
+                            class="flex justify-center items-center"
+                            alt="Sands"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Goblet -->
+                  <div class="stat">
+                    <div class="stat-title">Goblet</div>
+                    <div
+                      v-if="groupedStats.goblet.length"
+                      class="stat-value text-xl whitespace-pre-line md:whitespace-normal"
+                    >
+                      {{ groupedStats.goblet.map((s) => s.stat).join(" or ") }}
+                    </div>
+                    <div v-else>N/A</div>
+                    <div class="stat-figure text-secondary">
+                      <div class="avatar">
+                        <div class="w-16 rounded-full">
+                          <img
+                            src="/imgs/goblet.webp"
+                            class="flex justify-center items-center"
+                            alt="Goblet"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Circlet -->
+                  <div class="stat">
+                    <div class="stat-title">Circlet</div>
+                    <div
+                      v-if="groupedStats.circlet.length"
+                      class="stat-value text-xl whitespace-pre-line md:whitespace-normal"
+                    >
+                      {{ groupedStats.circlet.map((s) => s.stat).join(" or ") }}
+                    </div>
+                    <div v-else>N/A</div>
+                    <div class="stat-figure text-secondary">
+                      <div class="avatar">
+                        <div class="w-16 rounded-full">
+                          <img
+                            src="/imgs/circlet.webp"
+                            class="flex justify-center items-center"
+                            alt="Goblet"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="divider divider-horizontal h-lg"></div>
+              <div class="flex-1">
+                <h4 class="divider">Substats</h4>
+
+                <div v-if="groupedStats.substat.length" class="space-y-4">
+                  <div
+                    v-for="(s, i) in groupedStats.substat"
+                    :key="s.id"
+                    class="bg-zinc-500/20 p-4 rounded-lg"
+                  >
+                    <span class="font-bold">{{ i + 1 }}.</span> {{ s.stat }}
+                  </div>
+                </div>
+                <div v-else class="h-25 flex justify-center items-center">
+                  Not released yet
+                </div>
+              </div>
+            </div>
+
+            <h4 class="divider md:px-32 mt-6">Artifacts</h4>
+            <div
+              v-if="buildsLoading"
+              class="h-50 flex justify-center items-center"
+            >
+              <span class="loading loading-xl"></span>
+            </div>
+
+            <ErrorMessage v-else-if="buildsError" :error="buildsError" />
+
+            <div
+              v-else-if="builds.length > 0"
+              v-for="build in builds"
+              :key="build.id"
+              class="mt-6"
+            >
+              <div class="text-2xl font-genshin mb-2">{{ build.title }}</div>
+              <div
+                v-for="piece in build.build_artifact"
+                :key="piece.id"
+                class="mb-2"
               >
-                <img
-                  :src="item.material.img_url"
-                  :class="`rarity-${item.material.rarity}`"
-                  class="w-16 h-16 mask mask-squircle"
-                />
-                <figcaption>
-                  <h6 class="text-white/80">{{ item.material.name }}</h6>
-                  <span class="text-warning">
-                    ×{{ item.amount.toLocaleString() }}
-                  </span>
-                </figcaption>
-              </figure>
+                <div class="flex gap-3">
+                  <img
+                    :src="piece.artifact_id.flower_img_url"
+                    :alt="piece.artifact_id.name"
+                    class="w-20 h-20 rounded-xl rarity-5"
+                  />
+                  <div>
+                    <span class="badge badge-info badge-xs">
+                      {{ piece.piece_count }} Piece
+                    </span>
+                    <h6 class="border-b border-white mb-2">
+                      {{ piece.artifact_id.name }}
+                    </h6>
+                    <div
+                      v-if="piece.piece_count === 4"
+                      class="text-xs text-white/66 space-y-1"
+                    >
+                      <p>
+                        {{ piece.artifact_id.two_piece_bonus_id.name }}
+                      </p>
+                      <p>
+                        {{ piece.artifact_id.four_piece_bonus }}
+                      </p>
+                    </div>
+                    <p
+                      v-if="piece.piece_count === 2"
+                      class="text-xs text-white/80"
+                    >
+                      {{ piece.artifact_id.two_piece_bonus_id.name }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div v-else class="h-25 flex justify-center items-center">
+              Not released yet
             </div>
           </div>
-        </div>
-      </section>
-    </div>
-  </article>
+        </section>
 
-  <div v-else class="h-screen flex justify-center items-center">
-    <EmptyFallback />
+        <!-- Teams -->
+        <section class="px-4 md:px-0" v-if="character.teams.length > 0">
+          <span class="text-xs text-white/50 italic"
+            >Possible Team Comps for {{ character.name }}</span
+          >
+          <div class="flex items-center gap-2 mb-2">
+            <div class="h-9 w-1 rounded-full bg-white"></div>
+            <h2>Teams</h2>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+            <div
+              v-for="team in sortTeams(character.teams)"
+              :key="team.id"
+              class="bg-base-300/90 p-4 rounded-lg"
+            >
+              <div class="flex justify-between items-center">
+                <p class="font-bold">{{ team.name }}</p>
+                <span class="text-white/15">#{{ team.id }}</span>
+              </div>
+              <div class="divider mt-0 mb-2"></div>
+
+              <div class="flex justify-center items-center gap-4">
+                <img
+                  class="h-16 w-16 mask mask-squircle"
+                  :class="{
+                    'rarity-5': character.rarity === 5,
+                    'rarity-4': character.rarity === 4,
+                  }"
+                  :src="character.img_url"
+                  :alt="character.name"
+                />
+                <div class="h-8 w-px bg-base-content/50"></div>
+                <NuxtLink
+                  v-for="member in sortedMembers(team.members)"
+                  :key="member.id"
+                  class="tooltip tooltip-bottom tooltip-primary hover:cursor-pointer"
+                  :data-tip="`${member.character.name} (${member.role})`"
+                  :to="`/characters/${member.character.id}-${slugify(member.character.name)}`"
+                  target="_blank"
+                >
+                  <img
+                    class="h-16 w-16 mask mask-squircle"
+                    :class="{
+                      'rarity-5': member.character.rarity === 5,
+                      'rarity-4': member.character.rarity === 4,
+                    }"
+                    :src="member.character.img_url"
+                    :alt="member.character.name"
+                  />
+                </NuxtLink>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Materials -->
+        <section class="px-4 md:px-0">
+          <span class="text-xs text-white/50 italic">
+            All Materials for {{ character.name }} LvL. 90 & Max Talents
+          </span>
+          <div class="flex items-center gap-2 mb-2">
+            <div class="h-9 w-1 rounded-full bg-white"></div>
+            <h2>Materials</h2>
+          </div>
+
+          <div class="flex gap-4">
+            <div
+              v-for="(items, type) in groupedMaterials"
+              :key="type"
+              class="flex-1 bg-base-300/90 p-4 rounded-lg"
+            >
+              <h5 class="divider uppercase">
+                {{ type.replaceAll("_", " ") }}
+              </h5>
+
+              <div class="space-y-4">
+                <figure
+                  v-for="item in items"
+                  :key="item.id"
+                  class="flex items-center gap-3"
+                >
+                  <img
+                    :src="item.material.img_url"
+                    :class="`rarity-${item.material.rarity}`"
+                    class="w-16 h-16 mask mask-squircle"
+                  />
+                  <figcaption>
+                    <h6 class="text-white/80">{{ item.material.name }}</h6>
+                    <span class="text-info">
+                      ×{{ item.amount.toLocaleString() }}
+                    </span>
+                  </figcaption>
+                </figure>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
   </div>
+
+  <section v-else>
+    <EmptyFallback />
+  </section>
 </template>
 
 <script setup>

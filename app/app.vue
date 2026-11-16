@@ -1,9 +1,9 @@
 <template>
   <main data-theme="dark">
     <Navbar />
-    <div class="min-h-screen">
+    <article class="min-h-screen z-0">
       <NuxtPage />
-    </div>
+    </article>
     <Footer />
   </main>
 </template>
