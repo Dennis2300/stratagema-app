@@ -141,7 +141,7 @@
     <!-- Background (blurred + faded, on its own) -->
     <div
       :style="{ backgroundImage: `url(${character.splash_art_url})` }"
-      class="fixed inset-0 z-0 bg-no-repeat bg-top bg-cover blur-xs opacity-33 pointer-events-none"
+      class="fixed max-w-7xl mx-auto inset-0 z-0 bg-no-repeat bg-top bg-cover blur-xs opacity-33 pointer-events-none"
       aria-hidden="true"
     ></div>
 
