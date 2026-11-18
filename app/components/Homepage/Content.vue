@@ -1,98 +1,79 @@
 <template>
-  <article class="animated-bg border-t border-white/50">
-    <div class="shooting-stars" aria-hidden="true">
-      <div class="stars-left">
-        <div v-for="i in 10" :key="'left-' + i" class="shooting-star"></div>
-      </div>
-
-      <div class="stars-right">
-        <div v-for="i in 10" :key="'right-' + i" class="shooting-star"></div>
-      </div>
+  <section id="new_characters" class="relative z-10 max-w-7xl mx-auto space-y-6">
+    <h3 class="text-center">New Characters</h3>
+    <div v-if="pending" class="min-h-100 flex justify-center items-center">
+      <span class="loading scale-300"></span>
     </div>
-
-    <section
-      id="new_characters"
-      class="relative z-10 max-w-7xl mx-auto space-y-8 pt-24"
+    <div v-else-if="error">
+      <ErrorMessage :error="error" />
+    </div>
+    <div
+      v-else-if="new_characters"
+      class="flex flex-wrap justify-center items-center gap-8"
     >
-      <h1 class="text-center">Say hello to...</h1>
-      <div v-if="pending" class="min-h-82 flex justify-center items-center">
-        <span class="loading loading-xl"></span>
-      </div>
-
-      <div v-else-if="error">
-        <ErrorMessage :error="error" />
-      </div>
-
-      <div
-        v-else-if="new_characters"
-        class="flex flex-wrap justify-center items-center gap-8"
+      <NuxtLink
+        v-for="character in new_characters"
+        :key="character.id"
+        :to="`/characters/${character.id}-${slugify(character.name)}`"
+        class="relative bg-base-200 rounded-lg border border-white/25 hover:border-white/50 hover:cursor-pointer transition duration-300 group"
       >
-        <NuxtLink
-          v-for="character in new_characters"
-          :key="character.id"
-          :to="`/characters/${character.id}-${slugify(character.name)}`"
-          class="relative bg-base-200 rounded-lg border border-white/25 hover:border-white/50 hover:cursor-pointer transition duration-300 group"
-        >
-          <figure>
-            <img
-              class="w-82 h-auto opacity-50 object-cover object-center group-hover:opacity-95 transition duration-300"
-              :src="character.splash_art_url"
-              :alt="character.name"
-            />
-            <figcaption class="absolute bottom-4 left-4">
-              <h2>{{ character.name }}</h2>
-              <div class="flex items-center gap-2">
-                <span class="badge badge-sm badge-accent">{{
-                  character.vision.name
-                }}</span>
-                <span class="badge badge-sm badge-accent"
-                  >{{ character.weapon_type.name }}
-                </span>
-                <span class="badge badge-sm badge-accent">{{
-                  character.role
-                }}</span>
-              </div>
-            </figcaption>
-          </figure>
-
-          <span class="absolute top-3 left-3 text-yellow-500">
-            {{ "★".repeat(character.rarity) }}
-          </span>
-        </NuxtLink>
-      </div>
-
-      <div v-else>
-        <EmptyFallback />
-      </div>
-
-      <h2 class="divider mt-12">There's more to see...</h2>
-      <div
-        class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto mt-6 px-4 md:px-0"
-      >
-        <NuxtLink
-          v-for="link in links"
-          :key="link.name"
-          :to="link.path"
-          class="group bg-base-200 p-4 border border-white/25 rounded-lg hover:border-white/50 transition duration-300"
-        >
-          <div class="">
-            <div class="flex justify-between items-center">
-              <h2>
-                {{ link.name }}
-              </h2>
-              <span class="group-hover:translate-x-1 transition duration-300">
-                →
+        <figure>
+          <img
+            class="w-82 h-auto opacity-50 object-cover object-center group-hover:opacity-95 transition duration-300"
+            :src="character.splash_art_url"
+            :alt="character.name"
+          />
+          <figcaption class="absolute bottom-4 left-4">
+            <h2>{{ character.name }}</h2>
+            <div class="flex items-center gap-2">
+              <span class="badge badge-sm badge-accent">{{
+                character.vision.name
+              }}</span>
+              <span class="badge badge-sm badge-accent"
+                >{{ character.weapon_type.name }}
               </span>
+              <span class="badge badge-sm badge-accent">{{
+                character.role
+              }}</span>
             </div>
-            <div class="divider mt-0 mb-1"></div>
-            <p class="text-xs text-base-content/90">
-              {{ link.desc }}
-            </p>
+          </figcaption>
+        </figure>
+
+        <span class="absolute top-3 left-3 text-yellow-500">
+          {{ "★".repeat(character.rarity) }}
+        </span>
+      </NuxtLink>
+    </div>
+    <div v-else>
+      <EmptyFallback />
+    </div>
+    <h2 class="text-center">There's more to see...</h2>
+    <div
+      class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto mt-6 px-4 md:px-0"
+    >
+      <NuxtLink
+        v-for="link in links"
+        :key="link.name"
+        :to="link.path"
+        class="group bg-base-200 p-4 border border-white/25 rounded-lg hover:border-white/50 transition duration-300"
+      >
+        <div class="">
+          <div class="flex justify-between items-center">
+            <h2>
+              {{ link.name }}
+            </h2>
+            <span class="group-hover:translate-x-1 transition duration-300">
+              →
+            </span>
           </div>
-        </NuxtLink>
-      </div>
-    </section>
-  </article>
+          <div class="divider mt-0 mb-1"></div>
+          <p class="text-xs text-base-content/90">
+            {{ link.desc }}
+          </p>
+        </div>
+      </NuxtLink>
+    </div>
+  </section>
 </template>
 
 <script setup>
