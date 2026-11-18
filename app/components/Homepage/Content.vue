@@ -12,7 +12,7 @@
 
     <section
       id="new_characters"
-      class="relative z-10 max-w-7xl mx-auto space-y-8 py-24"
+      class="relative z-10 max-w-7xl mx-auto space-y-8 pt-24"
     >
       <h1 class="text-center">Say hello to...</h1>
       <div v-if="pending" class="min-h-82 flex justify-center items-center">
