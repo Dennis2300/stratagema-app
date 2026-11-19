@@ -632,77 +632,45 @@
         </section>
 
         <!-- Materials -->
-        <!-- Reworking!
-         <section class="px-4 md:px-0">
-           <span class="text-xs text-white/50 italic">
-             All Materials for {{ character.name }} LvL. 90 & Max Talents
-           </span>
-           <div class="flex items-center gap-2 mb-2">
-             <div class="h-9 w-1 rounded-full bg-white"></div>
-             <h2>Materials</h2>
-           </div>
- 
-           <div class="flex gap-4">
-             <div
-               v-for="(items, type) in groupedMaterials"
-               :key="type"
-               class="flex-1 bg-base-300/90 p-4 rounded-lg"
-             >
-               <h5 class="divider uppercase">
-                 {{ type.replaceAll("_", " ") }}
-               </h5>
- 
-               <div class="space-y-4">
-                 <figure
-                   v-for="item in items"
-                   :key="item.id"
-                   class="flex items-center gap-3"
-                 >
-                   <img
-                     :src="item.material.img_url"
-                     :class="`rarity-${item.material.rarity}`"
-                     class="w-16 h-16 mask mask-squircle"
-                   />
-                   <figcaption>
-                     <h6 class="text-white/80">{{ item.material.name }}</h6>
-                     <span class="text-info">
-                       ×{{ item.amount.toLocaleString() }}
-                     </span>
-                   </figcaption>
-                 </figure>
-               </div>
-             </div>
-           </div>
-         </section>
-         -->
-        <section class="md:flex">
-          <div class="flex-1 bg-base-200">
-            <h4>Ascension</h4>
-            <div v-for="i in 6">
-              <span>Ascension {{ i }}</span>
-              <div class="flex gap-4">
-                <div v-for="x in 5" class="">
-                  <img
-                    class="w-12 h-12 rarity-5 rounded-lg"
-                    src="https://wiki.hoyolab.com/_ipx/f_webp/https://bbs.hoyolab.com/hoyowiki/picture/object/Mora_icon.png"
-                  />
-                  <p>{{ x }}</p>
-                </div>
-              </div>
-            </div>
-            <h5>Total:</h5>
-            <div class="flex gap-4">
-              <div v-for="x in 5">
-                <img
-                  class="w-12 h-12 rarity-5 rounded-lg"
-                  src="https://wiki.hoyolab.com/_ipx/f_webp/https://bbs.hoyolab.com/hoyowiki/picture/object/Mora_icon.png"
-                />
-                <p>{{ x }}</p>
-              </div>
-            </div>
+        <section class="px-4 md:px-0">
+          <span class="text-xs text-white/50 italic">
+            All Materials for {{ character.name }} LvL. 90 & Max Talents
+          </span>
+          <div class="flex items-center gap-2 mb-2">
+            <div class="h-9 w-1 rounded-full bg-white"></div>
+            <h2>Materials</h2>
           </div>
-          <div class="flex-1 bg-base-200">
-            <h4>Talents</h4>
+
+          <div class="flex gap-4">
+            <div
+              v-for="(items, type) in groupedMaterials"
+              :key="type"
+              class="flex-1 bg-base-300/90 p-4 rounded-lg"
+            >
+              <h5 class="divider uppercase">
+                {{ type.replaceAll("_", " ") }}
+              </h5>
+
+              <div class="space-y-4">
+                <figure
+                  v-for="item in items"
+                  :key="item.id"
+                  class="flex items-center gap-3"
+                >
+                  <img
+                    :src="item.material.img_url"
+                    :class="`rarity-${item.material.rarity}`"
+                    class="w-16 h-16 mask mask-squircle"
+                  />
+                  <figcaption>
+                    <h6 class="text-white/80">{{ item.material.name }}</h6>
+                    <span class="text-info">
+                      ×{{ item.amount.toLocaleString() }}
+                    </span>
+                  </figcaption>
+                </figure>
+              </div>
+            </div>
           </div>
         </section>
       </div>
