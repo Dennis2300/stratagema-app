@@ -126,6 +126,7 @@
               <th>
                 <NuxtLink
                   :to="`/weapons/${weapon.id}-${slugify(weapon.name)}`"
+                  target="_blank"
                   class="btn btn-primary btn-sm"
                 >
                   Details

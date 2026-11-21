@@ -44,6 +44,7 @@
         v-for="character in upcomingCharacters"
         :key="character.id"
         :to="`/characters/${character.id}-${slugify(character.name)}`"
+        target="_blank"
         class="bg-base-200 p-4 rounded-lg group border border-white/25 hover:border-white/50 hover:bg-base-200 transition duration-300"
       >
         <figure class="flex items-center gap-4">
@@ -107,6 +108,7 @@
           v-for="character in playableCharacters"
           :key="character.id"
           :to="`/characters/${character.id}-${slugify(character.name)}`"
+          target="_blank"
           class="relative overflow-hidden rounded-lg h-100 bg-base-200 group hover:cursor-pointer"
         >
           <!-- Background image -->

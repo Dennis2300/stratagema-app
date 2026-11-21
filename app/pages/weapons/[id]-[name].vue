@@ -1,22 +1,6 @@
 <template>
-  <Navbar class="fixed top-0 z-50" />
-
-  <div v-if="weaponLoading" class="h-screen flex justify-center items-center">
-    <span class="loader"></span>
-  </div>
-
-  <div
-    v-else-if="weaponError"
-    class="h-screen flex justify-center items-center"
-  >
-    <ErrorMessage :error="weaponError" />
-  </div>
-
-  <article
-    v-else-if="weapon"
-    class="mx-auto min-h-screen w-full max-w-7xl space-y-8 mt-24"
-  >
-    <section class="bg-base-300 p-4 rounded-lg">
+  <article v-if="weapon" class="max-w-7xl mx-auto pt-24 space-y-6">
+    <section class="bg-base-200 p-4 rounded-lg border border-white/25">
       <figure class="flex items-center gap-4">
         <img
           class="w-16 h-16 md:w-32 md:h-32 mask mask-squircle"
@@ -26,14 +10,14 @@
         />
         <figcaption>
           <h1 class="mb-2 mt-1">{{ weapon.name }}</h1>
+          <p class="text-xs text-white/50">{{ weapon.description }}</p>
         </figcaption>
       </figure>
-      <div class="divider my-2"></div>
-      <p class="text-sm text-white/50">{{ weapon.description }}</p>
-    </section>
+      <h4 class="divider mb-0"></h4>
+      <div class="text-center">
+        <p class="badge badge-xs badge-primary">Level 90</p>
+      </div>
 
-    <section class="bg-base-300 p-4 rounded-lg">
-      <h4 class="divider divider-start">Weapon Stats</h4>
       <div class="stats stats-vertical lg:stats-horizontal shadow w-full">
         <div class="stat place-items-center">
           <div class="stat-title">Rarity</div>
@@ -67,13 +51,21 @@
       </div>
     </section>
 
-    <section class="bg-base-300 p-4 rounded-lg">
-      <h4 class="divider divider-start">Weapon Passive</h4>
-      <p>{{ weapon.ability }}</p>
+    <section class="bg-base-200 p-4 rounded-lg border border-white/25">
+      <div class="flex items-center gap-2">
+        <div class="h-9 w-1 rounded-full bg-white"></div>
+        <h3>Weapon Passive</h3>
+      </div>
+      <div class="divider my-1"></div>
+      <p class="text-white/75">{{ weapon.ability }}</p>
     </section>
 
-    <section class="bg-base-300 p-4 rounded-lg">
-      <h4 class="divider divider-start">Suitable Character(s)</h4>
+    <section class="bg-base-200 p-4 rounded-lg border border-white/25">
+      <div class="flex items-center gap-2">
+        <div class="h-9 w-1 rounded-full bg-white"></div>
+        <h3>Character(s) using this</h3>
+      </div>
+      <div class="divider my-1"></div>
       <div class="flex flex-wrap gap-4">
         <NuxtLink
           v-for="c in relatedCharacters"
@@ -92,10 +84,6 @@
       </div>
     </section>
   </article>
-
-  <div v-else class="h-screen flex justify-center items-center">
-    <EmptyFallback />
-  </div>
 </template>
 
 <script setup>
