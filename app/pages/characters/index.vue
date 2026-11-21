@@ -163,7 +163,7 @@
               </div>
 
               <!-- Character attributes -->
-              <div class="flex flex-wrap items-center gap-2">
+              <div class="flex flex-wrap items-center gap-1">
                 <span class="badge badge-sm badge-primary">
                   {{ character?.weapon_type_id?.name }}
                 </span>
