@@ -669,6 +669,35 @@
                     </span>
                   </figcaption>
                 </figure>
+
+                <!-- Crown -->
+                <figure
+                  v-if="type === 'character_talent'"
+                  class="flex items-center gap-3"
+                >
+                  <img
+                    src="https://wiki.hoyolab.com/_ipx/f_webp/https://bbs.hoyolab.com/hoyowiki/picture/object/Crown%2520of%2520Insight_icon.png"
+                    class="w-16 h-16 mask mask-squircle rarity-5"
+                  />
+                  <figcaption>
+                    <h6 class="text-white/80">Crown of Insight</h6>
+                    <span class="text-info">×3</span>
+                  </figcaption>
+                </figure>
+
+                <!-- Mora -->
+                <figure v-if="moraCost[type]" class="flex items-center gap-3">
+                  <img
+                    src="https://wiki.hoyolab.com/_ipx/f_webp/https://bbs.hoyolab.com/hoyowiki/picture/object/Mora_icon.png"
+                    class="w-16 h-16 mask mask-squircle rarity-3"
+                  />
+                  <figcaption>
+                    <h6 class="text-white/80">Mora</h6>
+                    <span class="text-info">
+                      ×{{ moraCost[type].toLocaleString() }}
+                    </span>
+                  </figcaption>
+                </figure>
               </div>
             </div>
           </div>
@@ -691,6 +720,10 @@ const route = useRoute();
 
 const param_id = route.params.id;
 
+const moraCost = {
+  character_ascension: 420000,
+  character_talent: 4957500,
+};
 const usageOrder = ["character_ascension", "character_talent"];
 const flagMap = { EN: "us", JP: "jp", CN: "cn", KR: "kr" };
 const languageOrder = ["EN", "JP", "CN", "KR"];
