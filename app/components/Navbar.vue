@@ -33,14 +33,14 @@
       <!-- Right -->
       <div class="navbar-end">
         <!-- Desktop: About -->
-        <ul class="menu menu-horizontal hidden gap-1 p-0 md:flex">
+        <ul class="flex items-center gap-1">
           <li>
             <NuxtLink
-              to="/about"
-              class="relative hover:bg-transparent focus:bg-transparent focus-visible:bg-transparent active:bg-transparent aria-[current=page]:bg-transparent hover:shadow-none focus:shadow-none focus-visible:shadow-none active:shadow-none aria-[current=page]:shadow-none after:absolute after:inset-x-4 after:bottom-1 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-current after:transition-transform after:duration-300 after:content-[''] hover:after:scale-x-100 focus-visible:after:scale-x-100"
-              active-class="after:scale-x-100"
+              to="/current-banner"
+              class="relative block px-4 py-2 after:absolute after:inset-x-4 after:bottom-1 after:h-0.5 after:origin-right after:scale-x-0 after:rounded-full after:bg-current after:transition-transform after:duration-300 after:content-[''] hover:after:origin-left hover:after:scale-x-100 focus-visible:after:origin-left focus-visible:after:scale-x-100"
+              exact-active-class="after:origin-left after:scale-x-100"
             >
-              About
+              Current Banner
             </NuxtLink>
           </li>
         </ul>
@@ -88,11 +88,11 @@
             </li>
             <li>
               <NuxtLink
-                to="/about"
+                to="/current-banner"
                 class="rounded-full"
                 active-class="bg-base-200 font-medium"
               >
-                About
+                Current Banner
               </NuxtLink>
             </li>
           </ul>

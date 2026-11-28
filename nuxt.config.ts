@@ -20,6 +20,7 @@ export default defineNuxtConfig({
         "/weapons/**",
         "/artifacts",
         "/redeem-codes",
+        "/current-banner",
         "/about",
         "/privacy-policy"
       ],
