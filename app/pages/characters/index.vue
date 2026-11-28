@@ -214,6 +214,10 @@
       </div>
     </section>
   </article>
+
+  <div v-else class="h-100 flex justify-center items-center">
+    <EmptyFallback />
+  </div>
 </template>
 
 <script setup>

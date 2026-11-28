@@ -631,6 +631,61 @@
           </div>
         </section>
 
+        <!-- Abilities -->
+        <section class="px-4 md:px-0">
+          <span class="text-xs text-white/50 italic"
+            >Normal Attack, Elemental Skill & Elemental Burst for
+            {{ character.name }}</span
+          >
+          <div class="flex items-center gap-2 mb-2">
+            <div class="h-9 w-1 rounded-full bg-white"></div>
+            <h2>Talents</h2>
+          </div>
+
+          <div class="bg-base-300/90 py-4 px-8 rounded-lg">
+            <div class="flex justify-center items-center gap-8">
+              <img
+                v-for="i in 7"
+                class="w-16 h-16 bg-zinc-700 rounded-full"
+                src="https://act-webstatic.hoyoverse.com/event-static-hoyowiki-admin/2026/09/21/eeb957f7452f06a3c22ecea53e254b4e_1397118036452733041.png?x-oss-process=image%2Fformat%2Cwebp"
+                alt=""
+              />
+            </div>
+            <div class="divider mb-0"></div>
+            <h3>Chain Reaction</h3>
+            <div class="space-y-4">
+              <div>
+                <h6 class="text-info">Normal Attack</h6>
+                <p>Performs a maximum of 3 attacks that deal Electro DMG.</p>
+              </div>
+              <div>
+                <h6 class="text-info">Charged Attack</h6>
+                <p>
+                  Consumes a certain amount of Stamina to deal AoE Electro DMG
+                  to the area in front after a short casting time. Mitya will
+                  instead perform the special Charged Attack Gradient
+                  Detonation, which consumes no Stamina, if a Detection Core:
+                  Overload created by Mitya himself is currently on the field
+                  and he has at least 1 Gradient Beacon: Deals 1 instance of AoE
+                  Electro DMG to the area in front and continuously consumes
+                  Gradient Beacons while held. Each Gradient Beacon consumed
+                  deals 1 instance of AoE Electro DMG to the area in front that
+                  is considered Stellar-Conduct reaction DMG.
+                </p>
+              </div>
+              <div>
+                <h6 class="text-info">Plunging Attack</h6>
+                <p>
+                  Plunges from mid-air to strike the ground below, damaging
+                  opponents along the path and dealing AoE Electro DMG upon
+                  impact.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
         <!-- Materials -->
         <section class="px-4 md:px-0">
           <span class="text-xs text-white/50 italic">
@@ -641,7 +696,7 @@
             <h2>Materials</h2>
           </div>
 
-          <div class="flex gap-4">
+          <div class="flex flex-wrap gap-4">
             <div
               v-for="(items, type) in groupedMaterials"
               :key="type"
@@ -706,9 +761,9 @@
     </div>
   </div>
 
-  <section v-else>
+  <div v-else class="h-screen flex justify-center items-center">
     <EmptyFallback />
-  </section>
+  </div>
 </template>
 
 <script setup>
